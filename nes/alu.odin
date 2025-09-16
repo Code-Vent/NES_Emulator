@@ -270,11 +270,23 @@ decode_operation::proc (self: ^Alu6502, op: OpcodeLabel, bus: ^addr.Bus, opr: ^O
 }
 
 
-load::proc (src: ^Operand, dest: ^Operand, bus: ^addr.Bus) {
+load::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) {
     srcaddr, ok1 := src.(u16); assert(ok1);
-    data := addr.bus_read_u8(bus, srcaddr);
+    result := addr.bus_read_u8(bus, srcaddr);
     destaddrr, ok2 := dest.(^u8); assert(ok2);
-    destaddrr^ = data;
+    destaddrr^ = result;
+
+    if result == 0 {
+        alu_set_flag(alu, .Z);
+    }else{
+        alu_clear_flag(alu, .Z);
+    }
+    
+    if result & 0x80 == 0 {
+        alu_clear_flag(alu, .N);
+    }else{
+        alu_set_flag(alu, .N);
+    }
 }
 
 store::proc (src: ^Operand, dest: ^Operand, bus: ^addr.Bus) {
@@ -284,13 +296,26 @@ store::proc (src: ^Operand, dest: ^Operand, bus: ^addr.Bus) {
     addr.bus_write(bus, destaddrr, data);
 }
 
-transfer::proc (src: ^Operand, dest: ^Operand) {
+transfer::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502) {
     srcaddr, ok1 := src.(^u8); assert(ok1);
     destaddrr, ok2 := dest.(^u8); assert(ok2);
-    destaddrr^ = srcaddr^;
+    result := srcaddr^;
+    destaddrr^ = result;
+
+    if result == 0 {
+        alu_set_flag(alu, .Z);
+    }else{
+        alu_clear_flag(alu, .Z);
+    }
+    
+    if result & 0x80 == 0 {
+        alu_clear_flag(alu, .N);
+    }else{
+        alu_set_flag(alu, .N);
+    }
 }
 
-arithmetic::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) {
+arithmetic::proc (src: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) {
     data:u8;
     switch choice in src {
         case u8:
@@ -302,16 +327,26 @@ arithmetic::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) 
     }
     carry := alu_is_flag_set(alu, .C)? 1 : 0;
     result:int = int(alu.regs.A) + int(data) + carry;
+    alu.regs.A = u8(result & 0x000000FF);
     if result & 0x100 != 0 {
         alu_set_flag(alu, .C);
+    }else{
+        alu_clear_flag(alu, .C);
     }
+
     if result == 0 {
         alu_set_flag(alu, .Z);
+    }else{
+        alu_clear_flag(alu, .Z);
     }
-    overflow := 0;//(result^int(alu.regs.A)) & (result^int(data));
+    
+    overflow := (result~int(alu.regs.A)) & (result~int(data));
     if overflow & 0x80 != 0 {
         alu_set_flag(alu, .V);
+    }else{
+        alu_clear_flag(alu, .V);
     }
+    
     if(result & 0x80 == 0){
         alu_clear_flag(alu, .N)
     }
@@ -320,39 +355,236 @@ arithmetic::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) 
     }
 }
 
-compare::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502) {
-    
-}
+compare::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) {
+    memory:u8;
+    switch choice in src {
+        case u8:
+            memory = choice;
+        case u16:
+            memory = addr.bus_read_u8(bus, choice);
+        case ^u8, u32:
+            assert(false);
+    }
+    register, ok := dest.(^u8); assert(ok);
+    result := int(register^) - int(memory);
 
-branch::proc (src: ^Operand, alu: ^Alu6502, flag: Flags) {
-    
-}
+    if result == 0 {
+        alu_set_flag(alu, .Z);
+    }else{
+        alu_clear_flag(alu, .Z);
+    }
 
-inc_or_dec::proc (src: ^Operand) {
-    
-}
+    if result >= 0 {
+        alu_set_flag(alu, .C);
+    }else{
+        alu_clear_flag(alu, .C);
+    }
 
-shift::proc (src: ^Operand, dir: enum{RIGHT,LEFT}) {
-    switch dir {
-        case .RIGHT:
-        case .LEFT:
+    if result & 0x80 == 0 {
+        alu_clear_flag(alu, .N);
+    }else{
+        alu_set_flag(alu, .N);
     }
 }
 
-rotate::proc (src: ^Operand, dir: enum{RIGHT,LEFT}) {
-    switch dir {
-        case .RIGHT:
-        case .LEFT:
+branch::proc (src: ^Operand, alu: ^Alu6502, flag: Flags, cond: bool) {
+    if cond && alu_is_flag_set(alu, flag) || 
+    !cond && alu_is_flag_clear(alu, flag){
+        eaddr, ok := src.(u16); assert(ok);
+        alu.regs.PC = eaddr;
     }
 }
 
-bitwise::proc (src: ^Operand, op: enum{AND,OR,XOR,BIT}) {
+inc_or_dec::proc (src: ^Operand, alu: ^Alu6502, option: enum(int){INC=1,DEC=-1}, bus: ^addr.Bus) {
+    result:int;
+    switch eaddr in src {
+        case u16:
+            data := addr.bus_read_u8(bus, eaddr);
+            result = int(data) + int(option);
+            addr.bus_write(bus, eaddr, u8(result));
+        case ^u8:
+            result = int(eaddr^) + int(option);
+            eaddr^ = u8(result);
+        case u8, u32:
+            assert(false);
+    }
+    if result == 0 {
+        alu_set_flag(alu, .Z);
+    }else{
+        alu_clear_flag(alu, .Z);
+    }
+    
+    if result & 0x80 == 0 {
+        alu_clear_flag(alu, .N);
+    }else{
+        alu_set_flag(alu, .N);
+    }
+}
+
+shift::proc (src: ^Operand, dir: enum{RIGHT,LEFT}, alu: ^Alu6502, bus: ^addr.Bus) {
+    carry:bool;
+    result:u8;
+    data:u8;
+    switch eaddr in src {
+        case ^u8:
+            data = eaddr^;
+        case u16:
+            data = addr.bus_read_u8(bus, eaddr);
+        case u32, u8:
+            assert(false);
+    }
+    if dir == .LEFT {
+        carry = (data & 0x80) == 0x80;
+        result = data << 1;   
+    }else{
+        carry = (data & 0x01) == 0x01;
+        result = data >> 1;      
+    }
+
+    eaddr, ok := src.(^u8);
+    if ok {
+        eaddr^ = result;
+    }else{
+        eaddr := src.(u16);
+        addr.bus_write(bus, eaddr, result);
+    }
+
+    if carry {
+        alu_set_flag(alu, .C);
+    }else{
+        alu_clear_flag(alu, .C);
+    }
+
+    if result == 0 {
+        alu_set_flag(alu, .Z);
+    }else{
+        alu_clear_flag(alu, .Z);
+    }
+    
+    if result & 0x80 == 0 {
+        alu_clear_flag(alu, .N);
+    }else{
+        alu_set_flag(alu, .N);
+    }
+}
+
+rotate::proc (src: ^Operand, dir: enum{RIGHT,LEFT}, alu: ^Alu6502, bus: ^addr.Bus) {
+    old_carry:bool = alu_is_flag_set(alu, .C);
+    new_carry:bool;
+    result:u8;
+    data:u8;
+    switch eaddr in src {
+        case ^u8:
+            data = eaddr^;
+        case u16:
+            data = addr.bus_read_u8(bus, eaddr);
+        case u32, u8:
+            assert(false);
+    }
+    if dir == .LEFT {
+        new_carry = (data & 0x80) == 0x80; 
+        result = (old_carry)? (data << 1) | 1 : (data << 1);
+    }else{
+        new_carry = (data & 0x01) == 0x01;
+        result = (old_carry)? (data >> 1) | 0x80 : (data >> 1);      
+    }
+
+    eaddr, ok := src.(^u8);
+    if ok {
+        eaddr^ = result;
+    }else{
+        eaddr := src.(u16);
+        addr.bus_write(bus, eaddr, result);
+    }
+
+    if new_carry {
+        alu_set_flag(alu, .C);
+    }else{
+        alu_clear_flag(alu, .C);
+    }
+
+    if result == 0 {
+        alu_set_flag(alu, .Z);
+    }else{
+        alu_clear_flag(alu, .Z);
+    }
+    
+    if result & 0x80 == 0 {
+        alu_clear_flag(alu, .N);
+    }else{
+        alu_set_flag(alu, .N);
+    }
+}
+
+BitwiseOp::enum{
+    AND,
+    OR,
+    XOR,
+    BIT,
+}
+
+bitwise::proc (src: ^Operand, alu: ^Alu6502, op: BitwiseOp, bus: ^addr.Bus) {
+    data, result:u8;
+    switch eaddr in src {
+        case u8:
+            data = eaddr
+        case u16:
+            data = addr.bus_read_u8(bus, eaddr);
+        case u32, ^u8:
+            assert(false);
+    }
+
     switch op {
         case .AND:
+            result = alu.regs.A & data;
+            alu.regs.A = result;
         case .OR:
+            result = alu.regs.A | data;
+            alu.regs.A = result;
         case .BIT:
+            result = alu.regs.A & data;
         case .XOR:
+            result = alu.regs.A ~  data;
+            alu.regs.A = result;
     }
+
+    if result == 0 {
+        alu_set_flag(alu, .Z);
+    }else{
+        alu_clear_flag(alu, .Z);
+    }
+    
+    if op == .BIT {
+        if data & 0x80 == 0 {
+            alu_clear_flag(alu, .N);
+        }else{
+            alu_set_flag(alu, .N);
+        }
+
+        if data & 0x40 == 0 {
+            alu_clear_flag(alu, .V);
+        }else{
+            alu_set_flag(alu, .V);
+        }
+    }else{
+        if result & 0x80 == 0 {
+            alu_clear_flag(alu, .N);
+        }else{
+            alu_set_flag(alu, .N);
+        }
+    }
+}
+
+JumpOp::enum{
+    JMP,
+    JSR,
+    RTS,
+    BRK,
+    RTI,
+}
+
+jump::proc (src: ^Operand, alu: ^Alu6502, op: JumpOp, bus: ^addr.Bus) {
+    
 }
 
 
