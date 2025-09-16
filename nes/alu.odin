@@ -270,5 +270,92 @@ decode_operation::proc (self: ^Alu6502, op: OpcodeLabel, bus: ^addr.Bus, opr: ^O
 }
 
 
+load::proc (src: ^Operand, dest: ^Operand, bus: ^addr.Bus) {
+    srcaddr, ok1 := src.(u16); assert(ok1);
+    data := addr.bus_read_u8(bus, srcaddr);
+    destaddrr, ok2 := dest.(^u8); assert(ok2);
+    destaddrr^ = data;
+}
+
+store::proc (src: ^Operand, dest: ^Operand, bus: ^addr.Bus) {
+    srcaddr, ok1 := src.(^u8); assert(ok1);
+    data := srcaddr^;
+    destaddrr, ok2 := dest.(u16); assert(ok2);
+    addr.bus_write(bus, destaddrr, data);
+}
+
+transfer::proc (src: ^Operand, dest: ^Operand) {
+    srcaddr, ok1 := src.(^u8); assert(ok1);
+    destaddrr, ok2 := dest.(^u8); assert(ok2);
+    destaddrr^ = srcaddr^;
+}
+
+arithmetic::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) {
+    data:u8;
+    switch choice in src {
+        case u8:
+            data = choice;
+        case u16:
+            data = addr.bus_read_u8(bus, choice);
+        case ^u8, u32:
+            assert(false);
+    }
+    carry := alu_is_flag_set(alu, .C)? 1 : 0;
+    result:int = int(alu.regs.A) + int(data) + carry;
+    if result & 0x100 != 0 {
+        alu_set_flag(alu, .C);
+    }
+    if result == 0 {
+        alu_set_flag(alu, .Z);
+    }
+    overflow := 0;//(result^int(alu.regs.A)) & (result^int(data));
+    if overflow & 0x80 != 0 {
+        alu_set_flag(alu, .V);
+    }
+    if(result & 0x80 == 0){
+        alu_clear_flag(alu, .N)
+    }
+    else{
+        alu_set_flag(alu,.N);
+    }
+}
+
+compare::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502) {
+    
+}
+
+branch::proc (src: ^Operand, alu: ^Alu6502, flag: Flags) {
+    
+}
+
+inc_or_dec::proc (src: ^Operand) {
+    
+}
+
+shift::proc (src: ^Operand, dir: enum{RIGHT,LEFT}) {
+    switch dir {
+        case .RIGHT:
+        case .LEFT:
+    }
+}
+
+rotate::proc (src: ^Operand, dir: enum{RIGHT,LEFT}) {
+    switch dir {
+        case .RIGHT:
+        case .LEFT:
+    }
+}
+
+bitwise::proc (src: ^Operand, op: enum{AND,OR,XOR,BIT}) {
+    switch op {
+        case .AND:
+        case .OR:
+        case .BIT:
+        case .XOR:
+    }
+}
+
+
+
 
 
