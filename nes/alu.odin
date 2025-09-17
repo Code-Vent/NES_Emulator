@@ -293,6 +293,7 @@ decode_operation::proc (
 ) {
     #partial switch op {
         case .PHP:
+            alu_set_flag(self, .B);
             src^ = &self.regs.SR
             fallthrough
         case .PHA:

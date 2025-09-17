@@ -29,11 +29,13 @@ main::proc () {
     fmt.printfln("%x\n", alu.regs.PC);
     fmt.printfln("sr = %x\n", alu.regs.SR);
 
-    nes.alu_push(&alu, &cpu.bus, 0xBB);
-    fmt.printfln("sp = %x\n", alu.regs.SP);
-    src, dest: nes.Operand;
-    nes.decode_operand(&alu, .IMP, &cpu.bus, &src);
-    nes.decode_operation(&alu, .PLA, &cpu.bus, &src, &dest);
-    fmt.printfln("A = %x\n", alu.regs.A);
-    fmt.printfln("sp = %x\n", alu.regs.SP);
+    for i in 0..=1000 {
+        nes.alu_push(&alu, &cpu.bus, 0xBB);
+        fmt.printfln("sp = %x\n", alu.regs.SP);
+        src, dest: nes.Operand;
+        nes.decode_operand(&alu, .IMP, &cpu.bus, &src);
+        nes.decode_operation(&alu, .PLA, &cpu.bus, &src, &dest);
+        fmt.printfln("A = %x\n", alu.regs.A);
+        fmt.printfln("sp = %x\n", alu.regs.SP);
+    }
 }
