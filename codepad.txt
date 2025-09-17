@@ -17,3 +17,6 @@ ok := sdl.Init({.VIDEO}); assert(ok);
             }
         }
     }
+
+
+    /////////
