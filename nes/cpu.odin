@@ -79,29 +79,15 @@ cpu_reset::proc (self: ^CpuInterface) {
 
 cpu_nmi::proc (self: ^CpuInterface) {
     alu, ok := self.pu.(^Alu6502); assert(ok);
-    alu_push_pc(alu, &self.bus);
-    alu_clear_flag(alu, .B);
-    alu_set_flag(alu, .I);
-    alu_push_sr(alu, &self.bus);
-    
-    lo := u16(cpu_read(self, 0xFFFA));
-    hi := u16(cpu_read(self, 0xFFFB));
-
-    alu.regs.PC = (hi << 8) | lo;
+    isr:Operand = u32(0xFFFA);        
+    alu_jump(&isr, alu, .BRK, &self.bus);
 }
 
 cpu_irq::proc (self: ^CpuInterface) {
     alu, ok := self.pu.(^Alu6502); assert(ok);
     if alu_is_flag_clear(alu, .I) {
-        alu_push_pc(alu, &self.bus);
-        alu_clear_flag(alu, .B);
-        alu_set_flag(alu, .I);
-        alu_push_sr(alu, &self.bus);
-        
-        lo := u16(cpu_read(self, 0xFFFE));
-        hi := u16(cpu_read(self, 0xFFFF));
-
-        alu.regs.PC = (hi << 8) | lo;
+        isr:Operand = u32(0xFFFE);        
+        alu_jump(&isr, alu, .BRK, &self.bus);
     }
 }
 
