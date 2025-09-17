@@ -74,20 +74,37 @@ cpu_reset::proc (self: ^CpuInterface) {
     alu.regs.X = 0;
     alu.regs.Y = 0;
     alu.regs.SP = 0xFF;
-    alu_set_flag(alu, .I);
+    alu.regs.SR = u8(1 << 5);
 }
 
 cpu_nmi::proc (self: ^CpuInterface) {
     alu, ok := self.pu.(^Alu6502); assert(ok);
-    isr:Operand = u32(0xFFFA);        
-    alu_jump(&isr, alu, .BRK, &self.bus);
+    alu_push_pc(alu, &self.bus);
+    alu_clear_flag(alu, .B);
+    alu_push(alu, &self.bus, alu.regs.SR);
+    alu_set_flag(alu, .I);
+    
+    lo := u16(cpu_read(self, 0xFFFA));
+    hi := u16(cpu_read(self, 0xFFFB));
+
+    isr: Operand = u16((hi << 8) | lo);
+    alu_jump(&isr, alu, .JMP, &self.bus);
 }
 
 cpu_irq::proc (self: ^CpuInterface) {
     alu, ok := self.pu.(^Alu6502); assert(ok);
     if alu_is_flag_clear(alu, .I) {
-        isr:Operand = u32(0xFFFE);        
-        alu_jump(&isr, alu, .BRK, &self.bus);
+        alu_push_pc(alu, &self.bus);
+        alu_clear_flag(alu, .B);
+        alu_push(alu, &self.bus, alu.regs.SR);
+        alu_set_flag(alu, .I);
+        
+        lo := u16(cpu_read(self, 0xFFFE));
+        hi := u16(cpu_read(self, 0xFFFF));
+
+        isr: Operand = u16((hi << 8) | lo);
+
+        alu_jump(&isr, alu, .JMP, &self.bus);
     }
 }
 
