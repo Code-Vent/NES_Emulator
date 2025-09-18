@@ -31,17 +31,19 @@ Alu6502_Result::struct {
 }
 
 OpcodeLabel::enum(u8) {
-    LDA, STA, LDX, STX, LDY, STY,
-    TAX, TXA, TAY, TYA, TXS, TSX,
-    ADC, SBC, INC, DEC, INX, DEX, INY, DEY,
-    ASL, LSR, ROL, ROR,
-    AND, ORA, EOR, BIT,
-    CMP, CPX, CPY,
-    BCC, BCS, BEQ, BNE, BPL, BMI, BVC, BVS,
-    JMP, JSR, RTS, BRK, RTI,
-    PHA, PLA, PHP, PLP,//Done
-    CLC, SEC, CLI, SEI, CLD, SED, CLV,
-    NOP, UND,
+    LDA, STA, LDX, STX, LDY, STY,//Implemented
+    TAX, TXA, TAY, TYA, TXS, TSX,//Implemented
+    ADC, SBC, INC, DEC, INX, DEX, INY, DEY,//Implemented
+    ASL, LSR, ROL, ROR,//Implemented
+    AND, ORA, EOR, BIT,//Implemented
+    CMP, CPX, CPY,//Implemented
+    BCC, BCS, BEQ, BNE, BPL, BMI, BVC, BVS,//Implemented
+    JMP, JSR, RTS, BRK, RTI,//Implemented
+    PHA, PLA, PHP, PLP,//Implemented
+    CLC, SEC, CLI, SEI, CLD, SED, CLV,//Implemented
+    NOP, //Implemented
+    //Undocumented Opcodes
+    UND,
 }
 
 AddressingLabel::enum(u8) {
@@ -300,11 +302,161 @@ decode_operation::proc (
             alu_stack(src, self, bus, .PUSH);
         case .PLP:
             src^ = &self.regs.SR
-            fallthrough
-        case .PLA:
             alu_stack(src, self, bus, .PULL);
-        //case TAX, TXA, TAY, TYA, TXS, TSX
-        case:
+        case .PLA:
+            alu_stack(src, self, bus, .PULL);//src has been set to A inside imp addressing mode
+            A, ok := src.(^u8); assert(ok);
+            if A^ == 0 {
+                alu_set_flag(self, .Z);
+            }else{
+                alu_clear_flag(self, .Z);
+            }
+
+            if A^ & 0x80 == 0 {
+                alu_clear_flag(self, .Z);
+            }else{
+                alu_set_flag(self, .Z);
+            }
+        case .TAX:
+            dest^ = &self.regs.X
+            alu_transfer(src, dest, self);
+        case .TXA:
+            src^ = &self.regs.X
+            dest^ = &self.regs.A
+            alu_transfer(src, dest, self);
+        case .TAY:
+            dest^ = &self.regs.Y
+            alu_transfer(src, dest, self);
+        case .TYA:
+            src^ = &self.regs.Y;
+            dest^ = &self.regs.A;
+            alu_transfer(src, dest, self);
+        case .TXS:
+            src^ = &self.regs.X;
+            dest^ = &self.regs.SP;
+            alu_transfer(src, dest, self);
+        case .TSX:
+            src^ = &self.regs.SP;
+            dest^ = &self.regs.X;
+            alu_transfer(src, dest, self);
+        case .LDA:
+            dest^ = &self.regs.A;
+            alu_load(src, dest, self, bus);
+        case .STA:
+            dest^ = &self.regs.A;
+            alu_store(dest, src, bus);
+        case .LDX:
+            dest^ = &self.regs.X;
+            alu_load(src, dest, self, bus);
+        case .STX:
+            dest^ = &self.regs.X;
+            alu_store(dest, src, bus);
+        case .LDY:
+            dest^ = &self.regs.Y;
+            alu_load(src, dest, self, bus);
+        case .STY:
+            dest^ = &self.regs.Y;
+            alu_store(dest, src, bus);
+        case .CMP:
+            dest^ = &self.regs.A;
+            alu_compare(src, dest, self, bus);
+        case .CPX:
+            dest^ = &self.regs.X;
+            alu_compare(src, dest, self, bus);
+        case .CPY:
+            dest^ = &self.regs.Y;
+            alu_compare(src, dest, self, bus);
+        case .BCC:
+            alu_branch(src, self, .C, false);
+        case .BCS:
+            alu_branch(src, self, .C, true);
+        case .BEQ:
+            alu_branch(src, self, .Z, true);
+        case .BNE:
+            alu_branch(src, self, .Z, false);
+        case .BPL:
+            alu_branch(src, self, .N, false);
+        case .BMI:
+            alu_branch(src, self, .N, true);
+        case .BVC:
+            alu_branch(src, self, .V, false);
+        case .BVS:
+            alu_branch(src, self, .V, true);
+        case .CLC:
+            alu_clear_flag(self, .C);
+        case .SEC:
+            alu_set_flag(self, .C);
+        case .CLI:
+            alu_clear_flag(self, .I);
+        case .SEI:
+            alu_set_flag(self, .I);
+        case .CLD:
+            alu_clear_flag(self, .D);
+        case .SED:
+            alu_set_flag(self, .D);
+        case .CLV:
+            alu_clear_flag(self, .V);
+        case .NOP:
+            //Do nothing
+        case .JMP:
+            alu_jump(src, self, .JMP, bus);
+        case .JSR:
+            alu_jump(src, self, .JSR, bus);
+        case .RTS:  
+            alu_jump(src, self, .RTS, bus);
+        case .BRK:
+            alu_jump(src, self, .BRK, bus);
+        case .RTI:
+            alu_jump(src, self, .RTI, bus);
+        case .ADC:
+            alu_arithmetic(src, self, bus);
+        case .SBC:
+            #partial switch choice in src {
+                case u8:
+                    data := choice;
+                    data = ~data;
+                    src^ = data;
+                case u16:
+                    data := addr.bus_read_u8(bus, choice);
+                    data = ~data;
+                    src^ = data;
+                case:
+                    assert(false);
+            }
+            alu_arithmetic(src, self, bus);
+        case .INC:
+            alu_inc_or_dec(src, self, .INC, bus);
+        case .INX:
+            src^ = &self.regs.X;
+            alu_inc_or_dec(src, self, .INC, bus);
+        case .INY:
+            src^ = &self.regs.Y;
+            alu_inc_or_dec(src, self, .INC, bus);
+        case .DEC:
+            alu_inc_or_dec(src, self, .DEC, bus);
+        case .DEX:
+            src^ = &self.regs.X;
+            alu_inc_or_dec(src, self, .DEC, bus);
+        case .DEY:
+            src^ = &self.regs.Y;
+            alu_inc_or_dec(src, self, .DEC, bus);
+        case .ASL:
+            alu_shift(src, .LEFT, self, bus);
+        case .LSR:
+            alu_shift(src, .RIGHT, self, bus);
+        case .ROL:
+            alu_rotate(src, .LEFT, self, bus);
+        case .ROR:
+            alu_rotate(src, .RIGHT, self, bus);
+        case .AND:
+            alu_bitwise(src, self, .AND, bus);
+        case .ORA:
+            alu_bitwise(src, self, .OR, bus);
+        case .EOR:
+            alu_bitwise(src, self, .XOR, bus);
+        case .BIT:
+            alu_bitwise(src, self, .BIT, bus);
+        case .UND:
             assert(false);
     }
 }
