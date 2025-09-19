@@ -20,32 +20,33 @@ Result::union {
 CpuInterface::struct {
     pu: ProcessingUnit,
     bus: addr.Bus,
-    mem_map: [5]addr.Addressable,
 }
 
 @(private)
-MemoryBlock::struct {
+CPUMemoryBlock::struct {
     ram: [0x0800]u8,
-    ppu_regs: [0x0008]u8,
     apu_io_regs: [0x0018]u8,
     apu_io_funcs: [0x0008]u8,
     cartridge: [0xBFE0]u8,
 }
 @(private)
-CPU_MEMORY := MemoryBlock{};
+CPU_MEMORY := CPUMemoryBlock{};
 
 @(private)
 cpu := CpuInterface{};
 
+@(private)
+cpu_mem_map: [5]addr.Addressable;
+
 cpu_get::proc (alu: ^Alu6502) -> ^CpuInterface {
 
-    cpu.mem_map[0] = addr.new_address_space(CPU_MEMORY.ram[:], 0x0000, 0x07FF);
-    cpu.mem_map[1] = addr.new_address_space(CPU_MEMORY.ppu_regs[:], 0x2000, 0x2007);
-    cpu.mem_map[2] = addr.new_address_space(CPU_MEMORY.apu_io_regs[:], 0x4000, 0x4017);
-    cpu.mem_map[3] = addr.new_address_space(CPU_MEMORY.apu_io_funcs[:], 0x4018, 0x401F);
-    cpu.mem_map[4] = addr.new_address_space(CPU_MEMORY.cartridge[:], 0x4020, 0xFFFF);
+    cpu_mem_map[0] = addr.new_address_space(CPU_MEMORY.ram[:], 0x0000, 0x07FF,0);
+    cpu_mem_map[1] = addr.new_address_space(ppu_regs_io, 0x2000, 0x2007,0x2007);
+    cpu_mem_map[2] = addr.new_address_space(CPU_MEMORY.apu_io_regs[:], 0x4000, 0x4017,0);
+    cpu_mem_map[3] = addr.new_address_space(CPU_MEMORY.apu_io_funcs[:], 0x4018, 0x401F,0);
+    cpu_mem_map[4] = addr.new_address_space(CPU_MEMORY.cartridge[:], 0x4020, 0xFFFF,0);
 
-    cpu.bus = addr.new_bus(cpu.mem_map[:]);
+    cpu.bus = addr.new_bus(cpu_mem_map[:]);
     
     alu.regs.SR = u8(1 << 5); 
     cpu.pu = alu;  
