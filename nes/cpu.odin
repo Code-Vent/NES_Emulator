@@ -25,7 +25,6 @@ CpuInterface::struct {
 @(private)
 CPUMemoryBlock::struct {
     ram: [0x0800]u8,
-    apu_io_regs: [0x0018]u8,
     apu_io_funcs: [0x0008]u8,
     cartridge: [0xBFE0]u8,
 }
@@ -40,8 +39,10 @@ cpu_mem_map: [5]addr.Addressable;
 
 cpu_get::proc (alu: ^Alu6502) -> ^CpuInterface {
     cpu_mem_map[0] = addr.new_address_space(CPU_MEMORY.ram[:], 0x0000, 0x07FF,0);
-    cpu_mem_map[1] = addr.new_address_space(ppu_regs_io, 0x2000, 0x2007,0x2007);
-    cpu_mem_map[2] = addr.new_address_space(CPU_MEMORY.apu_io_regs[:], 0x4000, 0x4017,0);
+    cpu_mem_map[1] = addr.new_address_space(ppu_regs_io, 0x2000, 0x2007,0x3FFF);
+    cpu_mem_map[1] = addr.new_address_space(apu_regs_io, 0x4000, 0xFFFF,0x4013);
+    cpu_mem_map[1] = addr.new_address_space(ppu_regs_io, 0x4014, 0xFFFF,0x4014);
+    cpu_mem_map[1] = addr.new_address_space(apu_regs_io, 0x4015, 0xFFFF,0x4017);
     cpu_mem_map[3] = addr.new_address_space(CPU_MEMORY.apu_io_funcs[:], 0x4018, 0x401F,0);
     cpu_mem_map[4] = addr.new_address_space(CPU_MEMORY.cartridge[:], 0x4020, 0xFFFF,0);
 

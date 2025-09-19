@@ -55,5 +55,12 @@ ppu_step::proc (self: ^Ppu2C02, bus: ^addr.Bus) -> Ppu2C02_Result {
 }
 
 ppu_regs_io::proc (address: u16, data: u8) -> u8 {
-    return 0xFA;   
+    switch address {
+        case 0x2000:
+            return 0xFA;
+        case 0x4014:
+            return 0xFE;
+        case:
+            return 0xFD;
+    }   
 }

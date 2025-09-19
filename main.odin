@@ -39,6 +39,6 @@ main::proc () {
         fmt.printfln("sp = %x\n", alu.regs.SP);
     }
 
-    ppu_reg := addr.bus_read_u8(&cpu.bus, 0x2002);
-    fmt.printfln("ppu reg = %x\n", ppu_reg);
+    oam_reg := addr.bus_read_u8(&cpu.bus, 0x4014);
+    fmt.printfln("ppu reg = %x\n", oam_reg);
 }
