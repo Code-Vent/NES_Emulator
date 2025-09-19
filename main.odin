@@ -40,5 +40,5 @@ main::proc () {
     }
 
     oam_reg := addr.bus_read_u8(&cpu.bus, 0x4014);
-    fmt.printfln("ppu reg = %x\n", oam_reg);
+    fmt.printfln("oam reg = %x\n", oam_reg);
 }

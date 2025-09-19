@@ -18,14 +18,7 @@ Addressable::struct {
     target: Target,
 }
 
-new_address_space::proc (target: Target, first_addr: u16, addr_mask: u16, rightmost_addr:u16) -> Addressable{
-    last_addr: u16;
-    if mem, ok := target.([]u8); ok {
-        last_addr = first_addr + u16(len(mem) - 1);
-    }else{
-        last_addr = rightmost_addr;
-    }
-    
+new_address_space::proc (target: Target, first_addr: u16, addr_mask: u16, last_addr:u16) -> Addressable{    
     return {
         addr_space = Range{
             upper_addr = last_addr , 
@@ -40,12 +33,12 @@ new_address_space::proc (target: Target, first_addr: u16, addr_mask: u16, rightm
 space_write::proc (self: ^Addressable, address: u16, data: u8) {
     addr := self.mask & address;
     ok := space_contains_address(self, addr); assert(ok);
-    i := index(self, addr);
     if bytes, ok := self.target.([]u8); ok {
+        i := index(self, addr); assert(i < len(bytes));
         bytes[i] = data;
     }else{
         callback := self.target.(proc(memory_mapped_addr: u16,data: u8) -> u8);
-        callback(address, data);
+        callback(addr, data);
     }
     
 }
@@ -55,13 +48,13 @@ space_write::proc (self: ^Addressable, address: u16, data: u8) {
 space_read::proc (self: ^Addressable, address: u16) -> u8{ 
     addr := self.mask & address;
     ok := space_contains_address(self, addr); assert(ok);
-    i := index(self, addr);
     if bytes, ok := self.target.([]u8); ok {
         bytes = self.target.([]u8);
+        i := index(self, addr); assert(i < len(bytes));
         return bytes[i];
     }else{
         callback := self.target.(proc(memory_mapped_addr: u16,data: u8) -> u8);
-        return callback(address, 0);
+        return callback(addr, 0);
     }    
 }
 
