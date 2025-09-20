@@ -7,6 +7,7 @@ ProcessingUnit::union {
     ^Alu6502,
     ^Ppu2C02,
     ^ApuRP2A03,
+    ^Mapper,
 }
 
 None::struct {}
@@ -14,6 +15,7 @@ Result::union {
     Alu6502_Result,
     Ppu2C02_Result,
     ApuRP2A03_Result,
+    Mapper_Result,
     None,
 }
 
@@ -113,9 +115,11 @@ cpu_step::proc (self: ^CpuInterface) -> Result {
         case ^Alu6502:
             result = alu_step(u, &self.bus);
         case ^Ppu2C02:
-            result = ppu_step(u, &self.bus);
+            result = ppu_step(u);
         case ^ApuRP2A03:
-            result = apu_step(u, &self.bus);
+            result = apu_step(u);
+        case ^Mapper:
+            result = mapper_step(u);
     }
     return result;
 }

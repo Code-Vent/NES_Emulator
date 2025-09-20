@@ -44,13 +44,14 @@ ppu_regs: PPURegisters = PPURegisters{};
 
 Ppu2C02::struct {
     bus: Bus,
+    mapper: Mapper_Result,
 }
 
 Ppu2C02_Result::struct{
 
 }
 
-ppu_init::proc (self: ^Ppu2C02) {
+ppu_init::proc (self: ^Ppu2C02, mapper_result: Mapper_Result) {
     ppu_mem_map[0] = new_address_space(ppu_memory.pattern_tbl0[:], 0x0000, 0xFFFF,0x0FFF);
     ppu_mem_map[1] = new_address_space(ppu_memory.pattern_tbl1[:], 0x1000, 0xFFFF,0x1FFF);
     ppu_mem_map[2] = new_address_space(ppu_memory.name_tbl0[:], 0x2000, 0xFFFF,0x23BF);
@@ -65,9 +66,10 @@ ppu_init::proc (self: ^Ppu2C02) {
     ppu_mem_map[11] = new_address_space(ppu_memory.palette_ram[:], 0x3F00, 0x3F1F,0x3FFF);
 
     self.bus = new_bus(ppu_mem_map[:]);
+    self.mapper = mapper_result;
 }
 
-ppu_step::proc (self: ^Ppu2C02, bus: ^Bus) -> Ppu2C02_Result {
+ppu_step::proc (self: ^Ppu2C02) -> Ppu2C02_Result {
     return Ppu2C02_Result{};
 }
 
