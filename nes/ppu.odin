@@ -38,9 +38,12 @@ PPURegisters::struct {
     data: u8,
     oam_dma: u8,
 }
+
+@(private)
+ppu_regs: PPURegisters = PPURegisters{};
+
 Ppu2C02::struct {
     bus: Bus,
-    regs: PPURegisters,
 }
 
 Ppu2C02_Result::struct{
@@ -86,23 +89,23 @@ byte_shift:u8 = 8;
 ppu_regs_write::proc (self: ^Ppu2C02, address: u16, data: u8) {
     switch address {
         case 0x2000://ppuctrl
-            self.regs.ctrl = data;
+            ppu_regs.ctrl = data;
         case 0x2001: //ppumask
-            self.regs.mask = data;
+            ppu_regs.mask = data;
         case 0x2003: //oam addr
-            self.regs.oam_addr = data;
+            ppu_regs.oam_addr = data;
         case 0x2004: //oam data
-            self.regs.oam_addr = data;
+            ppu_regs.oam_addr = data;
         case 0x2005: //scroll
-            self.regs.scroll |= u16(data) << byte_shift;
+            ppu_regs.scroll |= u16(data) << byte_shift;
             byte_shift = (byte_shift + 8) & 0x8;        
         case 0x2006: //vram address
-            self.regs.addr |= u16(data) << byte_shift;
+            ppu_regs.addr |= u16(data) << byte_shift;
             byte_shift = (byte_shift + 8) & 0x8; 
         case 0x2007: //vram data
             //self.regs.addr |= u16(data) << byte_shift;
             //byte_shift = (byte_shift + 8) & 0x8;       
         case 0x4014:
-            self.regs.oam_dma = data;
+            ppu_regs.oam_dma = data;
     }
 }

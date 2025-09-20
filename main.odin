@@ -39,7 +39,7 @@ main::proc () {
         fmt.printfln("A = %x\n", alu.regs.A);
         fmt.printfln("sp = %x\n", alu.regs.SP);
     }
-
+    
     oam_reg := nes.bus_read_u8(&cpu.bus, 0x4014);
     fmt.printfln("oam reg = %x\n", oam_reg);
 }
