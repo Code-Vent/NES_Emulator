@@ -3,13 +3,14 @@ package main
 import "core:mem"
 import "core:fmt"
 import sdl "vendor:sdl3"
-import addr "./nes/address"
 import "nes"
 
 
 main::proc () {
     alu := nes.Alu6502{};
-    cpu := nes.cpu_get(&alu);
+    ppu := nes.Ppu2C02{};
+    apu := nes.ApuRP2A03{};
+    cpu := nes.cpu_get(&alu, &ppu, &apu);
     nes.cpu_write(cpu, 0xFFFC, 0xFC);
     nes.cpu_write(cpu, 0xFFFD, 0xFD);
 
@@ -20,7 +21,7 @@ main::proc () {
     nes.cpu_write(cpu, 0xFFFB, 0xFB);
 
     nes.cpu_reset(cpu);
-    addr.bus_map(&cpu.bus);
+    nes.bus_map(&cpu.bus);
 
     //fmt.printfln("\n%x\n", alu.regs.PC);
     //fmt.printfln("%x\n", alu.regs.SR);
@@ -39,6 +40,6 @@ main::proc () {
         fmt.printfln("sp = %x\n", alu.regs.SP);
     }
 
-    oam_reg := addr.bus_read_u8(&cpu.bus, 0x4014);
+    oam_reg := nes.bus_read_u8(&cpu.bus, 0x4014);
     fmt.printfln("oam reg = %x\n", oam_reg);
 }

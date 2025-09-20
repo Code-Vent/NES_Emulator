@@ -1,7 +1,5 @@
 package nes
 
-import addr "address"
-
 Flags::enum {
     C = 0, Z , I , D, B, _, V, N
 }
@@ -80,53 +78,53 @@ OPCODES:[16][16]Opcode = {
 
 alu_read_u8_arg::proc (
     self: ^Alu6502, 
-    bus: ^addr.Bus, 
+    bus: ^Bus, 
     address: u16
 ) -> u8 {
-    data := addr.bus_read_u8(bus, address);
+    data := bus_read_u8(bus, address);
     self.regs.PC = address + 1;
     return data;
 }
 
 alu_read_u16_arg::proc (
     self: ^Alu6502, 
-    bus: ^addr.Bus, 
+    bus: ^Bus, 
     address: u16
 ) -> u16 {
-    data := addr.bus_read_u16(bus, address);
+    data := bus_read_u16(bus, address);
     self.regs.PC = address + 2;
     return data;
 }
 
 alu_pop::proc (
     self: ^Alu6502, 
-    bus: ^addr.Bus
+    bus: ^Bus
 ) -> u8{
     assert(self.regs.SP < 0xff);
     self.regs.SP += 1;
     stack_ptr:u16 = u16(0x100) + u16(self.regs.SP);
-    return addr.bus_read_u8(bus, stack_ptr);
+    return bus_read_u8(bus, stack_ptr);
 }
 
 alu_push::proc (
     self: ^Alu6502, 
-    bus: ^addr.Bus, 
+    bus: ^Bus, 
     data: u8
 ){
     assert(self.regs.SP > 0x00);
     stack_ptr:u16 = u16(0x100) + u16(self.regs.SP);
-    addr.bus_write(bus, stack_ptr, data);
+    bus_write(bus, stack_ptr, data);
     self.regs.SP -= 1;
 }
 
-alu_push_pc::proc (self: ^Alu6502, bus: ^addr.Bus) {
+alu_push_pc::proc (self: ^Alu6502, bus: ^Bus) {
     lo:u8 = u8((self.regs.PC >> 8) & 0x00FF);
     hi:u8 = u8(self.regs.PC & 0x00FF);
     alu_push(self, bus, lo);
     alu_push(self, bus, hi);
 }
 
-alu_pop_pc::proc (self: ^Alu6502, bus: ^addr.Bus) {
+alu_pop_pc::proc (self: ^Alu6502, bus: ^Bus) {
     lo := alu_pop(self, bus);
     hi := alu_pop(self, bus);
     self.regs.PC = u16((hi << 8) | lo);
@@ -151,7 +149,7 @@ alu_is_flag_clear::proc (self: ^Alu6502, flag: Flags) -> bool{
 
 alu_step::proc (
     self: ^Alu6502, 
-    bus: ^addr.Bus
+    bus: ^Bus
 ) -> Alu6502_Result {
     byte := alu_read_u8_arg(self, bus, self.regs.PC);
     row := (byte & 0xF0) >> 4;
@@ -167,7 +165,7 @@ alu_step::proc (
 decode_operand::proc (
     self: ^Alu6502, 
     mode: AddressingLabel, 
-    bus: ^addr.Bus, 
+    bus: ^Bus, 
     opr: ^Operand
 ) {
     switch(mode){
@@ -199,18 +197,18 @@ decode_operand::proc (
 }
 
 @(private)
-implied::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+implied::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     opr^ = &self.regs.A;
 }
 
 @(private)
-immediate::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+immediate::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
     opr^ = arg;
 }
 
 @(private)
-relative::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+relative::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg := alu_read_u8_arg(self, bus, self.regs.PC);
     val := (0x80 & arg != 0)? -1 * int(~(arg - 1)) : int(arg);
     eaddr:int = int(self.regs.PC) + val;
@@ -218,68 +216,68 @@ relative::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
 }
 
 @(private)
-zero_page_indexed_x::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+zero_page_indexed_x::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
     eaddr:u16 = u16(arg + self.regs.X) & 0x00FF;
     opr^ = eaddr;
 }
 
 @(private)
-zero_page_indexed_y::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+zero_page_indexed_y::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
     eaddr:u16 = u16(arg + self.regs.Y) & 0x00FF;
     opr^ = eaddr;
 }
 
 @(private)
-absolute::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+absolute::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u16 = alu_read_u16_arg(self, bus, self.regs.PC);
     opr^ = arg;
 }
 
 @(private)
-absolute_indexed_x::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+absolute_indexed_x::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u16 = alu_read_u16_arg(self, bus, self.regs.PC);
     eaddr:u16 = u16(arg) + u16(self.regs.X);
     opr^ = eaddr;
 }
 
 @(private)
-absolute_indexed_y::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+absolute_indexed_y::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u16 = alu_read_u16_arg(self, bus, self.regs.PC);
     eaddr:u16 = u16(arg) + u16(self.regs.Y);
     opr^ = eaddr;
 }
 
 @(private)
-indirect_indexed_x::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+indirect_indexed_x::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
     temp:u16 = (u16(arg) + u16(self.regs.X)) & 0x00FF;
-    eadrr_lo:u8 = addr.bus_read_u8(bus, temp);
+    eadrr_lo:u8 = bus_read_u8(bus, temp);
     temp = (u16(arg) + u16(self.regs.X + 1)) & 0x00FF;
-    eadrr_hi:u8 = addr.bus_read_u8(bus, temp);
+    eadrr_hi:u8 = bus_read_u8(bus, temp);
     eaddr := u16(eadrr_hi) << 8 | u16(eadrr_lo);
     opr^ = eaddr;
 }
 
 @(private)
-indirect_indexed_y::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+indirect_indexed_y::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
-    eadrr_lo:u8 = addr.bus_read_u8(bus, u16(arg));
+    eadrr_lo:u8 = bus_read_u8(bus, u16(arg));
     temp := u16(arg + 1) & 0x00FF;
-    eadrr_hi:u8 = addr.bus_read_u8(bus, temp);
+    eadrr_hi:u8 = bus_read_u8(bus, temp);
     eaddr := (u16(eadrr_hi) << 8 | u16(eadrr_lo)) + u16(self.regs.Y);
     opr^ = eaddr;
 }
 
 @(private)
-indirect::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+indirect::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u32 = u32(alu_read_u16_arg(self, bus, self.regs.PC));
     opr^ = arg;
 }
 
 @(private)
-zero_page::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
+zero_page::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
     arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
     eaddr:u16 = u16(arg) & 0x00FF;
     opr^ = eaddr;
@@ -289,7 +287,7 @@ zero_page::proc (self: ^Alu6502, bus: ^addr.Bus, opr: ^Operand) {
 decode_operation::proc (
     self: ^Alu6502, 
     op: OpcodeLabel, 
-    bus: ^addr.Bus, 
+    bus: ^Bus, 
     src: ^Operand, 
     dest: ^Operand
 ) {
@@ -417,7 +415,7 @@ decode_operation::proc (
                     data = ~data;
                     src^ = data;
                 case u16:
-                    data := addr.bus_read_u8(bus, choice);
+                    data := bus_read_u8(bus, choice);
                     data = ~data;
                     src^ = data;
                 case:
@@ -466,10 +464,10 @@ alu_load::proc (
     src: ^Operand, 
     dest: ^Operand, 
     alu: ^Alu6502, 
-    bus: ^addr.Bus
+    bus: ^Bus
 ) {
     srcaddr, ok1 := src.(u16); assert(ok1);
-    result := addr.bus_read_u8(bus, srcaddr);
+    result := bus_read_u8(bus, srcaddr);
     destaddrr, ok2 := dest.(^u8); assert(ok2);
     destaddrr^ = result;
 
@@ -486,11 +484,11 @@ alu_load::proc (
     }
 }
 
-alu_store::proc (src: ^Operand, dest: ^Operand, bus: ^addr.Bus) {
+alu_store::proc (src: ^Operand, dest: ^Operand, bus: ^Bus) {
     srcaddr, ok1 := src.(^u8); assert(ok1);
     data := srcaddr^;
     destaddrr, ok2 := dest.(u16); assert(ok2);
-    addr.bus_write(bus, destaddrr, data);
+    bus_write(bus, destaddrr, data);
 }
 
 alu_transfer::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502) {
@@ -512,13 +510,13 @@ alu_transfer::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502) {
     }
 }
 
-alu_arithmetic::proc (src: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) {
+alu_arithmetic::proc (src: ^Operand, alu: ^Alu6502, bus: ^Bus) {
     data:u8;
     #partial switch choice in src {
         case u8:
             data = choice;
         case u16:
-            data = addr.bus_read_u8(bus, choice);
+            data = bus_read_u8(bus, choice);
         case:
             assert(false);
     }
@@ -552,13 +550,13 @@ alu_arithmetic::proc (src: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) {
     }
 }
 
-alu_compare::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^addr.Bus) {
+alu_compare::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^Bus) {
     memory:u8;
     #partial switch choice in src {
         case u8:
             memory = choice;
         case u16:
-            memory = addr.bus_read_u8(bus, choice);
+            memory = bus_read_u8(bus, choice);
         case:
             assert(false);
     }
@@ -592,13 +590,13 @@ alu_branch::proc (src: ^Operand, alu: ^Alu6502, flag: Flags, cond: bool) {
     }
 }
 
-alu_inc_or_dec::proc (src: ^Operand, alu: ^Alu6502, option: enum(int){INC=1,DEC=-1}, bus: ^addr.Bus) {
+alu_inc_or_dec::proc (src: ^Operand, alu: ^Alu6502, option: enum(int){INC=1,DEC=-1}, bus: ^Bus) {
     result:int;
     #partial switch eaddr in src {
         case u16:
-            data := addr.bus_read_u8(bus, eaddr);
+            data := bus_read_u8(bus, eaddr);
             result = int(data) + int(option);
-            addr.bus_write(bus, eaddr, u8(result));
+            bus_write(bus, eaddr, u8(result));
         case ^u8:
             result = int(eaddr^) + int(option);
             eaddr^ = u8(result);
@@ -623,7 +621,7 @@ ShiftDirection::enum{
     LEFT,
 }
 
-alu_shift::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^addr.Bus) {
+alu_shift::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^Bus) {
     carry:bool;
     result:u8;
     data:u8;
@@ -631,7 +629,7 @@ alu_shift::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^addr.B
         case ^u8:
             data = eaddr^;
         case u16:
-            data = addr.bus_read_u8(bus, eaddr);
+            data = bus_read_u8(bus, eaddr);
         case:
             assert(false);
     }
@@ -648,7 +646,7 @@ alu_shift::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^addr.B
         eaddr^ = result;
     }else{
         eaddr := src.(u16);
-        addr.bus_write(bus, eaddr, result);
+        bus_write(bus, eaddr, result);
     }
 
     if carry {
@@ -670,7 +668,7 @@ alu_shift::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^addr.B
     }
 }
 
-alu_rotate::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^addr.Bus) {
+alu_rotate::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^Bus) {
     old_carry:bool = alu_is_flag_set(alu, .C);
     new_carry:bool;
     result:u8;
@@ -679,7 +677,7 @@ alu_rotate::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^addr.
         case ^u8:
             data = eaddr^;
         case u16:
-            data = addr.bus_read_u8(bus, eaddr);
+            data = bus_read_u8(bus, eaddr);
         case:
             assert(false);
     }
@@ -696,7 +694,7 @@ alu_rotate::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^addr.
         eaddr^ = result;
     }else{
         eaddr := src.(u16);
-        addr.bus_write(bus, eaddr, result);
+        bus_write(bus, eaddr, result);
     }
 
     if new_carry {
@@ -725,13 +723,13 @@ BitwiseOp::enum{
     BIT,
 }
 
-alu_bitwise::proc (src: ^Operand, alu: ^Alu6502, op: BitwiseOp, bus: ^addr.Bus) {
+alu_bitwise::proc (src: ^Operand, alu: ^Alu6502, op: BitwiseOp, bus: ^Bus) {
     data, result:u8;
     #partial switch eaddr in src {
         case u8:
             data = eaddr
         case u16:
-            data = addr.bus_read_u8(bus, eaddr);
+            data = bus_read_u8(bus, eaddr);
         case:
             assert(false);
     }
@@ -785,13 +783,13 @@ JumpOp::enum{
     RTI,
 }
 
-alu_jump::proc (src: ^Operand, alu: ^Alu6502, op: JumpOp, bus: ^addr.Bus) {
+alu_jump::proc (src: ^Operand, alu: ^Alu6502, op: JumpOp, bus: ^Bus) {
     pc:u16;
     #partial switch eaddr in src {
         case u16:
             pc = eaddr;
         case u32:
-            pc = addr.bus_read_u16(bus, u16(eaddr));
+            pc = bus_read_u16(bus, u16(eaddr));
         case:
             assert(false);
     }
@@ -815,7 +813,7 @@ alu_jump::proc (src: ^Operand, alu: ^Alu6502, op: JumpOp, bus: ^addr.Bus) {
     }
 }
 
-alu_stack::proc (src: ^Operand, alu: ^Alu6502, bus: ^addr.Bus, op: enum{PUSH, PULL}) {
+alu_stack::proc (src: ^Operand, alu: ^Alu6502, bus: ^Bus, op: enum{PUSH, PULL}) {
     reg, ok := src.(^u8); assert(ok);
     switch op {
         case .PUSH:

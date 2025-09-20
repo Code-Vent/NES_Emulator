@@ -1,5 +1,5 @@
 package nes
-import addr "address"
+
 
 @(private)
 PPUMemoryBlock::struct {
@@ -18,15 +18,29 @@ PPUMemoryBlock::struct {
 }
 
 @(private)
-PPU_MEMORY := PPUMemoryBlock{};
+ppu_memory := PPUMemoryBlock{};
 
 @(private)
-ppu_mem_map: [12]addr.Addressable;
+ppu_mem_map: [12]Addressable;
 
 @(private)
 ppu_oam: [256]u8;
+
+@(private)
+PPURegisters::struct {
+    ctrl: u8,
+    mask: u8,
+    status: u8,
+    oam_addr: u8,
+    oam_data: u8,
+    scroll: u16,
+    addr: u16,
+    data: u8,
+    oam_dma: u8,
+}
 Ppu2C02::struct {
-    bus: addr.Bus,
+    bus: Bus,
+    regs: PPURegisters,
 }
 
 Ppu2C02_Result::struct{
@@ -34,33 +48,61 @@ Ppu2C02_Result::struct{
 }
 
 ppu_init::proc (self: ^Ppu2C02) {
-    ppu_mem_map[0] = addr.new_address_space(PPU_MEMORY.pattern_tbl0[:], 0x0000, 0x07FF,0);
-    ppu_mem_map[1] = addr.new_address_space(PPU_MEMORY.pattern_tbl1[:], 0x2000, 0x2007,0);
-    ppu_mem_map[2] = addr.new_address_space(PPU_MEMORY.name_tbl0[:], 0x4000, 0x4017,0);
-    ppu_mem_map[3] = addr.new_address_space(PPU_MEMORY.attrib_tbl0[:], 0x4018, 0x401F,0);
-    ppu_mem_map[4] = addr.new_address_space(PPU_MEMORY.name_tbl1[:], 0x4020, 0xFFFF,0);
-    ppu_mem_map[5] = addr.new_address_space(PPU_MEMORY.attrib_tbl1[:], 0x4020, 0xFFFF,0);
-    ppu_mem_map[6] = addr.new_address_space(PPU_MEMORY.name_tbl2[:], 0x4020, 0xFFFF,0);
-    ppu_mem_map[7] = addr.new_address_space(PPU_MEMORY.attrib_tbl2[:], 0x4020, 0xFFFF,0);
-    ppu_mem_map[8] = addr.new_address_space(PPU_MEMORY.name_tbl3[:], 0x4020, 0xFFFF,0);
-    ppu_mem_map[9] = addr.new_address_space(PPU_MEMORY.attrib_tbl3[:], 0x4020, 0xFFFF,0);
-    ppu_mem_map[10] = addr.new_address_space(PPU_MEMORY.unused[:], 0x4020, 0xFFFF,0);
-    //ppu_mem_map[11] = addr.new_address_space(PPU_MEMORY.palette_ram[:], 0x4020, 0xFFFF,0);
+    ppu_mem_map[0] = new_address_space(ppu_memory.pattern_tbl0[:], 0x0000, 0xFFFF,0x0FFF);
+    ppu_mem_map[1] = new_address_space(ppu_memory.pattern_tbl1[:], 0x1000, 0xFFFF,0x1FFF);
+    ppu_mem_map[2] = new_address_space(ppu_memory.name_tbl0[:], 0x2000, 0xFFFF,0x23BF);
+    ppu_mem_map[3] = new_address_space(ppu_memory.attrib_tbl0[:], 0x23C0, 0xFFFF,0x23FF);
+    ppu_mem_map[4] = new_address_space(ppu_memory.name_tbl1[:], 0x2400, 0xFFFF,0x27BF);
+    ppu_mem_map[5] = new_address_space(ppu_memory.attrib_tbl1[:], 0x27C0, 0xFFFF,0x27FF);
+    ppu_mem_map[6] = new_address_space(ppu_memory.name_tbl2[:], 0x2800, 0xFFFF,0x2BBF);
+    ppu_mem_map[7] = new_address_space(ppu_memory.attrib_tbl2[:], 0x2BC0, 0xFFFF,0x2BFF);
+    ppu_mem_map[8] = new_address_space(ppu_memory.name_tbl3[:], 0x2C00, 0xFFFF,0x2FBF);
+    ppu_mem_map[9] = new_address_space(ppu_memory.attrib_tbl3[:], 0x2FC0, 0xFFFF,0x2FFF);
+    ppu_mem_map[10] = new_address_space(ppu_memory.unused[:], 0x3000, 0xFFFF,0x3EFF);
+    ppu_mem_map[11] = new_address_space(ppu_memory.palette_ram[:], 0x3F00, 0x3F1F,0x3FFF);
 
-    self.bus = addr.new_bus(ppu_mem_map[:]);
+    self.bus = new_bus(ppu_mem_map[:]);
 }
 
-ppu_step::proc (self: ^Ppu2C02, bus: ^addr.Bus) -> Ppu2C02_Result {
+ppu_step::proc (self: ^Ppu2C02, bus: ^Bus) -> Ppu2C02_Result {
     return Ppu2C02_Result{};
 }
 
-ppu_regs_io::proc (address: u16, data: u8) -> u8 {
+ppu_regs_read::proc (self: ^Ppu2C02, address: u16) -> u8 {
     switch address {
         case 0x2000:
             return 0xFA;
         case 0x4014:
             return 0xFE;
+
         case:
             return 0xFD;
     }   
+}
+
+@(private)
+byte_shift:u8 = 8;
+
+ppu_regs_write::proc (self: ^Ppu2C02, address: u16, data: u8) {
+    switch address {
+        case 0x2000://ppuctrl
+            self.regs.ctrl = data;
+        case 0x2001: //ppumask
+            self.regs.mask = data;
+        case 0x2003: //oam addr
+            self.regs.oam_addr = data;
+        case 0x2004: //oam data
+            self.regs.oam_addr = data;
+        case 0x2005: //scroll
+            self.regs.scroll |= u16(data) << byte_shift;
+            byte_shift = (byte_shift + 8) & 0x8;        
+        case 0x2006: //vram address
+            self.regs.addr |= u16(data) << byte_shift;
+            byte_shift = (byte_shift + 8) & 0x8; 
+        case 0x2007: //vram data
+            //self.regs.addr |= u16(data) << byte_shift;
+            //byte_shift = (byte_shift + 8) & 0x8;       
+        case 0x4014:
+            self.regs.oam_dma = data;
+    }
 }

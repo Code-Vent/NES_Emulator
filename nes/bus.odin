@@ -1,4 +1,4 @@
-package address
+package nes
 
 import "core:fmt"
 

@@ -1,4 +1,4 @@
-package address
+package nes
 
 import "core:fmt"
 
@@ -9,7 +9,8 @@ Range::struct {
 
 Target::union {
     []u8,
-    proc(memory_mapped_addr:u16, data:u8)->u8,
+    ^Ppu2C02,
+    ^ApuRP2A03,
 }
 
 Addressable::struct {
@@ -33,14 +34,16 @@ new_address_space::proc (target: Target, first_addr: u16, addr_mask: u16, last_a
 space_write::proc (self: ^Addressable, address: u16, data: u8) {
     addr := self.mask & address;
     ok := space_contains_address(self, addr); assert(ok);
-    if bytes, ok := self.target.([]u8); ok {
-        i := index(self, addr); assert(i < len(bytes));
-        bytes[i] = data;
-    }else{
-        callback := self.target.(proc(memory_mapped_addr: u16,data: u8) -> u8);
-        callback(addr, data);
+
+    switch opt in self.target {
+        case []u8:
+            i := index(self, addr); assert(i < len(opt));
+            opt[i] = data;
+        case ^Ppu2C02:
+            ppu_regs_write(opt, addr, data);
+        case ^ApuRP2A03:
+            apu_regs_write(opt, addr, data);
     }
-    
 }
 
 
@@ -48,14 +51,17 @@ space_write::proc (self: ^Addressable, address: u16, data: u8) {
 space_read::proc (self: ^Addressable, address: u16) -> u8{ 
     addr := self.mask & address;
     ok := space_contains_address(self, addr); assert(ok);
-    if bytes, ok := self.target.([]u8); ok {
-        bytes = self.target.([]u8);
-        i := index(self, addr); assert(i < len(bytes));
-        return bytes[i];
-    }else{
-        callback := self.target.(proc(memory_mapped_addr: u16,data: u8) -> u8);
-        return callback(addr, 0);
-    }    
+    data: u8;
+    switch opt in self.target {
+        case []u8:
+            i := index(self, addr); assert(i < len(opt));
+            data = opt[i];
+        case ^Ppu2C02:
+            data = ppu_regs_read(opt, addr);
+        case ^ApuRP2A03:
+            data = apu_regs_read(opt, addr);
+    } 
+    return data;  
 }
 
 space_contains_address::proc (self: ^Addressable, address: u16) -> bool{
