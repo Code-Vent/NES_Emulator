@@ -11,7 +11,10 @@ BanksMap ::struct {
 }
 
 VRam :: struct {
-
+    name_tbl0_offset: u16,
+    name_tbl1_offset: u16,
+    name_tbl2_offset: u16,
+    name_tbl3_offset: u16,
     buffer: []u8,
 }
 
@@ -51,15 +54,35 @@ new_mapper::proc (
 
 @(private)
 mapper_alloc_vram ::proc(meta: ^MetaData) -> VRam {
-    buf := make([]u8, 4 * 1024);//4KB
+    buf:[]u8;
     vram := VRam{};
     switch meta.mirroring {
         case .HORIZONTAL:
+            vram.name_tbl0_offset = 0;
+            vram.name_tbl2_offset = 0;
+            vram.name_tbl1_offset = 1024;
+            vram.name_tbl3_offset = 1024;
+            buf = make([]u8, 2 * 1024);//2KB
         case .VERTICAL:
+            vram.name_tbl0_offset = 0;
+            vram.name_tbl1_offset = 0;
+            vram.name_tbl2_offset = 1024;
+            vram.name_tbl3_offset = 1024;
+            buf = make([]u8, 2 * 1024);//2KB
         case .FOUR_SCREEN:
+            vram.name_tbl0_offset = 0;
+            vram.name_tbl1_offset = 1024;
+            vram.name_tbl2_offset = 2 * 1024;
+            vram.name_tbl3_offset = 3 * 1024;
+            buf = make([]u8, 4 * 1024);//4KB
         case .SINGLE_SCREEN:
-
+            vram.name_tbl0_offset = 0;
+            vram.name_tbl1_offset = 0;
+            vram.name_tbl2_offset = 0;
+            vram.name_tbl3_offset = 0;
+            buf = make([]u8, 1024);//1KB
     }
+    vram.buffer = buf[:];
     return vram;
 }
 
