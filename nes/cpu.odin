@@ -1,22 +1,14 @@
 package nes
 
 import "core:fmt"
+import cart "mappers"
 
 
 ProcessingUnit::union {
     ^Alu6502,
     ^Ppu2C02,
     ^ApuRP2A03,
-    ^Mapper,
-}
-
-None::struct {}
-Result::union {
-    Alu6502_Result,
-    Ppu2C02_Result,
-    ApuRP2A03_Result,
-    Mapper_Result,
-    None,
+    ^cart.Mapper,
 }
 
 CpuInterface::struct {
@@ -28,8 +20,8 @@ CpuInterface::struct {
 CPUMemoryBlock::struct {
     ram: [0x0800]u8,
     apu_io_funcs: [0x0008]u8,
-    cartridge: [0xBFE0]u8,
 }
+
 @(private)
 cpu_memory := CPUMemoryBlock{};
 
@@ -39,14 +31,19 @@ cpu := CpuInterface{};
 @(private)
 cpu_mem_map: [7]Addressable;
 
-cpu_get::proc (alu: ^Alu6502, ppu: ^Ppu2C02, apu: ^ApuRP2A03) -> ^CpuInterface {
+cpu_get::proc (
+    alu: ^Alu6502, 
+    ppu: ^Ppu2C02, 
+    apu: ^ApuRP2A03,
+    mapper: ^cart.Mapper
+) -> ^CpuInterface {
     cpu_mem_map[0] = new_address_space(cpu_memory.ram[:], 0x0000, 0x07FF,0x1FFF);
     cpu_mem_map[1] = new_address_space(ppu, 0x2000, 0x2007,0x3FFF);
     cpu_mem_map[2] = new_address_space(apu, 0x4000, 0xFFFF,0x4013);
     cpu_mem_map[3] = new_address_space(ppu, 0x4014, 0xFFFF,0x4014);
     cpu_mem_map[4] = new_address_space(apu, 0x4015, 0xFFFF,0x4017);
     cpu_mem_map[5] = new_address_space(cpu_memory.apu_io_funcs[:], 0x4018, 0x401F,0x401F);
-    cpu_mem_map[6] = new_address_space(cpu_memory.cartridge[:], 0x4020, 0xFFFF,0xFFFF);
+    cpu_mem_map[6] = new_address_space(mapper, 0x4020, 0xFFFF,0xFFFF);
 
     cpu.bus = new_bus(cpu_mem_map[:]);    
     alu.regs.SR = u8(1 << 5); 
@@ -109,19 +106,17 @@ cpu_irq::proc (self: ^CpuInterface) {
     }
 }
 
-cpu_step::proc (self: ^CpuInterface) -> Result {
-    result: Result = None{};
+cpu_step::proc (self: ^CpuInterface) {    
     switch u in self.pu {
         case ^Alu6502:
-            result = alu_step(u, &self.bus);
+            alu_step(u, &self.bus);
         case ^Ppu2C02:
-            result = ppu_step(u);
+            ppu_step(u);
         case ^ApuRP2A03:
-            result = apu_step(u);
-        case ^Mapper:
-            result = mapper_step(u);
+            apu_step(u);
+        case ^cart.Mapper:
+            cart.mapper_step(u);
     }
-    return result;
 }
 
 

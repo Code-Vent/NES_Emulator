@@ -41,7 +41,7 @@ bus_read_u16::proc (self: ^Bus, address: u16) -> u16 {
     lo:= u16(space_read(device, address));
     hi:= u16(space_read(device, address + 1));
     data := (hi << 8) | lo;
-    return lo;
+    return data;
 }
 
 bus_print_u8::proc (self: ^Bus, address: u16) {
