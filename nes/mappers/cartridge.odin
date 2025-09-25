@@ -117,9 +117,3 @@ extract_meta_data ::proc(
             meta.mirroring = .FOUR_SCREEN;
     }
 }
-
-@(private)
-delete_cartridge ::proc(self: ^Cartridge){
-    delete(self.buffer);
-}
-

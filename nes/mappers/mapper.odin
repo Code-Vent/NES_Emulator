@@ -129,5 +129,6 @@ mapper_vram_write::proc (self: ^Mapper, address: u16, data: u8) {
 }
 
 delete_mapper ::proc(self: ^Mapper){
-    delete_cartridge(&self.cartridge)
+    delete(self.cartridge.buffer);
+    delete(self.vram.buffer);
 }
