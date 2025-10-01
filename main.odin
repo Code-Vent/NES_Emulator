@@ -2,7 +2,7 @@ package main
 
 import "core:fmt"
 import "nes"
-import screen "./nes/display"
+import scrn "./nes/screen"
 import cart "./nes/mappers"
 import "core:mem"
 
@@ -12,9 +12,11 @@ main ::proc() {
     assert(ok);
     defer cart.delete_mapper(&mapper);
 
-    cpu := nes.cpu_get(&nes.Alu6502{}, &nes.Ppu2C02{}, &nes.ApuRP2A03{}, &mapper);
-
-    value := nes.bus_read_u16(&cpu.bus, 0xFFFC);
-    fmt.printf("%x\n", value);
+    ppu := scrn.new_ppu(&mapper);
+    
+    scrn.init();
+    scrn.view_pattern_table(&ppu, scrn.background[:], true);
+    //scrn.render_frame();
+    //scrn.draw_name_table(&ppu);
 }
 

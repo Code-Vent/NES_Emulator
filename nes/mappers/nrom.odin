@@ -32,8 +32,6 @@ nrom_write::proc (self: ^Mapper, address: u16, data: u8) {
                 loc := int(address - 0x0000) + self.banks.chr_bnk[0];
                 self.cartridge.buffer[loc] = data;
             }
-        case 0x2000..=0x2FFF:
-            mapper_vram_write(self, address, data);
         case:
             fmt.printfln("nrom_write received an unexpected address\n");
     }

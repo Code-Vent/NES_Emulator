@@ -1,5 +1,7 @@
 package mappers
 
+import "core:fmt"
+
 MapperType ::enum {
     NROM,
     UNKNOWN,
@@ -110,6 +112,27 @@ mapper_read::proc (self: ^Mapper, address: u16) -> u8 {
     return data;
 }
 
+mapper_direct_access ::proc(self: ^Mapper, address: u16, len: u16) -> []u8 {
+    loc:int = 0;
+    data:[]u8;
+    switch address {
+        case 0x0000..=0x1FFF:
+            loc = int(address - 0x0000) + self.banks.chr_bnk[0];
+            data = self.cartridge.buffer[loc:];
+        case 0x2000..=0x23BF:
+            data = self.vram.buffer[self.vram.name_tbl0_offset:];
+        case 0x2400..=0x27BF:
+            data = self.vram.buffer[self.vram.name_tbl1_offset:];
+        case 0x2800..=0x2BBF:
+            data = self.vram.buffer[self.vram.name_tbl2_offset:];
+        case 0x2C00..=0x2FBF:
+            data = self.vram.buffer[self.vram.name_tbl3_offset:];
+        case:
+            fmt.printfln("Invalid Mapper address");
+    }
+    return data[:len];
+}
+
 mapper_write::proc (self: ^Mapper, address: u16, data: u8) {
     switch self.type {
         case .NROM:
@@ -120,12 +143,37 @@ mapper_write::proc (self: ^Mapper, address: u16, data: u8) {
 
 mapper_vram_read::proc (self: ^Mapper, address: u16) -> u8 {
     data:u8;
-    
-    return data;
+    loc:u16 = 0;
+    switch address {
+        case 0x2000..=0x23BF:
+            loc = (address - 0x2000) + self.vram.name_tbl0_offset;
+        case 0x2400..=0x27BF:
+            loc = (address - 0x2400) + self.vram.name_tbl1_offset;
+        case 0x2800..=0x2BBF:
+            loc = (address - 0x2800) + self.vram.name_tbl2_offset;
+        case 0x2C00..=0x2FBF:
+            loc = (address - 0x2C00) + self.vram.name_tbl3_offset;
+        case:
+            fmt.printfln("Invalid Mapper address");
+    }
+    return self.vram.buffer[loc];
 }
 
 mapper_vram_write::proc (self: ^Mapper, address: u16, data: u8) {
-    
+    loc:u16 = 0;
+    switch address {
+        case 0x2000..=0x23BF:
+            loc = (address - 0x2000) + self.vram.name_tbl0_offset;
+        case 0x2400..=0x27BF:
+            loc = (address - 0x2400) + self.vram.name_tbl1_offset;
+        case 0x2800..=0x2BBF:
+            loc = (address - 0x2800) + self.vram.name_tbl2_offset;
+        case 0x2C00..=0x2FBF:
+            loc = (address - 0x2C00) + self.vram.name_tbl3_offset;
+        case:
+            fmt.printfln("Invalid Mapper address");
+    }
+    self.vram.buffer[loc] = data;
 }
 
 delete_mapper ::proc(self: ^Mapper){

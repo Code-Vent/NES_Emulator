@@ -2,6 +2,7 @@ package nes
 
 import "core:fmt"
 import cart "mappers"
+import scrn "screen"
 
 Range ::struct {
     lower_addr:u16,
@@ -10,7 +11,7 @@ Range ::struct {
 
 Target ::union {
     []u8,
-    ^Ppu2C02,
+    ^scrn.Ppu2C02,
     ^ApuRP2A03,
     ^cart.Mapper,
 }
@@ -41,8 +42,8 @@ space_write ::proc(self: ^Addressable, address: u16, data: u8) {
         case []u8:
             i := index(self, addr); assert(i < len(opt));
             opt[i] = data;
-        case ^Ppu2C02:
-            ppu_regs_write(opt, addr, data);
+        case ^scrn.Ppu2C02:
+            scrn.ppu_regs_write(opt, addr, data);
         case ^ApuRP2A03:
             apu_regs_write(opt, addr, data);
         case ^cart.Mapper:
@@ -60,8 +61,8 @@ space_read ::proc(self: ^Addressable, address: u16) -> u8{
         case []u8:
             i := index(self, addr); assert(i < len(opt));
             data = opt[i];
-        case ^Ppu2C02:
-            data = ppu_regs_read(opt, addr);
+        case ^scrn.Ppu2C02:
+            data = scrn.ppu_regs_read(opt, addr);
         case ^ApuRP2A03:
             data = apu_regs_read(opt, addr);
         case ^cart.Mapper:

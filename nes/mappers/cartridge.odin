@@ -108,6 +108,7 @@ extract_meta_data ::proc(
     meta.has_trainer = (header.mapper1 & 0x04) != 0;
     meta.chr_writeable = header.chr_rom_banks == 0;
     mirroring := (header.mapper1 & 0x01) | ((header.mapper1 & 0x08) >> 2);
+    //fmt.println(header.mapper1);
     switch mirroring {
         case 0:
             meta.mirroring = .HORIZONTAL;

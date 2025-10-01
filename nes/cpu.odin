@@ -2,11 +2,13 @@ package nes
 
 import "core:fmt"
 import cart "mappers"
+import scrn "screen"
+
 
 
 ProcessingUnit::union {
     ^Alu6502,
-    ^Ppu2C02,
+    ^scrn.Ppu2C02,
     ^ApuRP2A03,
     ^cart.Mapper,
 }
@@ -33,7 +35,7 @@ cpu_mem_map: [7]Addressable;
 
 cpu_get::proc (
     alu: ^Alu6502, 
-    ppu: ^Ppu2C02, 
+    ppu: ^scrn.Ppu2C02, 
     apu: ^ApuRP2A03,
     mapper: ^cart.Mapper
 ) -> ^CpuInterface {
@@ -106,12 +108,20 @@ cpu_irq::proc (self: ^CpuInterface) {
     }
 }
 
+cpu_ppu_dma ::proc(self: ^CpuInterface){
+    src := u16(scrn.ppu_regs.oam_dma) << 8;
+    for i in 0..<256 {
+        scrn.ppu_oam[i] = bus_read_u8(&self.bus, src);
+        src += 1;        
+    }
+}
+
 cpu_step::proc (self: ^CpuInterface) {    
     switch u in self.pu {
         case ^Alu6502:
             alu_step(u, &self.bus);
-        case ^Ppu2C02:
-            ppu_step(u);
+        case ^scrn.Ppu2C02:
+            scrn.ppu_step(u);
         case ^ApuRP2A03:
             apu_step(u);
         case ^cart.Mapper:
