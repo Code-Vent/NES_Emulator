@@ -67,8 +67,8 @@ mapper_alloc_vram ::proc(meta: ^MetaData) -> VRam {
             buf = make([]u8, 2 * 1024);//2KB
         case .VERTICAL:
             vram.name_tbl0_offset = 0;
-            vram.name_tbl1_offset = 0;
-            vram.name_tbl2_offset = 1024;
+            vram.name_tbl1_offset = 1024;
+            vram.name_tbl2_offset = 0;
             vram.name_tbl3_offset = 1024;
             buf = make([]u8, 2 * 1024);//2KB
         case .FOUR_SCREEN:

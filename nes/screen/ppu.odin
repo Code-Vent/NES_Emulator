@@ -18,8 +18,6 @@ name_tbl_base := [4]u16{
 
 attrib_tbl_offset::u16(0x03C0);
 
-palette_address_mask ::u16(0x3F1F);
-
 @(private)
 palette_ram := [2][4][4]u8{
     //Background Palettes
@@ -126,8 +124,8 @@ draw_name_table ::proc(self: ^Ppu2C02) {
     tbl_addr := get_bckgnd_pattern_tbl_address(self);
     addr := get_name_tbl_address(self);
     src := cart.mapper_direct_access(self.mapper, addr, 1024);
-    name_tbl := src[:960];
-    attrib_tbl := src[960:];
+    name_tbl := src[:attrib_tbl_offset];
+    attrib_tbl := src[attrib_tbl_offset:];
     attrib_8x8 := [][]u8{
         attrib_tbl[0:8],
         attrib_tbl[8:16],
@@ -139,12 +137,13 @@ draw_name_table ::proc(self: ^Ppu2C02) {
         attrib_tbl[56:64],
     };
     attrib_32x32: [32][32]u8;
-    k := 0;
+    index := 0;
+    sel := ppu_regs.ctrl & 0x03; 
     decode_attrib(attrib_8x8[:][:], attrib_32x32[:][:]);
     for i in 0..<30 {
         for j in 0..<32 {
             palette_index := attrib_32x32[i][j];
-            tile_no := u16(name_tbl[k]);
+            tile_no := u16(name_tbl[index]);
             stride_x := u16(j * int(8));
             stride_y := u16(i * int(8));
             draw_pattern_tbl_tile(
@@ -154,10 +153,10 @@ draw_name_table ::proc(self: ^Ppu2C02) {
                 stride_x,
                 stride_y,
                 palette_ram[0][palette_index],
-                background[:][:],
+                background[sel][:][:],
                 palette_index == 0
             );
-            k += 1;
+            index += 1;
         }
     }
 }
@@ -212,12 +211,18 @@ draw_oam_sprites ::proc(self: ^Ppu2C02) {
         s.x_pos = u16(object[3]);
         addr := get_sprite_pattern_tbl_address(self, &index); 
         s.data = cart.mapper_direct_access(self.mapper, addr + u16(index), len);
-        draw_sprite(&s, i==0);
+        draw_sprite(&s);
+        if i == 0 {
+            sprite0hit_region.x0 = s.x_pos;
+            sprite0hit_region.y0 = s.y_pos + 1;
+            sprite0hit_region.x1 = s.x_pos + 8;
+            sprite0hit_region.y1 = s.y_pos + u16(len / 2);
+        }
         offset += len;
     }          
 }
 
-draw_sprite ::proc(sprite: ^Sprite, check_hit_0: bool) {
+draw_sprite ::proc(sprite: ^Sprite) {
     tile:[8][8]u8;
     palette_index := 0x03 & sprite.attrib;
     behind_background := (sprite.attrib & 0x20) >> 5;
@@ -235,7 +240,7 @@ draw_sprite ::proc(sprite: ^Sprite, check_hit_0: bool) {
             );
             apply_flip(tile[:][:], sprite.attrib);
             draw_tile(
-                sprite.x_pos, sprite.y_pos,
+                sprite.x_pos, sprite.y_pos + 1,
                 tile[:][:],
                 0,0,
                 foreground[:][:],
@@ -256,7 +261,7 @@ draw_sprite ::proc(sprite: ^Sprite, check_hit_0: bool) {
             );
             apply_flip(tile[:][:], sprite.attrib);
             draw_tile(
-                sprite.x_pos, sprite.y_pos,
+                sprite.x_pos, sprite.y_pos + 1,
                 tile[:][:],
                 0,8,
                 foreground[:][:],

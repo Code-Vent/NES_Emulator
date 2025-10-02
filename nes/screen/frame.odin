@@ -12,12 +12,21 @@ hWnd: win.HWND;
 hdc: win.HDC;
 hframe: win.HBITMAP;
 framebuffer: [][WIDTH * PIXEL_SIZE]win.COLORREF;
-background: [HEIGHT][WIDTH]win.COLORREF;
-backdrop: [HEIGHT][WIDTH]win.COLORREF;
+background: [4][HEIGHT][WIDTH]win.COLORREF;//Capacity to display four nametables 
+backdrop: [4][HEIGHT][WIDTH]win.COLORREF;//Capacity to display four nametables
 foreground: [HEIGHT][WIDTH]win.COLORREF;
 PIXEL_SIZE::i32(4)
 WIDTH::i32(256);
 HEIGHT::i32(240);
+
+Sprite0HitRegion ::struct{
+    x0: u16,
+    y0: u16,
+    x1: u16,
+    y1: u16,
+};
+
+sprite0hit_region: Sprite0HitRegion;
 
 
 // placeholder NES palette (64 RGB hex) - same as earlier placeholder
@@ -177,7 +186,7 @@ draw_tile ::proc(
     screen_offset_y: u16, // y transform
     target: [][WIDTH]win.COLORREF,
     backdrop_color: bool,
-    bd_tile:[][8]u8,
+    bd_tile:[][8]u8,//back drop tile
 ) {
     x0 := x;
     y0 := y;
@@ -187,16 +196,18 @@ draw_tile ::proc(
             y_coord := y0 + screen_offset_y;
             x_coord := xt + screen_offset_x;
             palette_index := tile[i][j];
-            if palette_index != 0 {
+            if palette_index != 0 && target[y_coord][x_coord] == 0{
                 color:win.COLORREF = NES_PALETTE[palette_index];
                 target[y_coord][x_coord] = color;  
             }else if backdrop_color && bd_tile != nil{
                 palette_index := bd_tile[i][j];
                 color:win.COLORREF = NES_PALETTE[palette_index];
-                backdrop[y_coord][x_coord] = color;  
+                sel := ppu_regs.ctrl & 0x03;            //select a corresponding backdrop for
+                backdrop[sel][y_coord][x_coord] = color;//the current nametable  
             }else{
                 color:win.COLORREF = NES_PALETTE[palette_index];
-                backdrop[y_coord][x_coord] = color; 
+                sel := ppu_regs.ctrl & 0x03;             //select a corresponding backdrop for
+                backdrop[sel][y_coord][x_coord] = color; //the current nametable
             }           
             xt += 1;         
         }
@@ -242,7 +253,7 @@ decode_tile_row ::proc(
 render_frame ::proc() {
     for i in 0..<HEIGHT {
         for j in 0..<WIDTH {
-            framebuffer[i][j] = backdrop[i][j];
+            framebuffer[i][j] = background[0][i][j];
         }
     }
 }
