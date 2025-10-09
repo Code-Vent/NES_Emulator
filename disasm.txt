@@ -1,0 +1,8278 @@
+ c004 78 SEI 
+ c005 d8 CLD 
+ c006 a2 LDX  #ff
+ c008 9a TXS 
+ c009 ad LDA  [2002]
+ c00c 10 BPL  [c009]
+ c00e ad LDA  [2002]
+ c011 10 BPL  [c00e]
+ c013 a9 LDA  #0
+ c015 8d STA  [2000]
+ c018 8d STA  [2001]
+ c01b 8d STA  [2005]
+ c01e 8d STA  [2005]
+ c021 ad LDA  [2002]
+ c024 a2 LDX  #20
+ c026 8e STX  [2006]
+ c029 a2 LDX  #0
+ c02b 8e STX  [2006]
+ c02e a2 LDX  #0
+ c030 a0 LDY  #f
+ c032 a9 LDA  #0
+ c034 8d STA  [2007]
+ c037 ca DEX 
+ c038 d0 BNE  [c034]
+ c03a 88 DEY 
+ c03b d0 BNE  [c034]
+ c03d a9 LDA  #3f
+ c03f 8d STA  [2006]
+ c042 a9 LDA  #0
+ c044 8d STA  [2006]
+ c047 a2 LDX  #0
+ c049 bd LDA  [ff78]
+ c04c 8d STA  [2007]
+ c04f e8 INX 
+ c050 e0 CPX  #20
+ c052 d0 BNE  [c049]
+ c054 a9 LDA  #c0
+ c056 8d STA  [4017]
+ c059 a9 LDA  #0
+ c05b 8d STA  [4015]
+ c05e a9 LDA  #78
+ c060 85 STA  [d0]
+ c062 a9 LDA  #fb
+ c064 85 STA  [d1]
+ c066 a9 LDA  #7f
+ c068 85 STA  [d3]
+ c06a a0 LDY  #0
+ c06c 8c STY  [2006]
+ c06f 8c STY  [2006]
+ c072 a9 LDA  #0
+ c074 85 STA  [d7]
+ c076 a9 LDA  #7
+ c078 85 STA  [d0]
+ c07a a9 LDA  #c3
+ c07c 85 STA  [d1]
+ c07e 20 JSR  [c2a7]
+ c081 20 JSR  [c28d]
+ c084 a2 LDX  #12
+ c086 20 JSR  [c261]
+ c089 a5 LDA  [d5]
+ c08b 4a LSR 
+ c08c 4a LSR 
+ c08d 4a LSR 
+ c08e b0 BCS  [c0ac]
+ c090 4a LSR 
+ c091 b0 BCS  [c09f]
+ c093 4a LSR 
+ c094 b0 BCS  [c0bd]
+ c096 4a LSR 
+ c097 b0 BCS  [c09c]
+ c099 4c JMP  [c081]
+ c09c 4c JMP  [c126]
+ c09f 20 JSR  [c66f]
+ c0a2 c6 DEC  [d7]
+ c0a4 10 BPL  [c081]
+ c0a6 a9 LDA  #d
+ c0a8 85 STA  [d7]
+ c0aa d0 BNE  [c081]
+ c0ac 20 JSR  [c66f]
+ c0af e6 INC  [d7]
+ c0b1 a5 LDA  [d7]
+ c0b3 c9 CMP  #e
+ c0b5 90 BCC  [c081]
+ c0b7 a9 LDA  #0
+ c0b9 85 STA  [d7]
+ c0bb f0 BEQ  [c081]
+ c0bd 20 JSR  [c689]
+ c0c0 a5 LDA  [d7]
+ c0c2 f0 BEQ  [c0ca]
+ c0c4 20 JSR  [c0ed]
+ c0c7 4c JMP  [c081]
+ c0ca a9 LDA  #0
+ c0cc 85 STA  [d8]
+ c0ce e6 INC  [d7]
+ c0d0 20 JSR  [c0ed]
+ c0d3 e6 INC  [d7]
+ c0d5 a5 LDA  [d7]
+ c0d7 c9 CMP  #e
+ c0d9 d0 BNE  [c0d0]
+ c0db a9 LDA  #0
+ c0dd 85 STA  [d7]
+ c0df a5 LDA  [d8]
+ c0e1 f0 BEQ  [c0e5]
+ c0e3 a9 LDA  #ff
+ c0e5 85 STA  [0]
+ c0e7 20 JSR  [c1ed]
+ c0ea 4c JMP  [c081]
+ c0ed a5 LDA  [d7]
+ c0ef 0a ASL 
+ c0f0 aa TAX 
+ c0f1 bd LDA  [c10a]
+ c0f4 8d STA  [200]
+ c0f7 bd LDA  [c10b]
+ c0fa 8d STA  [201]
+ c0fd a9 LDA  #c1
+ c0ff 48 PHA 
+ c100 a9 LDA  #de
+ c102 48 PHA 
+ c103 a9 LDA  #0
+ c105 85 STA  [0]
+ c107 6c JMP  [[200]]
+ c10a 2d AND  [2dc7]
+ c10d c7 DCP 
+ c10f c7 DCP 
+ c111 c8 INY 
+ c112 de DEC  [f8cb]
+ c115 cd CMP  [ceee]
+ c118 a2 LDX  #cf
+ c11a 74 NOP 
+ c11c fb ISC 
+ c11f c1 CMP  [0]
+ c121 df DCP 
+ c124 aa TAX 
+ c125 e1 SBC  #ff
+ c127 00 BRK 
+ c129 d7 DCP 
+ c12b 92 UND 
+ c12c 85 STA  [d0]
+ c12e a9 LDA  #c4
+ c130 85 STA  [d1]
+ c132 20 JSR  [c2a7]
+ c135 20 JSR  [c28d]
+ c138 a2 LDX  #f
+ c13a 20 JSR  [c261]
+ c13d a5 LDA  [d5]
+ c13f 4a LSR 
+ c140 4a LSR 
+ c141 4a LSR 
+ c142 b0 BCS  [c160]
+ c144 4a LSR 
+ c145 b0 BCS  [c153]
+ c147 4a LSR 
+ c148 b0 BCS  [c171]
+ c14a 4a LSR 
+ c14b b0 BCS  [c150]
+ c14d 4c JMP  [c135]
+ c150 4c JMP  [c072]
+ c153 20 JSR  [c66f]
+ c156 c6 DEC  [d7]
+ c158 10 BPL  [c135]
+ c15a a9 LDA  #a
+ c15c 85 STA  [d7]
+ c15e d0 BNE  [c135]
+ c160 20 JSR  [c66f]
+ c163 e6 INC  [d7]
+ c165 a5 LDA  [d7]
+ c167 c9 CMP  #b
+ c169 90 BCC  [c135]
+ c16b a9 LDA  #0
+ c16d 85 STA  [d7]
+ c16f f0 BEQ  [c135]
+ c171 20 JSR  [c689]
+ c174 a5 LDA  [d7]
+ c176 f0 BEQ  [c17e]
+ c178 20 JSR  [c1a1]
+ c17b 4c JMP  [c135]
+ c17e a9 LDA  #0
+ c180 85 STA  [d8]
+ c182 e6 INC  [d7]
+ c184 20 JSR  [c1a1]
+ c187 e6 INC  [d7]
+ c189 a5 LDA  [d7]
+ c18b c9 CMP  #b
+ c18d d0 BNE  [c184]
+ c18f a9 LDA  #0
+ c191 85 STA  [d7]
+ c193 a5 LDA  [d8]
+ c195 f0 BEQ  [c199]
+ c197 a9 LDA  #ff
+ c199 85 STA  [0]
+ c19b 20 JSR  [c1ed]
+ c19e 4c JMP  [c135]
+ c1a1 a5 LDA  [d7]
+ c1a3 0a ASL 
+ c1a4 aa TAX 
+ c1a5 bd LDA  [c1be]
+ c1a8 8d STA  [200]
+ c1ab bd LDA  [c1bf]
+ c1ae 8d STA  [201]
+ c1b1 a9 LDA  #c1
+ c1b3 48 PHA 
+ c1b4 a9 LDA  #de
+ c1b6 48 PHA 
+ c1b7 a9 LDA  #0
+ c1b9 85 STA  [0]
+ c1bb 6c JMP  [[200]]
+ c1be a3 LAX 
+ c1c0 a3 LAX 
+ c1c2 1e ASL  [3de5]
+ c1c5 e7 ISC 
+ c1c7 e8 INX 
+ c1c8 16 ASL  [ea]
+ c1ca 86 STX  [eb]
+ c1cc f6 INC  [ee]
+ c1ce 66 ROR  [f0]
+ c1d0 d6 DEC  [f3]
+ c1d2 46 LSR  [f5]
+ c1d4 a9 LDA  #0
+ c1d6 85 STA  [0]
+ c1d8 20 JSR  [d900]
+ c1db 20 JSR  [dae0]
+ c1de ea NOP 
+ c1df ea NOP 
+ c1e0 ea NOP 
+ c1e1 a5 LDA  [0]
+ c1e3 f0 BEQ  [c1e7]
+ c1e5 85 STA  [d8]
+ c1e7 4c JMP  [c1ed]
+ c1ea 4c JMP  [c081]
+ c1ed 20 JSR  [c28d]
+ c1f0 a9 LDA  #0
+ c1f2 85 STA  [d3]
+ c1f4 a5 LDA  [d7]
+ c1f6 18 CLC 
+ c1f7 69 ADC  #4
+ c1f9 0a ASL 
+ c1fa 26 ROL  [d3]
+ c1fc 0a ASL 
+ c1fd 26 ROL  [d3]
+ c1ff 0a ASL 
+ c200 26 ROL  [d3]
+ c202 0a ASL 
+ c203 26 ROL  [d3]
+ c205 0a ASL 
+ c206 26 ROL  [d3]
+ c208 48 PHA 
+ c209 a5 LDA  [d3]
+ c20b 09 ORA  #20
+ c20d 8d STA  [2006]
+ c210 68 PLA 
+ c211 09 ORA  #4
+ c213 8d STA  [2006]
+ c216 a5 LDA  [0]
+ c218 f0 BEQ  [c237]
+ c21a c9 CMP  #ff
+ c21c f0 BEQ  [c244]
+ c21e 4a LSR 
+ c21f 4a LSR 
+ c220 4a LSR 
+ c221 4a LSR 
+ c222 aa TAX 
+ c223 bd LDA  [c251]
+ c226 8d STA  [2007]
+ c229 a5 LDA  [0]
+ c22b 29 AND  #f
+ c22d aa TAX 
+ c22e bd LDA  [c251]
+ c231 8d STA  [2007]
+ c234 4c JMP  [c294]
+ c237 a9 LDA  #4f
+ c239 8d STA  [2007]
+ c23c a9 LDA  #4b
+ c23e 8d STA  [2007]
+ c241 4c JMP  [c294]
+ c244 a9 LDA  #45
+ c246 8d STA  [2007]
+ c249 a9 LDA  #72
+ c24b 8d STA  [2007]
+ c24e 4c JMP  [c294]
+ c251 30 BMI  [c284]
+ c253 32 UND 
+ c254 33 RLA 
+ c256 35 AND  [36]
+ c258 37 RLA 
+ c25a 39 AND  [4242]
+ c25d 43 SRE 
+ c25f 45 EOR  [46]
+ c261 a5 LDA  [d7]
+ c263 18 CLC 
+ c264 69 ADC  #4
+ c266 a8 TAY 
+ c267 a9 LDA  #84
+ c269 8d STA  [2000]
+ c26c a9 LDA  #20
+ c26e 8d STA  [2006]
+ c271 a9 LDA  #2
+ c273 8d STA  [2006]
+ c276 a9 LDA  #20
+ c278 88 DEY 
+ c279 c8 INY 
+ c27a d0 BNE  [c27e]
+ c27c a9 LDA  #2a
+ c27e 8d STA  [2007]
+ c281 88 DEY 
+ c282 ca DEX 
+ c283 d0 BNE  [c276]
+ c285 a9 LDA  #80
+ c287 8d STA  [2000]
+ c28a 4c JMP  [c294]
+ c28d a5 LDA  [d2]
+ c28f c5 CMP  [d2]
+ c291 f0 BEQ  [c28f]
+ c293 60 RTS 
+ c294 a9 LDA  #0
+ c296 8d STA  [2005]
+ c299 8d STA  [2005]
+ c29c a9 LDA  #0
+ c29e 8d STA  [2006]
+ c2a1 a9 LDA  #0
+ c2a3 8d STA  [2006]
+ c2a6 60 RTS 
+ c2a7 a9 LDA  #0
+ c2a9 8d STA  [2000]
+ c2ac 8d STA  [2001]
+ c2af 20 JSR  [c2ed]
+ c2b2 a9 LDA  #20
+ c2b4 8d STA  [2006]
+ c2b7 a0 LDY  #0
+ c2b9 8c STY  [2006]
+ c2bc a2 LDX  #20
+ c2be b1 LDA  [0]
+ c2c0 f0 BEQ  [c2e2]
+ c2c2 c9 CMP  #ff
+ c2c4 f0 BEQ  [c2d3]
+ c2c6 8d STA  [2007]
+ c2c9 c8 INY 
+ c2ca d0 BNE  [c2ce]
+ c2cc e6 INC  [d1]
+ c2ce ca DEX 
+ c2cf d0 BNE  [c2be]
+ c2d1 f0 BEQ  [c2bc]
+ c2d3 c8 INY 
+ c2d4 d0 BNE  [c2d8]
+ c2d6 e6 INC  [d1]
+ c2d8 a9 LDA  #20
+ c2da 8d STA  [2007]
+ c2dd ca DEX 
+ c2de d0 BNE  [c2d8]
+ c2e0 f0 BEQ  [c2bc]
+ c2e2 a9 LDA  #80
+ c2e4 8d STA  [2000]
+ c2e7 a9 LDA  #e
+ c2e9 8d STA  [2001]
+ c2ec 60 RTS 
+ c2ed a9 LDA  #20
+ c2ef 8d STA  [2006]
+ c2f2 a9 LDA  #0
+ c2f4 8d STA  [2006]
+ c2f7 a2 LDX  #1e
+ c2f9 a9 LDA  #20
+ c2fb a0 LDY  #20
+ c2fd 8d STA  [2007]
+ c300 88 DEY 
+ c301 d0 BNE  [c2fd]
+ c303 ca DEX 
+ c304 d0 BNE  [c2fb]
+ c306 60 RTS 
+ c307 ff ISC 
+ c30a ff ISC 
+ c30d 20 JSR  [2d20]
+ c310 2d AND  [5220]
+ c313 75 ADC  [8b]
+ c315 20 JSR  [6c61]
+ c318 6c JMP  [[7420]]
+ c31b 65 ADC  [73]
+ c31d 74 NOP 
+ c31f ff ISC 
+ c322 20 JSR  [2d20]
+ c325 2d AND  [4220]
+ c328 72 UND 
+ c329 61 ADC  [0]
+ c32b 63 RRA 
+ c32d 20 JSR  [6574]
+ c330 73 RRA 
+ c332 73 RRA 
+ c334 20 JSR  [2020]
+ c337 20 JSR  [2d2d]
+ c33a 20 JSR  [6c46]
+ c33d 61 ADC  [0]
+ c33f 20 JSR  [6574]
+ c342 73 RRA 
+ c344 73 RRA 
+ c346 20 JSR  [2020]
+ c349 20 JSR  [2d2d]
+ c34c 20 JSR  [6d49]
+ c34f 6d ADC  [6465]
+ c352 69 ADC  #61
+ c354 74 NOP 
+ c356 20 JSR  [6574]
+ c359 73 RRA 
+ c35b 73 RRA 
+ c35d 20 JSR  [2020]
+ c360 20 JSR  [2d2d]
+ c363 20 JSR  [6d49]
+ c366 70 BVS  [c3d4]
+ c368 69 ADC  #65
+ c36a 64 NOP 
+ c36c 74 NOP 
+ c36e 73 RRA 
+ c370 73 RRA 
+ c372 20 JSR  [2020]
+ c375 20 JSR  [2d2d]
+ c378 20 JSR  [7453]
+ c37b 61 ADC  [0]
+ c37d 6b ARR 
+ c37f 74 NOP 
+ c381 73 RRA 
+ c383 73 RRA 
+ c385 20 JSR  [2020]
+ c388 20 JSR  [2d2d]
+ c38b 20 JSR  [6341]
+ c38e 63 RRA 
+ c390 6d ADC  [6c75]
+ c393 61 ADC  [0]
+ c395 6f RRA 
+ c398 74 NOP 
+ c39a 73 RRA 
+ c39c 73 RRA 
+ c39e 20 JSR  [2020]
+ c3a1 20 JSR  [2d2d]
+ c3a4 20 JSR  [4928]
+ c3a7 6e ROR  [6964]
+ c3aa 72 UND 
+ c3ab 65 ADC  [63]
+ c3ad 74 NOP 
+ c3af 58 CLI 
+ c3b0 29 AND  #20
+ c3b2 74 NOP 
+ c3b4 73 RRA 
+ c3b6 73 RRA 
+ c3b8 20 JSR  [2020]
+ c3bb 20 JSR  [2d2d]
+ c3be 20 JSR  [655a]
+ c3c1 72 UND 
+ c3c2 6f RRA 
+ c3c5 67 RRA 
+ c3c7 20 JSR  [6574]
+ c3ca 73 RRA 
+ c3cc 73 RRA 
+ c3ce 20 JSR  [2020]
+ c3d1 20 JSR  [2d2d]
+ c3d4 20 JSR  [6241]
+ c3d7 73 RRA 
+ c3d9 6c JMP  [[7475]]
+ c3dc 65 ADC  [20]
+ c3de 74 NOP 
+ c3e0 73 RRA 
+ c3e2 73 RRA 
+ c3e4 20 JSR  [2020]
+ c3e7 20 JSR  [2d2d]
+ c3ea 20 JSR  [4928]
+ c3ed 6e ROR  [6964]
+ c3f0 72 UND 
+ c3f1 65 ADC  [63]
+ c3f3 74 NOP 
+ c3f5 2c BIT  [2059]
+ c3f8 74 NOP 
+ c3fa 73 RRA 
+ c3fc 73 RRA 
+ c3fe 20 JSR  [2020]
+ c401 20 JSR  [2d2d]
+ c404 20 JSR  [6241]
+ c407 73 RRA 
+ c409 6c JMP  [[7475]]
+ c40c 65 ADC  [2c]
+ c40e 59 EOR  [743f]
+ c411 65 ADC  [73]
+ c413 74 NOP 
+ c415 ff ISC 
+ c418 20 JSR  [2d20]
+ c41b 2d AND  [5a20]
+ c41e 65 ADC  [72]
+ c420 6f RRA 
+ c423 67 RRA 
+ c425 2c BIT  [2058]
+ c428 74 NOP 
+ c42a 73 RRA 
+ c42c 73 RRA 
+ c42e 20 JSR  [2020]
+ c431 20 JSR  [2d2d]
+ c434 20 JSR  [6241]
+ c437 73 RRA 
+ c439 6c JMP  [[7475]]
+ c43c 65 ADC  [2c]
+ c43e 58 CLI 
+ c43f 20 JSR  [6574]
+ c442 73 RRA 
+ c444 73 RRA 
+ c446 ff ISC 
+ c449 20 JSR  [2020]
+ c44c 55 EOR  [8d]
+ c44e 2f RLA 
+ c451 77 RRA 
+ c453 3a NOP 
+ c454 20 JSR  [6573]
+ c457 6c JMP  [[6365]]
+ c45a 74 NOP 
+ c45c 74 NOP 
+ c45e 73 RRA 
+ c460 ff ISC 
+ c463 20 JSR  [2020]
+ c466 20 JSR  [7453]
+ c469 61 ADC  [0]
+ c46b 74 NOP 
+ c46d 20 JSR  [7572]
+ c470 6e ROR  [7420]
+ c473 65 ADC  [73]
+ c475 74 NOP 
+ c477 20 JSR  [2020]
+ c47a 20 JSR  [5320]
+ c47d 65 ADC  [6c]
+ c47f 65 ADC  [63]
+ c481 74 NOP 
+ c483 20 JSR  [6e49]
+ c486 76 ROR  [7e]
+ c488 6c JMP  [[6469]]
+ c48b 20 JSR  [706f]
+ c48e 73 RRA 
+ c490 ff ISC 
+ c493 ff ISC 
+ c496 20 JSR  [2020]
+ c499 20 JSR  [2d2d]
+ c49c 20 JSR  [7552]
+ c49f 6e ROR  [6120]
+ c4a2 6c JMP  [[206c]]
+ c4a5 74 NOP 
+ c4a7 73 RRA 
+ c4a9 73 RRA 
+ c4ab 20 JSR  [2020]
+ c4ae 20 JSR  [2d2d]
+ c4b1 20 JSR  [4f4e]
+ c4b4 50 BVC  [c4d6]
+ c4b6 74 NOP 
+ c4b8 73 RRA 
+ c4ba 73 RRA 
+ c4bc 20 JSR  [2020]
+ c4bf 20 JSR  [2d2d]
+ c4c2 20 JSR  [414c]
+ c4c5 58 CLI 
+ c4c6 20 JSR  [6574]
+ c4c9 73 RRA 
+ c4cb 73 RRA 
+ c4cd 20 JSR  [2020]
+ c4d0 20 JSR  [2d2d]
+ c4d3 20 JSR  [4153]
+ c4d6 58 CLI 
+ c4d7 20 JSR  [6574]
+ c4da 73 RRA 
+ c4dc 73 RRA 
+ c4de 20 JSR  [2020]
+ c4e1 20 JSR  [2d2d]
+ c4e4 20 JSR  [4253]
+ c4e7 43 SRE 
+ c4e9 74 NOP 
+ c4eb 73 RRA 
+ c4ed 20 JSR  [6f28]
+ c4f0 70 BVS  [c555]
+ c4f2 6f RRA 
+ c4f5 20 JSR  [4530]
+ c4f8 42 UND 
+ c4f9 68 PLA 
+ c4fa 29 AND  #ff
+ c4fc 20 JSR  [2020]
+ c4ff 20 JSR  [2d2d]
+ c502 20 JSR  [4344]
+ c505 50 BVC  [c527]
+ c507 74 NOP 
+ c509 73 RRA 
+ c50b 73 RRA 
+ c50d 20 JSR  [2020]
+ c510 20 JSR  [2d2d]
+ c513 20 JSR  [5349]
+ c516 42 UND 
+ c517 20 JSR  [6574]
+ c51a 73 RRA 
+ c51c 73 RRA 
+ c51e 20 JSR  [2020]
+ c521 20 JSR  [2d2d]
+ c524 20 JSR  [4c53]
+ c527 4f SRE 
+ c52a 65 ADC  [73]
+ c52c 74 NOP 
+ c52e ff ISC 
+ c531 20 JSR  [2d20]
+ c534 2d AND  [5220]
+ c537 4c JMP  [2041]
+ c53a 74 NOP 
+ c53c 73 RRA 
+ c53e 73 RRA 
+ c540 20 JSR  [2020]
+ c543 20 JSR  [2d2d]
+ c546 20 JSR  [5253]
+ c549 45 EOR  [20]
+ c54b 74 NOP 
+ c54d 73 RRA 
+ c54f 73 RRA 
+ c551 20 JSR  [2020]
+ c554 20 JSR  [2d2d]
+ c557 20 JSR  [5252]
+ c55a 41 EOR  [0]
+ c55c 74 NOP 
+ c55e 73 RRA 
+ c560 73 RRA 
+ c562 ff ISC 
+ c565 ff ISC 
+ c568 20 JSR  [2020]
+ c56b 55 EOR  [8d]
+ c56d 2f RLA 
+ c570 77 RRA 
+ c572 3a NOP 
+ c573 20 JSR  [6573]
+ c576 6c JMP  [[6365]]
+ c579 74 NOP 
+ c57b 74 NOP 
+ c57d 73 RRA 
+ c57f ff ISC 
+ c582 20 JSR  [2020]
+ c585 20 JSR  [7453]
+ c588 61 ADC  [0]
+ c58a 74 NOP 
+ c58c 20 JSR  [7572]
+ c58f 6e ROR  [7420]
+ c592 65 ADC  [73]
+ c594 74 NOP 
+ c596 20 JSR  [2020]
+ c599 20 JSR  [5320]
+ c59c 65 ADC  [6c]
+ c59e 65 ADC  [63]
+ c5a0 74 NOP 
+ c5a2 20 JSR  [6f4e]
+ c5a5 72 UND 
+ c5a6 6d ADC  [6c61]
+ c5a9 20 JSR  [706f]
+ c5ac 73 RRA 
+ c5ae 00 BRK 
+ c5b0 8a TXA 
+ c5b1 48 PHA 
+ c5b2 ad LDA  [2002]
+ c5b5 a9 LDA  #20
+ c5b7 8d STA  [2006]
+ c5ba a9 LDA  #40
+ c5bc 8d STA  [2006]
+ c5bf e6 INC  [d2]
+ c5c1 a9 LDA  #0
+ c5c3 8d STA  [2005]
+ c5c6 8d STA  [2005]
+ c5c9 a9 LDA  #0
+ c5cb 8d STA  [2006]
+ c5ce a9 LDA  #0
+ c5d0 8d STA  [2006]
+ c5d3 a2 LDX  #9
+ c5d5 8e STX  [4016]
+ c5d8 ca DEX 
+ c5d9 8e STX  [4016]
+ c5dc ad LDA  [4016]
+ c5df 4a LSR 
+ c5e0 26 ROL  [d4]
+ c5e2 ca DEX 
+ c5e3 d0 BNE  [c5dc]
+ c5e5 a5 LDA  [d4]
+ c5e7 aa TAX 
+ c5e8 45 EOR  [d6]
+ c5ea 25 AND  [d4]
+ c5ec 85 STA  [d5]
+ c5ee 86 STX  [d6]
+ c5f0 68 PLA 
+ c5f1 aa TAX 
+ c5f2 68 PLA 
+ c5f3 40 RTI 
+ c5f4 40 RTI 
+ c5f5 a2 LDX  #0
+ c5f7 86 STX  [0]
+ c5f9 86 STX  [10]
+ c5fb 86 STX  [11]
+ c5fd 20 JSR  [c72d]
+ c600 20 JSR  [c7db]
+ c603 20 JSR  [c885]
+ c606 20 JSR  [cbde]
+ c609 20 JSR  [cdf8]
+ c60c 20 JSR  [ceee]
+ c60f 20 JSR  [cfa2]
+ c612 20 JSR  [d174]
+ c615 20 JSR  [d4fb]
+ c618 20 JSR  [d900]
+ c61b a5 LDA  [0]
+ c61d 85 STA  [10]
+ c61f a9 LDA  #0
+ c621 85 STA  [0]
+ c623 20 JSR  [dae0]
+ c626 20 JSR  [df4a]
+ c629 20 JSR  [dbb8]
+ c62c 20 JSR  [e1aa]
+ c62f 20 JSR  [c6a3]
+ c632 20 JSR  [e51e]
+ c635 20 JSR  [e73d]
+ c638 20 JSR  [e8d3]
+ c63b 20 JSR  [e916]
+ c63e 20 JSR  [eb86]
+ c641 20 JSR  [edf6]
+ c644 20 JSR  [f066]
+ c647 20 JSR  [f2d6]
+ c64a a5 LDA  [0]
+ c64c 85 STA  [11]
+ c64e a9 LDA  #0
+ c650 85 STA  [0]
+ c652 20 JSR  [f546]
+ c655 a5 LDA  [0]
+ c657 05 ORA  [10]
+ c659 05 ORA  [11]
+ c65b f0 BEQ  [c66b]
+ c65d 20 JSR  [c66f]
+ c660 a6 LDX  [0]
+ c662 86 STX  [2]
+ c664 a6 LDX  [10]
+ c666 86 STX  [3]
+ c668 4c JMP  [c66e]
+ c66b 20 JSR  [c689]
+ c66e 60 RTS 
+ c66f a9 LDA  #3
+ c671 8d STA  [4015]
+ c674 a9 LDA  #87
+ c676 8d STA  [4000]
+ c679 a9 LDA  #89
+ c67b 8d STA  [4001]
+ c67e a9 LDA  #f0
+ c680 8d STA  [4002]
+ c683 a9 LDA  #0
+ c685 8d STA  [4003]
+ c688 60 RTS 
+ c689 a9 LDA  #2
+ c68b 8d STA  [4015]
+ c68e a9 LDA  #3f
+ c690 8d STA  [4004]
+ c693 a9 LDA  #9a
+ c695 8d STA  [4005]
+ c698 a9 LDA  #ff
+ c69a 8d STA  [4006]
+ c69d a9 LDA  #0
+ c69f 8d STA  [4007]
+ c6a2 60 RTS 
+ c6a3 a0 LDY  #4e
+ c6a5 a9 LDA  #ff
+ c6a7 85 STA  [1]
+ c6a9 20 JSR  [c6b0]
+ c6ac 20 JSR  [c6b7]
+ c6af 60 RTS 
+ c6b0 a9 LDA  #ff
+ c6b2 48 PHA 
+ c6b3 a9 LDA  #aa
+ c6b5 d0 BNE  [c6bc]
+ c6b7 a9 LDA  #34
+ c6b9 48 PHA 
+ c6ba a9 LDA  #55
+ c6bc 28 PLP 
+ c6bd 04 NOP 
+ c6bf 44 NOP 
+ c6c1 64 NOP 
+ c6c3 ea NOP 
+ c6c4 ea NOP 
+ c6c5 ea NOP 
+ c6c6 ea NOP 
+ c6c7 08 PHP 
+ c6c8 48 PHA 
+ c6c9 0c NOP 
+ c6cc ea NOP 
+ c6cd ea NOP 
+ c6ce ea NOP 
+ c6cf ea NOP 
+ c6d0 08 PHP 
+ c6d1 48 PHA 
+ c6d2 14 NOP 
+ c6d4 34 NOP 
+ c6d6 54 NOP 
+ c6d8 74 NOP 
+ c6da d4 NOP 
+ c6dc f4 NOP 
+ c6de ea NOP 
+ c6df ea NOP 
+ c6e0 ea NOP 
+ c6e1 ea NOP 
+ c6e2 08 PHP 
+ c6e3 48 PHA 
+ c6e4 1a NOP 
+ c6e5 3a NOP 
+ c6e6 5a NOP 
+ c6e7 7a NOP 
+ c6e8 da NOP 
+ c6e9 fa NOP 
+ c6ea 80 NOP 
+ c6ec ea NOP 
+ c6ed ea NOP 
+ c6ee ea NOP 
+ c6ef ea NOP 
+ c6f0 08 PHP 
+ c6f1 48 PHA 
+ c6f2 1c NOP 
+ c6f5 3c NOP 
+ c6f8 5c NOP 
+ c6fb 7c NOP 
+ c6fe dc NOP 
+ c701 fc NOP 
+ c704 ea NOP 
+ c705 ea NOP 
+ c706 ea NOP 
+ c707 ea NOP 
+ c708 08 PHP 
+ c709 48 PHA 
+ c70a a2 LDX  #5
+ c70c 68 PLA 
+ c70d c9 CMP  #55
+ c70f f0 BEQ  [c71b]
+ c711 c9 CMP  #aa
+ c713 f0 BEQ  [c71b]
+ c715 68 PLA 
+ c716 84 STY  [0]
+ c718 4c JMP  [c728]
+ c71b 68 PLA 
+ c71c 29 AND  #cb
+ c71e c9 CMP  #0
+ c720 f0 BEQ  [c728]
+ c722 c9 CMP  #cb
+ c724 f0 BEQ  [c728]
+ c726 84 STY  [0]
+ c728 c8 INY 
+ c729 ca DEX 
+ c72a d0 BNE  [c70c]
+ c72c 60 RTS 
+ c72d ea NOP 
+ c72e 38 SEC 
+ c72f b0 BCS  [c735]
+ c731 a2 LDX  #1
+ c733 86 STX  [0]
+ c735 ea NOP 
+ c736 18 CLC 
+ c737 b0 BCS  [c73c]
+ c739 4c JMP  [c740]
+ c73c a2 LDX  #2
+ c73e 86 STX  [0]
+ c740 ea NOP 
+ c741 38 SEC 
+ c742 90 BCC  [c747]
+ c744 4c JMP  [c74b]
+ c747 a2 LDX  #3
+ c749 86 STX  [0]
+ c74b ea NOP 
+ c74c 18 CLC 
+ c74d 90 BCC  [c753]
+ c74f a2 LDX  #4
+ c751 86 STX  [0]
+ c753 ea NOP 
+ c754 a9 LDA  #0
+ c756 f0 BEQ  [c75c]
+ c758 a2 LDX  #5
+ c75a 86 STX  [0]
+ c75c ea NOP 
+ c75d a9 LDA  #40
+ c75f f0 BEQ  [c764]
+ c761 4c JMP  [c768]
+ c764 a2 LDX  #6
+ c766 86 STX  [0]
+ c768 ea NOP 
+ c769 a9 LDA  #40
+ c76b d0 BNE  [c771]
+ c76d a2 LDX  #7
+ c76f 86 STX  [0]
+ c771 ea NOP 
+ c772 a9 LDA  #0
+ c774 d0 BNE  [c779]
+ c776 4c JMP  [c77d]
+ c779 a2 LDX  #8
+ c77b 86 STX  [0]
+ c77d ea NOP 
+ c77e a9 LDA  #ff
+ c780 85 STA  [1]
+ c782 24 BIT  [1]
+ c784 70 BVS  [c78a]
+ c786 a2 LDX  #9
+ c788 86 STX  [0]
+ c78a ea NOP 
+ c78b 24 BIT  [1]
+ c78d 50 BVC  [c792]
+ c78f 4c JMP  [c796]
+ c792 a2 LDX  #a
+ c794 86 STX  [0]
+ c796 ea NOP 
+ c797 a9 LDA  #0
+ c799 85 STA  [1]
+ c79b 24 BIT  [1]
+ c79d 50 BVC  [c7a3]
+ c79f a2 LDX  #b
+ c7a1 86 STX  [0]
+ c7a3 ea NOP 
+ c7a4 24 BIT  [1]
+ c7a6 70 BVS  [c7ab]
+ c7a8 4c JMP  [c7af]
+ c7ab a2 LDX  #c
+ c7ad 86 STX  [0]
+ c7af ea NOP 
+ c7b0 a9 LDA  #0
+ c7b2 10 BPL  [c7b8]
+ c7b4 a2 LDX  #d
+ c7b6 86 STX  [0]
+ c7b8 ea NOP 
+ c7b9 a9 LDA  #80
+ c7bb 10 BPL  [c7c0]
+ c7bd 4c JMP  [c7d9]
+ c7c0 a2 LDX  #e
+ c7c2 86 STX  [0]
+ c7c4 ea NOP 
+ c7c5 a9 LDA  #80
+ c7c7 30 BMI  [c7cd]
+ c7c9 a2 LDX  #f
+ c7cb 86 STX  [0]
+ c7cd ea NOP 
+ c7ce a9 LDA  #0
+ c7d0 30 BMI  [c7d5]
+ c7d2 4c JMP  [c7d9]
+ c7d5 a2 LDX  #10
+ c7d7 86 STX  [0]
+ c7d9 ea NOP 
+ c7da 60 RTS 
+ c7db ea NOP 
+ c7dc a9 LDA  #ff
+ c7de 85 STA  [1]
+ c7e0 24 BIT  [1]
+ c7e2 a9 LDA  #0
+ c7e4 38 SEC 
+ c7e5 78 SEI 
+ c7e6 f8 SED 
+ c7e7 08 PHP 
+ c7e8 68 PLA 
+ c7e9 29 AND  #ef
+ c7eb c9 CMP  #6f
+ c7ed f0 BEQ  [c7f3]
+ c7ef a2 LDX  #11
+ c7f1 86 STX  [0]
+ c7f3 ea NOP 
+ c7f4 a9 LDA  #40
+ c7f6 85 STA  [1]
+ c7f8 24 BIT  [1]
+ c7fa d8 CLD 
+ c7fb a9 LDA  #10
+ c7fd 18 CLC 
+ c7fe 08 PHP 
+ c7ff 68 PLA 
+ c800 29 AND  #ef
+ c802 c9 CMP  #64
+ c804 f0 BEQ  [c80a]
+ c806 a2 LDX  #12
+ c808 86 STX  [0]
+ c80a ea NOP 
+ c80b a9 LDA  #80
+ c80d 85 STA  [1]
+ c80f 24 BIT  [1]
+ c811 f8 SED 
+ c812 a9 LDA  #0
+ c814 38 SEC 
+ c815 08 PHP 
+ c816 68 PLA 
+ c817 29 AND  #ef
+ c819 c9 CMP  #2f
+ c81b f0 BEQ  [c821]
+ c81d a2 LDX  #13
+ c81f 86 STX  [0]
+ c821 ea NOP 
+ c822 a9 LDA  #ff
+ c824 48 PHA 
+ c825 28 PLP 
+ c826 d0 BNE  [c831]
+ c828 10 BPL  [c831]
+ c82a 50 BVC  [c831]
+ c82c 90 BCC  [c831]
+ c82e 4c JMP  [c835]
+ c831 a2 LDX  #14
+ c833 86 STX  [0]
+ c835 ea NOP 
+ c836 a9 LDA  #4
+ c838 48 PHA 
+ c839 28 PLP 
+ c83a f0 BEQ  [c845]
+ c83c 30 BMI  [c845]
+ c83e 70 BVS  [c845]
+ c840 b0 BCS  [c845]
+ c842 4c JMP  [c849]
+ c845 a2 LDX  #15
+ c847 86 STX  [0]
+ c849 ea NOP 
+ c84a f8 SED 
+ c84b a9 LDA  #ff
+ c84d 85 STA  [1]
+ c84f 24 BIT  [1]
+ c851 18 CLC 
+ c852 a9 LDA  #0
+ c854 48 PHA 
+ c855 a9 LDA  #ff
+ c857 68 PLA 
+ c858 d0 BNE  [c863]
+ c85a 30 BMI  [c863]
+ c85c 50 BVC  [c863]
+ c85e b0 BCS  [c863]
+ c860 4c JMP  [c867]
+ c863 a2 LDX  #16
+ c865 86 STX  [0]
+ c867 ea NOP 
+ c868 a9 LDA  #0
+ c86a 85 STA  [1]
+ c86c 24 BIT  [1]
+ c86e 38 SEC 
+ c86f a9 LDA  #ff
+ c871 48 PHA 
+ c872 a9 LDA  #0
+ c874 68 PLA 
+ c875 f0 BEQ  [c880]
+ c877 10 BPL  [c880]
+ c879 70 BVS  [c880]
+ c87b 90 BCC  [c880]
+ c87d 4c JMP  [c884]
+ c880 a2 LDX  #17
+ c882 86 STX  [0]
+ c884 60 RTS 
+ c885 ea NOP 
+ c886 18 CLC 
+ c887 a9 LDA  #ff
+ c889 85 STA  [1]
+ c88b 24 BIT  [1]
+ c88d a9 LDA  #55
+ c88f 09 ORA  #aa
+ c891 b0 BCS  [c89e]
+ c893 10 BPL  [c89e]
+ c895 c9 CMP  #ff
+ c897 d0 BNE  [c89e]
+ c899 50 BVC  [c89e]
+ c89b 4c JMP  [c8a2]
+ c89e a2 LDX  #18
+ c8a0 86 STX  [0]
+ c8a2 ea NOP 
+ c8a3 38 SEC 
+ c8a4 b8 CLV 
+ c8a5 a9 LDA  #0
+ c8a7 09 ORA  #0
+ c8a9 d0 BNE  [c8b4]
+ c8ab 70 BVS  [c8b4]
+ c8ad 90 BCC  [c8b4]
+ c8af 30 BMI  [c8b4]
+ c8b1 4c JMP  [c8b8]
+ c8b4 a2 LDX  #19
+ c8b6 86 STX  [0]
+ c8b8 ea NOP 
+ c8b9 18 CLC 
+ c8ba 24 BIT  [1]
+ c8bc a9 LDA  #55
+ c8be 29 AND  #aa
+ c8c0 d0 BNE  [c8cb]
+ c8c2 50 BVC  [c8cb]
+ c8c4 b0 BCS  [c8cb]
+ c8c6 30 BMI  [c8cb]
+ c8c8 4c JMP  [c8cf]
+ c8cb a2 LDX  #1a
+ c8cd 86 STX  [0]
+ c8cf ea NOP 
+ c8d0 38 SEC 
+ c8d1 b8 CLV 
+ c8d2 a9 LDA  #f8
+ c8d4 29 AND  #ef
+ c8d6 90 BCC  [c8e3]
+ c8d8 10 BPL  [c8e3]
+ c8da c9 CMP  #e8
+ c8dc d0 BNE  [c8e3]
+ c8de 70 BVS  [c8e3]
+ c8e0 4c JMP  [c8e7]
+ c8e3 a2 LDX  #1b
+ c8e5 86 STX  [0]
+ c8e7 ea NOP 
+ c8e8 18 CLC 
+ c8e9 24 BIT  [1]
+ c8eb a9 LDA  #5f
+ c8ed 49 EOR  #aa
+ c8ef b0 BCS  [c8fc]
+ c8f1 10 BPL  [c8fc]
+ c8f3 c9 CMP  #f5
+ c8f5 d0 BNE  [c8fc]
+ c8f7 50 BVC  [c8fc]
+ c8f9 4c JMP  [c900]
+ c8fc a2 LDX  #1c
+ c8fe 86 STX  [0]
+ c900 ea NOP 
+ c901 38 SEC 
+ c902 b8 CLV 
+ c903 a9 LDA  #70
+ c905 49 EOR  #70
+ c907 d0 BNE  [c912]
+ c909 70 BVS  [c912]
+ c90b 90 BCC  [c912]
+ c90d 30 BMI  [c912]
+ c90f 4c JMP  [c916]
+ c912 a2 LDX  #1d
+ c914 86 STX  [0]
+ c916 ea NOP 
+ c917 18 CLC 
+ c918 24 BIT  [1]
+ c91a a9 LDA  #0
+ c91c 69 ADC  #69
+ c91e 30 BMI  [c92b]
+ c920 b0 BCS  [c92b]
+ c922 c9 CMP  #69
+ c924 d0 BNE  [c92b]
+ c926 70 BVS  [c92b]
+ c928 4c JMP  [c92f]
+ c92b a2 LDX  #1e
+ c92d 86 STX  [0]
+ c92f ea NOP 
+ c930 38 SEC 
+ c931 f8 SED 
+ c932 24 BIT  [1]
+ c934 a9 LDA  #1
+ c936 69 ADC  #69
+ c938 30 BMI  [c945]
+ c93a b0 BCS  [c945]
+ c93c c9 CMP  #6b
+ c93e d0 BNE  [c945]
+ c940 70 BVS  [c945]
+ c942 4c JMP  [c949]
+ c945 a2 LDX  #1f
+ c947 86 STX  [0]
+ c949 ea NOP 
+ c94a d8 CLD 
+ c94b 38 SEC 
+ c94c b8 CLV 
+ c94d a9 LDA  #7f
+ c94f 69 ADC  #7f
+ c951 10 BPL  [c95e]
+ c953 b0 BCS  [c95e]
+ c955 c9 CMP  #ff
+ c957 d0 BNE  [c95e]
+ c959 50 BVC  [c95e]
+ c95b 4c JMP  [c962]
+ c95e a2 LDX  #20
+ c960 86 STX  [0]
+ c962 ea NOP 
+ c963 18 CLC 
+ c964 24 BIT  [1]
+ c966 a9 LDA  #7f
+ c968 69 ADC  #80
+ c96a 10 BPL  [c977]
+ c96c b0 BCS  [c977]
+ c96e c9 CMP  #ff
+ c970 d0 BNE  [c977]
+ c972 70 BVS  [c977]
+ c974 4c JMP  [c97b]
+ c977 a2 LDX  #21
+ c979 86 STX  [0]
+ c97b ea NOP 
+ c97c 38 SEC 
+ c97d b8 CLV 
+ c97e a9 LDA  #7f
+ c980 69 ADC  #80
+ c982 d0 BNE  [c98d]
+ c984 30 BMI  [c98d]
+ c986 70 BVS  [c98d]
+ c988 90 BCC  [c98d]
+ c98a 4c JMP  [c991]
+ c98d a2 LDX  #22
+ c98f 86 STX  [0]
+ c991 ea NOP 
+ c992 38 SEC 
+ c993 b8 CLV 
+ c994 a9 LDA  #9f
+ c996 f0 BEQ  [c9a1]
+ c998 10 BPL  [c9a1]
+ c99a 70 BVS  [c9a1]
+ c99c 90 BCC  [c9a1]
+ c99e 4c JMP  [c9a5]
+ c9a1 a2 LDX  #23
+ c9a3 86 STX  [0]
+ c9a5 ea NOP 
+ c9a6 18 CLC 
+ c9a7 24 BIT  [1]
+ c9a9 a9 LDA  #0
+ c9ab d0 BNE  [c9b6]
+ c9ad 30 BMI  [c9b6]
+ c9af 50 BVC  [c9b6]
+ c9b1 b0 BCS  [c9b6]
+ c9b3 4c JMP  [c9ba]
+ c9b6 a2 LDX  #23
+ c9b8 86 STX  [0]
+ c9ba ea NOP 
+ c9bb 24 BIT  [1]
+ c9bd a9 LDA  #40
+ c9bf c9 CMP  #40
+ c9c1 30 BMI  [c9cc]
+ c9c3 90 BCC  [c9cc]
+ c9c5 d0 BNE  [c9cc]
+ c9c7 50 BVC  [c9cc]
+ c9c9 4c JMP  [c9d0]
+ c9cc a2 LDX  #24
+ c9ce 86 STX  [0]
+ c9d0 ea NOP 
+ c9d1 b8 CLV 
+ c9d2 c9 CMP  #3f
+ c9d4 f0 BEQ  [c9df]
+ c9d6 30 BMI  [c9df]
+ c9d8 90 BCC  [c9df]
+ c9da 70 BVS  [c9df]
+ c9dc 4c JMP  [c9e3]
+ c9df a2 LDX  #25
+ c9e1 86 STX  [0]
+ c9e3 ea NOP 
+ c9e4 c9 CMP  #41
+ c9e6 f0 BEQ  [c9ef]
+ c9e8 10 BPL  [c9ef]
+ c9ea 10 BPL  [c9ef]
+ c9ec 4c JMP  [c9f3]
+ c9ef a2 LDX  #26
+ c9f1 86 STX  [0]
+ c9f3 ea NOP 
+ c9f4 a9 LDA  #80
+ c9f6 c9 CMP  #0
+ c9f8 f0 BEQ  [ca01]
+ c9fa 10 BPL  [ca01]
+ c9fc 90 BCC  [ca01]
+ c9fe 4c JMP  [ca05]
+ ca01 a2 LDX  #27
+ ca03 86 STX  [0]
+ ca05 ea NOP 
+ ca06 c9 CMP  #80
+ ca08 d0 BNE  [ca11]
+ ca0a 30 BMI  [ca11]
+ ca0c 90 BCC  [ca11]
+ ca0e 4c JMP  [ca15]
+ ca11 a2 LDX  #28
+ ca13 86 STX  [0]
+ ca15 ea NOP 
+ ca16 c9 CMP  #81
+ ca18 b0 BCS  [ca21]
+ ca1a f0 BEQ  [ca21]
+ ca1c 10 BPL  [ca21]
+ ca1e 4c JMP  [ca25]
+ ca21 a2 LDX  #29
+ ca23 86 STX  [0]
+ ca25 ea NOP 
+ ca26 c9 CMP  #7f
+ ca28 90 BCC  [ca31]
+ ca2a f0 BEQ  [ca31]
+ ca2c 30 BMI  [ca31]
+ ca2e 4c JMP  [ca35]
+ ca31 a2 LDX  #2a
+ ca33 86 STX  [0]
+ ca35 ea NOP 
+ ca36 24 BIT  [1]
+ ca38 a0 LDY  #40
+ ca3a c0 CPY  #40
+ ca3c d0 BNE  [ca47]
+ ca3e 30 BMI  [ca47]
+ ca40 90 BCC  [ca47]
+ ca42 50 BVC  [ca47]
+ ca44 4c JMP  [ca4b]
+ ca47 a2 LDX  #2b
+ ca49 86 STX  [0]
+ ca4b ea NOP 
+ ca4c b8 CLV 
+ ca4d c0 CPY  #3f
+ ca4f f0 BEQ  [ca5a]
+ ca51 30 BMI  [ca5a]
+ ca53 90 BCC  [ca5a]
+ ca55 70 BVS  [ca5a]
+ ca57 4c JMP  [ca5e]
+ ca5a a2 LDX  #2c
+ ca5c 86 STX  [0]
+ ca5e ea NOP 
+ ca5f c0 CPY  #41
+ ca61 f0 BEQ  [ca6a]
+ ca63 10 BPL  [ca6a]
+ ca65 10 BPL  [ca6a]
+ ca67 4c JMP  [ca6e]
+ ca6a a2 LDX  #2d
+ ca6c 86 STX  [0]
+ ca6e ea NOP 
+ ca6f a0 LDY  #80
+ ca71 c0 CPY  #0
+ ca73 f0 BEQ  [ca7c]
+ ca75 10 BPL  [ca7c]
+ ca77 90 BCC  [ca7c]
+ ca79 4c JMP  [ca80]
+ ca7c a2 LDX  #2e
+ ca7e 86 STX  [0]
+ ca80 ea NOP 
+ ca81 c0 CPY  #80
+ ca83 d0 BNE  [ca8c]
+ ca85 30 BMI  [ca8c]
+ ca87 90 BCC  [ca8c]
+ ca89 4c JMP  [ca90]
+ ca8c a2 LDX  #2f
+ ca8e 86 STX  [0]
+ ca90 ea NOP 
+ ca91 c0 CPY  #81
+ ca93 b0 BCS  [ca9c]
+ ca95 f0 BEQ  [ca9c]
+ ca97 10 BPL  [ca9c]
+ ca99 4c JMP  [caa0]
+ ca9c a2 LDX  #30
+ ca9e 86 STX  [0]
+ caa0 ea NOP 
+ caa1 c0 CPY  #7f
+ caa3 90 BCC  [caac]
+ caa5 f0 BEQ  [caac]
+ caa7 30 BMI  [caac]
+ caa9 4c JMP  [cab0]
+ caac a2 LDX  #31
+ caae 86 STX  [0]
+ cab0 ea NOP 
+ cab1 24 BIT  [1]
+ cab3 a2 LDX  #40
+ cab5 e0 CPX  #40
+ cab7 d0 BNE  [cac2]
+ cab9 30 BMI  [cac2]
+ cabb 90 BCC  [cac2]
+ cabd 50 BVC  [cac2]
+ cabf 4c JMP  [cac6]
+ cac2 a9 LDA  #32
+ cac4 85 STA  [0]
+ cac6 ea NOP 
+ cac7 b8 CLV 
+ cac8 e0 CPX  #3f
+ caca f0 BEQ  [cad5]
+ cacc 30 BMI  [cad5]
+ cace 90 BCC  [cad5]
+ cad0 70 BVS  [cad5]
+ cad2 4c JMP  [cad9]
+ cad5 a9 LDA  #33
+ cad7 85 STA  [0]
+ cad9 ea NOP 
+ cada e0 CPX  #41
+ cadc f0 BEQ  [cae5]
+ cade 10 BPL  [cae5]
+ cae0 10 BPL  [cae5]
+ cae2 4c JMP  [cae9]
+ cae5 a9 LDA  #34
+ cae7 85 STA  [0]
+ cae9 ea NOP 
+ caea a2 LDX  #80
+ caec e0 CPX  #0
+ caee f0 BEQ  [caf7]
+ caf0 10 BPL  [caf7]
+ caf2 90 BCC  [caf7]
+ caf4 4c JMP  [cafb]
+ caf7 a9 LDA  #35
+ caf9 85 STA  [0]
+ cafb ea NOP 
+ cafc e0 CPX  #80
+ cafe d0 BNE  [cb07]
+ cb00 30 BMI  [cb07]
+ cb02 90 BCC  [cb07]
+ cb04 4c JMP  [cb0b]
+ cb07 a9 LDA  #36
+ cb09 85 STA  [0]
+ cb0b ea NOP 
+ cb0c e0 CPX  #81
+ cb0e b0 BCS  [cb17]
+ cb10 f0 BEQ  [cb17]
+ cb12 10 BPL  [cb17]
+ cb14 4c JMP  [cb1b]
+ cb17 a9 LDA  #37
+ cb19 85 STA  [0]
+ cb1b ea NOP 
+ cb1c e0 CPX  #7f
+ cb1e 90 BCC  [cb27]
+ cb20 f0 BEQ  [cb27]
+ cb22 30 BMI  [cb27]
+ cb24 4c JMP  [cb2b]
+ cb27 a9 LDA  #38
+ cb29 85 STA  [0]
+ cb2b ea NOP 
+ cb2c 38 SEC 
+ cb2d b8 CLV 
+ cb2e a2 LDX  #9f
+ cb30 f0 BEQ  [cb3b]
+ cb32 10 BPL  [cb3b]
+ cb34 70 BVS  [cb3b]
+ cb36 90 BCC  [cb3b]
+ cb38 4c JMP  [cb3f]
+ cb3b a2 LDX  #39
+ cb3d 86 STX  [0]
+ cb3f ea NOP 
+ cb40 18 CLC 
+ cb41 24 BIT  [1]
+ cb43 a2 LDX  #0
+ cb45 d0 BNE  [cb50]
+ cb47 30 BMI  [cb50]
+ cb49 50 BVC  [cb50]
+ cb4b b0 BCS  [cb50]
+ cb4d 4c JMP  [cb54]
+ cb50 a2 LDX  #3a
+ cb52 86 STX  [0]
+ cb54 ea NOP 
+ cb55 38 SEC 
+ cb56 b8 CLV 
+ cb57 a0 LDY  #9f
+ cb59 f0 BEQ  [cb64]
+ cb5b 10 BPL  [cb64]
+ cb5d 70 BVS  [cb64]
+ cb5f 90 BCC  [cb64]
+ cb61 4c JMP  [cb68]
+ cb64 a2 LDX  #3b
+ cb66 86 STX  [0]
+ cb68 ea NOP 
+ cb69 18 CLC 
+ cb6a 24 BIT  [1]
+ cb6c a0 LDY  #0
+ cb6e d0 BNE  [cb79]
+ cb70 30 BMI  [cb79]
+ cb72 50 BVC  [cb79]
+ cb74 b0 BCS  [cb79]
+ cb76 4c JMP  [cb7d]
+ cb79 a2 LDX  #3c
+ cb7b 86 STX  [0]
+ cb7d ea NOP 
+ cb7e a9 LDA  #55
+ cb80 a2 LDX  #aa
+ cb82 a0 LDY  #33
+ cb84 c9 CMP  #55
+ cb86 d0 BNE  [cbab]
+ cb88 e0 CPX  #aa
+ cb8a d0 BNE  [cbab]
+ cb8c c0 CPY  #33
+ cb8e d0 BNE  [cbab]
+ cb90 c9 CMP  #55
+ cb92 d0 BNE  [cbab]
+ cb94 e0 CPX  #aa
+ cb96 d0 BNE  [cbab]
+ cb98 c0 CPY  #33
+ cb9a d0 BNE  [cbab]
+ cb9c c9 CMP  #56
+ cb9e f0 BEQ  [cbab]
+ cba0 e0 CPX  #ab
+ cba2 f0 BEQ  [cbab]
+ cba4 c0 CPY  #34
+ cba6 f0 BEQ  [cbab]
+ cba8 4c JMP  [cbaf]
+ cbab a2 LDX  #3d
+ cbad 86 STX  [0]
+ cbaf a0 LDY  #71
+ cbb1 20 JSR  [f931]
+ cbb4 e9 SBC  #bf
+ cbb6 20 JSR  [f937]
+ cbb9 c8 INY 
+ cbba 20 JSR  [f947]
+ cbbd e9 SBC  #c0
+ cbbf 20 JSR  [f94c]
+ cbc2 c8 INY 
+ cbc3 20 JSR  [f95c]
+ cbc6 e9 SBC  #be
+ cbc8 20 JSR  [f962]
+ cbcb c8 INY 
+ cbcc 20 JSR  [f972]
+ cbcf e9 SBC  #ff
+ cbd1 20 JSR  [f976]
+ cbd4 c8 INY 
+ cbd5 20 JSR  [f980]
+ cbd8 e9 SBC  #80
+ cbda 20 JSR  [f984]
+ cbdd 60 RTS 
+ cbde ea NOP 
+ cbdf a9 LDA  #ff
+ cbe1 85 STA  [1]
+ cbe3 a9 LDA  #44
+ cbe5 a2 LDX  #55
+ cbe7 a0 LDY  #66
+ cbe9 e8 INX 
+ cbea 88 DEY 
+ cbeb e0 CPX  #56
+ cbed d0 BNE  [cc10]
+ cbef c0 CPY  #65
+ cbf1 d0 BNE  [cc10]
+ cbf3 e8 INX 
+ cbf4 e8 INX 
+ cbf5 88 DEY 
+ cbf6 88 DEY 
+ cbf7 e0 CPX  #58
+ cbf9 d0 BNE  [cc10]
+ cbfb c0 CPY  #63
+ cbfd d0 BNE  [cc10]
+ cbff ca DEX 
+ cc00 c8 INY 
+ cc01 e0 CPX  #57
+ cc03 d0 BNE  [cc10]
+ cc05 c0 CPY  #64
+ cc07 d0 BNE  [cc10]
+ cc09 c9 CMP  #44
+ cc0b d0 BNE  [cc10]
+ cc0d 4c JMP  [cc14]
+ cc10 a2 LDX  #3e
+ cc12 86 STX  [0]
+ cc14 ea NOP 
+ cc15 38 SEC 
+ cc16 a2 LDX  #69
+ cc18 a9 LDA  #96
+ cc1a 24 BIT  [1]
+ cc1c a0 LDY  #ff
+ cc1e c8 INY 
+ cc1f d0 BNE  [cc5e]
+ cc21 30 BMI  [cc5e]
+ cc23 90 BCC  [cc5e]
+ cc25 50 BVC  [cc5e]
+ cc27 c0 CPY  #0
+ cc29 d0 BNE  [cc5e]
+ cc2b c8 INY 
+ cc2c f0 BEQ  [cc5e]
+ cc2e 30 BMI  [cc5e]
+ cc30 90 BCC  [cc5e]
+ cc32 50 BVC  [cc5e]
+ cc34 18 CLC 
+ cc35 b8 CLV 
+ cc36 a0 LDY  #0
+ cc38 88 DEY 
+ cc39 f0 BEQ  [cc5e]
+ cc3b 10 BPL  [cc5e]
+ cc3d b0 BCS  [cc5e]
+ cc3f 70 BVS  [cc5e]
+ cc41 c0 CPY  #ff
+ cc43 d0 BNE  [cc5e]
+ cc45 18 CLC 
+ cc46 88 DEY 
+ cc47 f0 BEQ  [cc5e]
+ cc49 10 BPL  [cc5e]
+ cc4b b0 BCS  [cc5e]
+ cc4d 70 BVS  [cc5e]
+ cc4f c0 CPY  #fe
+ cc51 d0 BNE  [cc5e]
+ cc53 c9 CMP  #96
+ cc55 d0 BNE  [cc5e]
+ cc57 e0 CPX  #69
+ cc59 d0 BNE  [cc5e]
+ cc5b 4c JMP  [cc62]
+ cc5e a2 LDX  #3f
+ cc60 86 STX  [0]
+ cc62 ea NOP 
+ cc63 38 SEC 
+ cc64 a0 LDY  #69
+ cc66 a9 LDA  #96
+ cc68 24 BIT  [1]
+ cc6a a2 LDX  #ff
+ cc6c e8 INX 
+ cc6d d0 BNE  [ccac]
+ cc6f 30 BMI  [ccac]
+ cc71 90 BCC  [ccac]
+ cc73 50 BVC  [ccac]
+ cc75 e0 CPX  #0
+ cc77 d0 BNE  [ccac]
+ cc79 e8 INX 
+ cc7a f0 BEQ  [ccac]
+ cc7c 30 BMI  [ccac]
+ cc7e 90 BCC  [ccac]
+ cc80 50 BVC  [ccac]
+ cc82 18 CLC 
+ cc83 b8 CLV 
+ cc84 a2 LDX  #0
+ cc86 ca DEX 
+ cc87 f0 BEQ  [ccac]
+ cc89 10 BPL  [ccac]
+ cc8b b0 BCS  [ccac]
+ cc8d 70 BVS  [ccac]
+ cc8f e0 CPX  #ff
+ cc91 d0 BNE  [ccac]
+ cc93 18 CLC 
+ cc94 ca DEX 
+ cc95 f0 BEQ  [ccac]
+ cc97 10 BPL  [ccac]
+ cc99 b0 BCS  [ccac]
+ cc9b 70 BVS  [ccac]
+ cc9d e0 CPX  #fe
+ cc9f d0 BNE  [ccac]
+ cca1 c9 CMP  #96
+ cca3 d0 BNE  [ccac]
+ cca5 c0 CPY  #69
+ cca7 d0 BNE  [ccac]
+ cca9 4c JMP  [ccb0]
+ ccac a2 LDX  #40
+ ccae 86 STX  [0]
+ ccb0 ea NOP 
+ ccb1 a9 LDA  #85
+ ccb3 a2 LDX  #34
+ ccb5 a0 LDY  #99
+ ccb7 18 CLC 
+ ccb8 24 BIT  [1]
+ ccba a8 TAY 
+ ccbb f0 BEQ  [cceb]
+ ccbd b0 BCS  [cceb]
+ ccbf 50 BVC  [cceb]
+ ccc1 10 BPL  [cceb]
+ ccc3 c9 CMP  #85
+ ccc5 d0 BNE  [cceb]
+ ccc7 e0 CPX  #34
+ ccc9 d0 BNE  [cceb]
+ cccb c0 CPY  #85
+ cccd d0 BNE  [cceb]
+ cccf a9 LDA  #0
+ ccd1 38 SEC 
+ ccd2 b8 CLV 
+ ccd3 a8 TAY 
+ ccd4 d0 BNE  [cceb]
+ ccd6 90 BCC  [cceb]
+ ccd8 70 BVS  [cceb]
+ ccda 30 BMI  [cceb]
+ ccdc c9 CMP  #0
+ ccde d0 BNE  [cceb]
+ cce0 e0 CPX  #34
+ cce2 d0 BNE  [cceb]
+ cce4 c0 CPY  #0
+ cce6 d0 BNE  [cceb]
+ cce8 4c JMP  [ccef]
+ cceb a2 LDX  #41
+ cced 86 STX  [0]
+ ccef ea NOP 
+ ccf0 a9 LDA  #85
+ ccf2 a2 LDX  #34
+ ccf4 a0 LDY  #99
+ ccf6 18 CLC 
+ ccf7 24 BIT  [1]
+ ccf9 aa TAX 
+ ccfa f0 BEQ  [cd2a]
+ ccfc b0 BCS  [cd2a]
+ ccfe 50 BVC  [cd2a]
+ cd00 10 BPL  [cd2a]
+ cd02 c9 CMP  #85
+ cd04 d0 BNE  [cd2a]
+ cd06 e0 CPX  #85
+ cd08 d0 BNE  [cd2a]
+ cd0a c0 CPY  #99
+ cd0c d0 BNE  [cd2a]
+ cd0e a9 LDA  #0
+ cd10 38 SEC 
+ cd11 b8 CLV 
+ cd12 aa TAX 
+ cd13 d0 BNE  [cd2a]
+ cd15 90 BCC  [cd2a]
+ cd17 70 BVS  [cd2a]
+ cd19 30 BMI  [cd2a]
+ cd1b c9 CMP  #0
+ cd1d d0 BNE  [cd2a]
+ cd1f e0 CPX  #0
+ cd21 d0 BNE  [cd2a]
+ cd23 c0 CPY  #99
+ cd25 d0 BNE  [cd2a]
+ cd27 4c JMP  [cd2e]
+ cd2a a2 LDX  #42
+ cd2c 86 STX  [0]
+ cd2e ea NOP 
+ cd2f a9 LDA  #85
+ cd31 a2 LDX  #34
+ cd33 a0 LDY  #99
+ cd35 18 CLC 
+ cd36 24 BIT  [1]
+ cd38 98 TYA 
+ cd39 f0 BEQ  [cd69]
+ cd3b b0 BCS  [cd69]
+ cd3d 50 BVC  [cd69]
+ cd3f 10 BPL  [cd69]
+ cd41 c9 CMP  #99
+ cd43 d0 BNE  [cd69]
+ cd45 e0 CPX  #34
+ cd47 d0 BNE  [cd69]
+ cd49 c0 CPY  #99
+ cd4b d0 BNE  [cd69]
+ cd4d a0 LDY  #0
+ cd4f 38 SEC 
+ cd50 b8 CLV 
+ cd51 98 TYA 
+ cd52 d0 BNE  [cd69]
+ cd54 90 BCC  [cd69]
+ cd56 70 BVS  [cd69]
+ cd58 30 BMI  [cd69]
+ cd5a c9 CMP  #0
+ cd5c d0 BNE  [cd69]
+ cd5e e0 CPX  #34
+ cd60 d0 BNE  [cd69]
+ cd62 c0 CPY  #0
+ cd64 d0 BNE  [cd69]
+ cd66 4c JMP  [cd6d]
+ cd69 a2 LDX  #43
+ cd6b 86 STX  [0]
+ cd6d ea NOP 
+ cd6e a9 LDA  #85
+ cd70 a2 LDX  #34
+ cd72 a0 LDY  #99
+ cd74 18 CLC 
+ cd75 24 BIT  [1]
+ cd77 8a TXA 
+ cd78 f0 BEQ  [cda8]
+ cd7a b0 BCS  [cda8]
+ cd7c 50 BVC  [cda8]
+ cd7e 30 BMI  [cda8]
+ cd80 c9 CMP  #34
+ cd82 d0 BNE  [cda8]
+ cd84 e0 CPX  #34
+ cd86 d0 BNE  [cda8]
+ cd88 c0 CPY  #99
+ cd8a d0 BNE  [cda8]
+ cd8c a2 LDX  #0
+ cd8e 38 SEC 
+ cd8f b8 CLV 
+ cd90 8a TXA 
+ cd91 d0 BNE  [cda8]
+ cd93 90 BCC  [cda8]
+ cd95 70 BVS  [cda8]
+ cd97 30 BMI  [cda8]
+ cd99 c9 CMP  #0
+ cd9b d0 BNE  [cda8]
+ cd9d e0 CPX  #0
+ cd9f d0 BNE  [cda8]
+ cda1 c0 CPY  #99
+ cda3 d0 BNE  [cda8]
+ cda5 4c JMP  [cdac]
+ cda8 a2 LDX  #44
+ cdaa 86 STX  [0]
+ cdac ea NOP 
+ cdad ba TSX 
+ cdae 8e STX  [7ff]
+ cdb1 a0 LDY  #33
+ cdb3 a2 LDX  #69
+ cdb5 a9 LDA  #84
+ cdb7 18 CLC 
+ cdb8 24 BIT  [1]
+ cdba 9a TXS 
+ cdbb f0 BEQ  [cdef]
+ cdbd 10 BPL  [cdef]
+ cdbf b0 BCS  [cdef]
+ cdc1 50 BVC  [cdef]
+ cdc3 c9 CMP  #84
+ cdc5 d0 BNE  [cdef]
+ cdc7 e0 CPX  #69
+ cdc9 d0 BNE  [cdef]
+ cdcb c0 CPY  #33
+ cdcd d0 BNE  [cdef]
+ cdcf a0 LDY  #1
+ cdd1 a9 LDA  #4
+ cdd3 38 SEC 
+ cdd4 b8 CLV 
+ cdd5 a2 LDX  #0
+ cdd7 ba TSX 
+ cdd8 f0 BEQ  [cdef]
+ cdda 30 BMI  [cdef]
+ cddc 90 BCC  [cdef]
+ cdde 70 BVS  [cdef]
+ cde0 e0 CPX  #69
+ cde2 d0 BNE  [cdef]
+ cde4 c9 CMP  #4
+ cde6 d0 BNE  [cdef]
+ cde8 c0 CPY  #1
+ cdea d0 BNE  [cdef]
+ cdec 4c JMP  [cdf3]
+ cdef a2 LDX  #45
+ cdf1 86 STX  [0]
+ cdf3 ae LDX  [7ff]
+ cdf6 9a TXS 
+ cdf7 60 RTS 
+ cdf8 a9 LDA  #ff
+ cdfa 85 STA  [1]
+ cdfc ba TSX 
+ cdfd 8e STX  [7ff]
+ ce00 ea NOP 
+ ce01 a2 LDX  #80
+ ce03 9a TXS 
+ ce04 a9 LDA  #33
+ ce06 48 PHA 
+ ce07 a9 LDA  #69
+ ce09 48 PHA 
+ ce0a ba TSX 
+ ce0b e0 CPX  #7e
+ ce0d d0 BNE  [ce2f]
+ ce0f 68 PLA 
+ ce10 c9 CMP  #69
+ ce12 d0 BNE  [ce2f]
+ ce14 68 PLA 
+ ce15 c9 CMP  #33
+ ce17 d0 BNE  [ce2f]
+ ce19 ba TSX 
+ ce1a e0 CPX  #80
+ ce1c d0 BNE  [ce2f]
+ ce1e ad LDA  [180]
+ ce21 c9 CMP  #33
+ ce23 d0 BNE  [ce2f]
+ ce25 ad LDA  [17f]
+ ce28 c9 CMP  #69
+ ce2a d0 BNE  [ce2f]
+ ce2c 4c JMP  [ce33]
+ ce2f a2 LDX  #46
+ ce31 86 STX  [0]
+ ce33 ea NOP 
+ ce34 a2 LDX  #80
+ ce36 9a TXS 
+ ce37 20 JSR  [ce3d]
+ ce3a 4c JMP  [ce5b]
+ ce3d ba TSX 
+ ce3e e0 CPX  #7e
+ ce40 d0 BNE  [ce5b]
+ ce42 68 PLA 
+ ce43 68 PLA 
+ ce44 ba TSX 
+ ce45 e0 CPX  #80
+ ce47 d0 BNE  [ce5b]
+ ce49 a9 LDA  #0
+ ce4b 20 JSR  [ce4e]
+ ce4e 68 PLA 
+ ce4f c9 CMP  #4d
+ ce51 d0 BNE  [ce5b]
+ ce53 68 PLA 
+ ce54 c9 CMP  #ce
+ ce56 d0 BNE  [ce5b]
+ ce58 4c JMP  [ce5f]
+ ce5b a2 LDX  #47
+ ce5d 86 STX  [0]
+ ce5f ea NOP 
+ ce60 a9 LDA  #ce
+ ce62 48 PHA 
+ ce63 a9 LDA  #66
+ ce65 48 PHA 
+ ce66 60 RTS 
+ ce67 a2 LDX  #77
+ ce69 a0 LDY  #69
+ ce6b 18 CLC 
+ ce6c 24 BIT  [1]
+ ce6e a9 LDA  #83
+ ce70 20 JSR  [ce66]
+ ce73 f0 BEQ  [ce99]
+ ce75 10 BPL  [ce99]
+ ce77 b0 BCS  [ce99]
+ ce79 50 BVC  [ce99]
+ ce7b c9 CMP  #83
+ ce7d d0 BNE  [ce99]
+ ce7f c0 CPY  #69
+ ce81 d0 BNE  [ce99]
+ ce83 e0 CPX  #77
+ ce85 d0 BNE  [ce99]
+ ce87 38 SEC 
+ ce88 b8 CLV 
+ ce89 a9 LDA  #0
+ ce8b 20 JSR  [ce66]
+ ce8e d0 BNE  [ce99]
+ ce90 30 BMI  [ce99]
+ ce92 90 BCC  [ce99]
+ ce94 70 BVS  [ce99]
+ ce96 4c JMP  [ce9d]
+ ce99 a2 LDX  #48
+ ce9b 86 STX  [0]
+ ce9d ea NOP 
+ ce9e a9 LDA  #ce
+ cea0 48 PHA 
+ cea1 a9 LDA  #ae
+ cea3 48 PHA 
+ cea4 a9 LDA  #65
+ cea6 48 PHA 
+ cea7 a9 LDA  #55
+ cea9 a0 LDY  #88
+ ceab a2 LDX  #99
+ cead 40 RTI 
+ ceae 30 BMI  [cee5]
+ ceb0 50 BVC  [cee5]
+ ceb2 f0 BEQ  [cee5]
+ ceb4 90 BCC  [cee5]
+ ceb6 c9 CMP  #55
+ ceb8 d0 BNE  [cee5]
+ ceba c0 CPY  #88
+ cebc d0 BNE  [cee5]
+ cebe e0 CPX  #99
+ cec0 d0 BNE  [cee5]
+ cec2 a9 LDA  #ce
+ cec4 48 PHA 
+ cec5 a9 LDA  #ce
+ cec7 48 PHA 
+ cec8 a9 LDA  #87
+ ceca 48 PHA 
+ cecb a9 LDA  #55
+ cecd 40 RTI 
+ cece 10 BPL  [cee5]
+ ced0 70 BVS  [cee5]
+ ced2 d0 BNE  [cee5]
+ ced4 90 BCC  [cee5]
+ ced6 c9 CMP  #55
+ ced8 d0 BNE  [cee5]
+ ceda c0 CPY  #88
+ cedc d0 BNE  [cee5]
+ cede e0 CPX  #99
+ cee0 d0 BNE  [cee5]
+ cee2 4c JMP  [cee9]
+ cee5 a2 LDX  #49
+ cee7 86 STX  [0]
+ cee9 ae LDX  [7ff]
+ ceec 9a TXS 
+ ceed 60 RTS 
+ ceee a2 LDX  #55
+ cef0 a0 LDY  #69
+ cef2 a9 LDA  #ff
+ cef4 85 STA  [1]
+ cef6 ea NOP 
+ cef7 24 BIT  [1]
+ cef9 38 SEC 
+ cefa a9 LDA  #1
+ cefc 4a LSR 
+ cefd 90 BCC  [cf1c]
+ ceff d0 BNE  [cf1c]
+ cf01 30 BMI  [cf1c]
+ cf03 50 BVC  [cf1c]
+ cf05 c9 CMP  #0
+ cf07 d0 BNE  [cf1c]
+ cf09 b8 CLV 
+ cf0a a9 LDA  #aa
+ cf0c 4a LSR 
+ cf0d b0 BCS  [cf1c]
+ cf0f f0 BEQ  [cf1c]
+ cf11 30 BMI  [cf1c]
+ cf13 70 BVS  [cf1c]
+ cf15 c9 CMP  #55
+ cf17 d0 BNE  [cf1c]
+ cf19 4c JMP  [cf20]
+ cf1c a2 LDX  #4a
+ cf1e 86 STX  [0]
+ cf20 ea NOP 
+ cf21 24 BIT  [1]
+ cf23 38 SEC 
+ cf24 a9 LDA  #80
+ cf26 0a ASL 
+ cf27 90 BCC  [cf47]
+ cf29 d0 BNE  [cf47]
+ cf2b 30 BMI  [cf47]
+ cf2d 50 BVC  [cf47]
+ cf2f c9 CMP  #0
+ cf31 d0 BNE  [cf47]
+ cf33 b8 CLV 
+ cf34 38 SEC 
+ cf35 a9 LDA  #55
+ cf37 0a ASL 
+ cf38 b0 BCS  [cf47]
+ cf3a f0 BEQ  [cf47]
+ cf3c 10 BPL  [cf47]
+ cf3e 70 BVS  [cf47]
+ cf40 c9 CMP  #aa
+ cf42 d0 BNE  [cf47]
+ cf44 4c JMP  [cf4b]
+ cf47 a2 LDX  #4b
+ cf49 86 STX  [0]
+ cf4b ea NOP 
+ cf4c 24 BIT  [1]
+ cf4e 38 SEC 
+ cf4f a9 LDA  #1
+ cf51 6a ROR 
+ cf52 90 BCC  [cf72]
+ cf54 f0 BEQ  [cf72]
+ cf56 10 BPL  [cf72]
+ cf58 50 BVC  [cf72]
+ cf5a c9 CMP  #80
+ cf5c d0 BNE  [cf72]
+ cf5e b8 CLV 
+ cf5f 18 CLC 
+ cf60 a9 LDA  #55
+ cf62 6a ROR 
+ cf63 90 BCC  [cf72]
+ cf65 f0 BEQ  [cf72]
+ cf67 30 BMI  [cf72]
+ cf69 70 BVS  [cf72]
+ cf6b c9 CMP  #2a
+ cf6d d0 BNE  [cf72]
+ cf6f 4c JMP  [cf76]
+ cf72 a2 LDX  #4c
+ cf74 86 STX  [0]
+ cf76 ea NOP 
+ cf77 24 BIT  [1]
+ cf79 38 SEC 
+ cf7a a9 LDA  #80
+ cf7c 2a ROL 
+ cf7d 90 BCC  [cf9d]
+ cf7f f0 BEQ  [cf9d]
+ cf81 30 BMI  [cf9d]
+ cf83 50 BVC  [cf9d]
+ cf85 c9 CMP  #1
+ cf87 d0 BNE  [cf9d]
+ cf89 b8 CLV 
+ cf8a 18 CLC 
+ cf8b a9 LDA  #55
+ cf8d 2a ROL 
+ cf8e b0 BCS  [cf9d]
+ cf90 f0 BEQ  [cf9d]
+ cf92 10 BPL  [cf9d]
+ cf94 70 BVS  [cf9d]
+ cf96 c9 CMP  #aa
+ cf98 d0 BNE  [cf9d]
+ cf9a 4c JMP  [cfa1]
+ cf9d a2 LDX  #4d
+ cf9f 86 STX  [0]
+ cfa1 60 RTS 
+ cfa2 a5 LDA  [0]
+ cfa4 8d STA  [7ff]
+ cfa7 a9 LDA  #0
+ cfa9 85 STA  [80]
+ cfab a9 LDA  #2
+ cfad 85 STA  [81]
+ cfaf a9 LDA  #ff
+ cfb1 85 STA  [1]
+ cfb3 a9 LDA  #0
+ cfb5 85 STA  [82]
+ cfb7 a9 LDA  #3
+ cfb9 85 STA  [83]
+ cfbb 85 STA  [84]
+ cfbd a9 LDA  #0
+ cfbf 85 STA  [ff]
+ cfc1 a9 LDA  #4
+ cfc3 85 STA  [0]
+ cfc5 a9 LDA  #5a
+ cfc7 8d STA  [200]
+ cfca a9 LDA  #5b
+ cfcc 8d STA  [300]
+ cfcf a9 LDA  #5c
+ cfd1 8d STA  [303]
+ cfd4 a9 LDA  #5d
+ cfd6 8d STA  [400]
+ cfd9 a2 LDX  #0
+ cfdb a1 LDA  [0]
+ cfdd c9 CMP  #5a
+ cfdf d0 BNE  [d000]
+ cfe1 e8 INX 
+ cfe2 e8 INX 
+ cfe3 a1 LDA  [0]
+ cfe5 c9 CMP  #5b
+ cfe7 d0 BNE  [d000]
+ cfe9 e8 INX 
+ cfea a1 LDA  [0]
+ cfec c9 CMP  #5c
+ cfee d0 BNE  [d000]
+ cff0 a2 LDX  #0
+ cff2 a1 LDA  [0]
+ cff4 c9 CMP  #5d
+ cff6 d0 BNE  [d000]
+ cff8 a2 LDX  #81
+ cffa a1 LDA  [0]
+ cffc c9 CMP  #5a
+ cffe f0 BEQ  [d005]
+ d000 a9 LDA  #58
+ d002 8d STA  [7ff]
+ d005 a9 LDA  #aa
+ d007 a2 LDX  #0
+ d009 81 STA  [0]
+ d00b e8 INX 
+ d00c e8 INX 
+ d00d a9 LDA  #ab
+ d00f 81 STA  [0]
+ d011 e8 INX 
+ d012 a9 LDA  #ac
+ d014 81 STA  [0]
+ d016 a2 LDX  #0
+ d018 a9 LDA  #ad
+ d01a 81 STA  [0]
+ d01c ad LDA  [200]
+ d01f c9 CMP  #aa
+ d021 d0 BNE  [d038]
+ d023 ad LDA  [300]
+ d026 c9 CMP  #ab
+ d028 d0 BNE  [d038]
+ d02a ad LDA  [303]
+ d02d c9 CMP  #ac
+ d02f d0 BNE  [d038]
+ d031 ad LDA  [400]
+ d034 c9 CMP  #ad
+ d036 f0 BEQ  [d03d]
+ d038 a9 LDA  #59
+ d03a 8d STA  [7ff]
+ d03d ad LDA  [7ff]
+ d040 85 STA  [0]
+ d042 a9 LDA  #0
+ d044 8d STA  [300]
+ d047 a9 LDA  #aa
+ d049 8d STA  [200]
+ d04c a2 LDX  #0
+ d04e a0 LDY  #5a
+ d050 20 JSR  [f7b6]
+ d053 01 ORA  [0]
+ d055 20 JSR  [f7c0]
+ d058 c8 INY 
+ d059 20 JSR  [f7ce]
+ d05c 01 ORA  [0]
+ d05e 20 JSR  [f7d3]
+ d061 c8 INY 
+ d062 20 JSR  [f7df]
+ d065 21 AND  [0]
+ d067 20 JSR  [f7e5]
+ d06a c8 INY 
+ d06b a9 LDA  #ef
+ d06d 8d STA  [300]
+ d070 20 JSR  [f7f1]
+ d073 21 AND  [0]
+ d075 20 JSR  [f7f6]
+ d078 c8 INY 
+ d079 20 JSR  [f804]
+ d07c 41 EOR  [0]
+ d07e 20 JSR  [f80a]
+ d081 c8 INY 
+ d082 a9 LDA  #70
+ d084 8d STA  [300]
+ d087 20 JSR  [f818]
+ d08a 41 EOR  [0]
+ d08c 20 JSR  [f81d]
+ d08f c8 INY 
+ d090 a9 LDA  #69
+ d092 8d STA  [200]
+ d095 20 JSR  [f829]
+ d098 61 ADC  [0]
+ d09a 20 JSR  [f82f]
+ d09d c8 INY 
+ d09e 20 JSR  [f83d]
+ d0a1 61 ADC  [0]
+ d0a3 20 JSR  [f843]
+ d0a6 c8 INY 
+ d0a7 a9 LDA  #7f
+ d0a9 8d STA  [200]
+ d0ac 20 JSR  [f851]
+ d0af 61 ADC  [0]
+ d0b1 20 JSR  [f856]
+ d0b4 c8 INY 
+ d0b5 a9 LDA  #80
+ d0b7 8d STA  [200]
+ d0ba 20 JSR  [f864]
+ d0bd 61 ADC  [0]
+ d0bf 20 JSR  [f86a]
+ d0c2 c8 INY 
+ d0c3 20 JSR  [f878]
+ d0c6 61 ADC  [0]
+ d0c8 20 JSR  [f87d]
+ d0cb c8 INY 
+ d0cc a9 LDA  #40
+ d0ce 8d STA  [200]
+ d0d1 20 JSR  [f889]
+ d0d4 c1 CMP  [0]
+ d0d6 20 JSR  [f88e]
+ d0d9 c8 INY 
+ d0da 48 PHA 
+ d0db a9 LDA  #3f
+ d0dd 8d STA  [200]
+ d0e0 68 PLA 
+ d0e1 20 JSR  [f89a]
+ d0e4 c1 CMP  [0]
+ d0e6 20 JSR  [f89c]
+ d0e9 c8 INY 
+ d0ea 48 PHA 
+ d0eb a9 LDA  #41
+ d0ed 8d STA  [200]
+ d0f0 68 PLA 
+ d0f1 c1 CMP  [0]
+ d0f3 20 JSR  [f8a8]
+ d0f6 c8 INY 
+ d0f7 48 PHA 
+ d0f8 a9 LDA  #0
+ d0fa 8d STA  [200]
+ d0fd 68 PLA 
+ d0fe 20 JSR  [f8b2]
+ d101 c1 CMP  [0]
+ d103 20 JSR  [f8b5]
+ d106 c8 INY 
+ d107 48 PHA 
+ d108 a9 LDA  #80
+ d10a 8d STA  [200]
+ d10d 68 PLA 
+ d10e c1 CMP  [0]
+ d110 20 JSR  [f8bf]
+ d113 c8 INY 
+ d114 48 PHA 
+ d115 a9 LDA  #81
+ d117 8d STA  [200]
+ d11a 68 PLA 
+ d11b c1 CMP  [0]
+ d11d 20 JSR  [f8c9]
+ d120 c8 INY 
+ d121 48 PHA 
+ d122 a9 LDA  #7f
+ d124 8d STA  [200]
+ d127 68 PLA 
+ d128 c1 CMP  [0]
+ d12a 20 JSR  [f8d3]
+ d12d c8 INY 
+ d12e a9 LDA  #40
+ d130 8d STA  [200]
+ d133 20 JSR  [f931]
+ d136 e1 SBC  #ff
+ d138 20 JSR  [f937]
+ d13b c8 INY 
+ d13c a9 LDA  #3f
+ d13e 8d STA  [200]
+ d141 20 JSR  [f947]
+ d144 e1 SBC  #ff
+ d146 20 JSR  [f94c]
+ d149 c8 INY 
+ d14a a9 LDA  #41
+ d14c 8d STA  [200]
+ d14f 20 JSR  [f95c]
+ d152 e1 SBC  #ff
+ d154 20 JSR  [f962]
+ d157 c8 INY 
+ d158 a9 LDA  #0
+ d15a 8d STA  [200]
+ d15d 20 JSR  [f972]
+ d160 e1 SBC  #ff
+ d162 20 JSR  [f976]
+ d165 c8 INY 
+ d166 a9 LDA  #7f
+ d168 8d STA  [200]
+ d16b 20 JSR  [f980]
+ d16e e1 SBC  #ff
+ d170 20 JSR  [f984]
+ d173 60 RTS 
+ d174 a9 LDA  #55
+ d176 85 STA  [78]
+ d178 a9 LDA  #ff
+ d17a 85 STA  [1]
+ d17c 24 BIT  [1]
+ d17e a0 LDY  #11
+ d180 a2 LDX  #23
+ d182 a9 LDA  #0
+ d184 a5 LDA  [78]
+ d186 f0 BEQ  [d198]
+ d188 30 BMI  [d198]
+ d18a c9 CMP  #55
+ d18c d0 BNE  [d198]
+ d18e c0 CPY  #11
+ d190 d0 BNE  [d198]
+ d192 e0 CPX  #23
+ d194 50 BVC  [d198]
+ d196 f0 BEQ  [d19c]
+ d198 a9 LDA  #76
+ d19a 85 STA  [0]
+ d19c a9 LDA  #46
+ d19e 24 BIT  [1]
+ d1a0 85 STA  [78]
+ d1a2 f0 BEQ  [d1ae]
+ d1a4 10 BPL  [d1ae]
+ d1a6 50 BVC  [d1ae]
+ d1a8 a5 LDA  [78]
+ d1aa c9 CMP  #46
+ d1ac f0 BEQ  [d1b2]
+ d1ae a9 LDA  #77
+ d1b0 85 STA  [0]
+ d1b2 a9 LDA  #55
+ d1b4 85 STA  [78]
+ d1b6 24 BIT  [1]
+ d1b8 a9 LDA  #11
+ d1ba a2 LDX  #23
+ d1bc a0 LDY  #0
+ d1be a4 LDY  [78]
+ d1c0 f0 BEQ  [d1d2]
+ d1c2 30 BMI  [d1d2]
+ d1c4 c0 CPY  #55
+ d1c6 d0 BNE  [d1d2]
+ d1c8 c9 CMP  #11
+ d1ca d0 BNE  [d1d2]
+ d1cc e0 CPX  #23
+ d1ce 50 BVC  [d1d2]
+ d1d0 f0 BEQ  [d1d6]
+ d1d2 a9 LDA  #78
+ d1d4 85 STA  [0]
+ d1d6 a0 LDY  #46
+ d1d8 24 BIT  [1]
+ d1da 84 STY  [78]
+ d1dc f0 BEQ  [d1e8]
+ d1de 10 BPL  [d1e8]
+ d1e0 50 BVC  [d1e8]
+ d1e2 a4 LDY  [78]
+ d1e4 c0 CPY  #46
+ d1e6 f0 BEQ  [d1ec]
+ d1e8 a9 LDA  #79
+ d1ea 85 STA  [0]
+ d1ec 24 BIT  [1]
+ d1ee a9 LDA  #55
+ d1f0 85 STA  [78]
+ d1f2 a0 LDY  #11
+ d1f4 a9 LDA  #23
+ d1f6 a2 LDX  #0
+ d1f8 a6 LDX  [78]
+ d1fa f0 BEQ  [d20c]
+ d1fc 30 BMI  [d20c]
+ d1fe e0 CPX  #55
+ d200 d0 BNE  [d20c]
+ d202 c0 CPY  #11
+ d204 d0 BNE  [d20c]
+ d206 c9 CMP  #23
+ d208 50 BVC  [d20c]
+ d20a f0 BEQ  [d210]
+ d20c a9 LDA  #7a
+ d20e 85 STA  [0]
+ d210 a2 LDX  #46
+ d212 24 BIT  [1]
+ d214 86 STX  [78]
+ d216 f0 BEQ  [d222]
+ d218 10 BPL  [d222]
+ d21a 50 BVC  [d222]
+ d21c a6 LDX  [78]
+ d21e e0 CPX  #46
+ d220 f0 BEQ  [d226]
+ d222 a9 LDA  #7b
+ d224 85 STA  [0]
+ d226 a9 LDA  #c0
+ d228 85 STA  [78]
+ d22a a2 LDX  #33
+ d22c a0 LDY  #88
+ d22e a9 LDA  #5
+ d230 24 BIT  [78]
+ d232 10 BPL  [d244]
+ d234 50 BVC  [d244]
+ d236 d0 BNE  [d244]
+ d238 c9 CMP  #5
+ d23a d0 BNE  [d244]
+ d23c e0 CPX  #33
+ d23e d0 BNE  [d244]
+ d240 c0 CPY  #88
+ d242 f0 BEQ  [d248]
+ d244 a9 LDA  #7c
+ d246 85 STA  [0]
+ d248 a9 LDA  #3
+ d24a 85 STA  [78]
+ d24c a9 LDA  #1
+ d24e 24 BIT  [78]
+ d250 30 BMI  [d25a]
+ d252 70 BVS  [d25a]
+ d254 f0 BEQ  [d25a]
+ d256 c9 CMP  #1
+ d258 f0 BEQ  [d25e]
+ d25a a9 LDA  #7d
+ d25c 85 STA  [0]
+ d25e a0 LDY  #7e
+ d260 a9 LDA  #aa
+ d262 85 STA  [78]
+ d264 20 JSR  [f7b6]
+ d267 05 ORA  [78]
+ d269 20 JSR  [f7c0]
+ d26c c8 INY 
+ d26d a9 LDA  #0
+ d26f 85 STA  [78]
+ d271 20 JSR  [f7ce]
+ d274 05 ORA  [78]
+ d276 20 JSR  [f7d3]
+ d279 c8 INY 
+ d27a a9 LDA  #aa
+ d27c 85 STA  [78]
+ d27e 20 JSR  [f7df]
+ d281 25 AND  [78]
+ d283 20 JSR  [f7e5]
+ d286 c8 INY 
+ d287 a9 LDA  #ef
+ d289 85 STA  [78]
+ d28b 20 JSR  [f7f1]
+ d28e 25 AND  [78]
+ d290 20 JSR  [f7f6]
+ d293 c8 INY 
+ d294 a9 LDA  #aa
+ d296 85 STA  [78]
+ d298 20 JSR  [f804]
+ d29b 45 EOR  [78]
+ d29d 20 JSR  [f80a]
+ d2a0 c8 INY 
+ d2a1 a9 LDA  #70
+ d2a3 85 STA  [78]
+ d2a5 20 JSR  [f818]
+ d2a8 45 EOR  [78]
+ d2aa 20 JSR  [f81d]
+ d2ad c8 INY 
+ d2ae a9 LDA  #69
+ d2b0 85 STA  [78]
+ d2b2 20 JSR  [f829]
+ d2b5 65 ADC  [78]
+ d2b7 20 JSR  [f82f]
+ d2ba c8 INY 
+ d2bb 20 JSR  [f83d]
+ d2be 65 ADC  [78]
+ d2c0 20 JSR  [f843]
+ d2c3 c8 INY 
+ d2c4 a9 LDA  #7f
+ d2c6 85 STA  [78]
+ d2c8 20 JSR  [f851]
+ d2cb 65 ADC  [78]
+ d2cd 20 JSR  [f856]
+ d2d0 c8 INY 
+ d2d1 a9 LDA  #80
+ d2d3 85 STA  [78]
+ d2d5 20 JSR  [f864]
+ d2d8 65 ADC  [78]
+ d2da 20 JSR  [f86a]
+ d2dd c8 INY 
+ d2de 20 JSR  [f878]
+ d2e1 65 ADC  [78]
+ d2e3 20 JSR  [f87d]
+ d2e6 c8 INY 
+ d2e7 a9 LDA  #40
+ d2e9 85 STA  [78]
+ d2eb 20 JSR  [f889]
+ d2ee c5 CMP  [78]
+ d2f0 20 JSR  [f88e]
+ d2f3 c8 INY 
+ d2f4 48 PHA 
+ d2f5 a9 LDA  #3f
+ d2f7 85 STA  [78]
+ d2f9 68 PLA 
+ d2fa 20 JSR  [f89a]
+ d2fd c5 CMP  [78]
+ d2ff 20 JSR  [f89c]
+ d302 c8 INY 
+ d303 48 PHA 
+ d304 a9 LDA  #41
+ d306 85 STA  [78]
+ d308 68 PLA 
+ d309 c5 CMP  [78]
+ d30b 20 JSR  [f8a8]
+ d30e c8 INY 
+ d30f 48 PHA 
+ d310 a9 LDA  #0
+ d312 85 STA  [78]
+ d314 68 PLA 
+ d315 20 JSR  [f8b2]
+ d318 c5 CMP  [78]
+ d31a 20 JSR  [f8b5]
+ d31d c8 INY 
+ d31e 48 PHA 
+ d31f a9 LDA  #80
+ d321 85 STA  [78]
+ d323 68 PLA 
+ d324 c5 CMP  [78]
+ d326 20 JSR  [f8bf]
+ d329 c8 INY 
+ d32a 48 PHA 
+ d32b a9 LDA  #81
+ d32d 85 STA  [78]
+ d32f 68 PLA 
+ d330 c5 CMP  [78]
+ d332 20 JSR  [f8c9]
+ d335 c8 INY 
+ d336 48 PHA 
+ d337 a9 LDA  #7f
+ d339 85 STA  [78]
+ d33b 68 PLA 
+ d33c c5 CMP  [78]
+ d33e 20 JSR  [f8d3]
+ d341 c8 INY 
+ d342 a9 LDA  #40
+ d344 85 STA  [78]
+ d346 20 JSR  [f931]
+ d349 e5 SBC  #ff
+ d34b 20 JSR  [f937]
+ d34e c8 INY 
+ d34f a9 LDA  #3f
+ d351 85 STA  [78]
+ d353 20 JSR  [f947]
+ d356 e5 SBC  #ff
+ d358 20 JSR  [f94c]
+ d35b c8 INY 
+ d35c a9 LDA  #41
+ d35e 85 STA  [78]
+ d360 20 JSR  [f95c]
+ d363 e5 SBC  #ff
+ d365 20 JSR  [f962]
+ d368 c8 INY 
+ d369 a9 LDA  #0
+ d36b 85 STA  [78]
+ d36d 20 JSR  [f972]
+ d370 e5 SBC  #ff
+ d372 20 JSR  [f976]
+ d375 c8 INY 
+ d376 a9 LDA  #7f
+ d378 85 STA  [78]
+ d37a 20 JSR  [f980]
+ d37d e5 SBC  #ff
+ d37f 20 JSR  [f984]
+ d382 c8 INY 
+ d383 a9 LDA  #40
+ d385 85 STA  [78]
+ d387 20 JSR  [f889]
+ d38a aa TAX 
+ d38b e4 CPX  [78]
+ d38d 20 JSR  [f88e]
+ d390 c8 INY 
+ d391 a9 LDA  #3f
+ d393 85 STA  [78]
+ d395 20 JSR  [f89a]
+ d398 e4 CPX  [78]
+ d39a 20 JSR  [f89c]
+ d39d c8 INY 
+ d39e a9 LDA  #41
+ d3a0 85 STA  [78]
+ d3a2 e4 CPX  [78]
+ d3a4 20 JSR  [f8a8]
+ d3a7 c8 INY 
+ d3a8 a9 LDA  #0
+ d3aa 85 STA  [78]
+ d3ac 20 JSR  [f8b2]
+ d3af aa TAX 
+ d3b0 e4 CPX  [78]
+ d3b2 20 JSR  [f8b5]
+ d3b5 c8 INY 
+ d3b6 a9 LDA  #80
+ d3b8 85 STA  [78]
+ d3ba e4 CPX  [78]
+ d3bc 20 JSR  [f8bf]
+ d3bf c8 INY 
+ d3c0 a9 LDA  #81
+ d3c2 85 STA  [78]
+ d3c4 e4 CPX  [78]
+ d3c6 20 JSR  [f8c9]
+ d3c9 c8 INY 
+ d3ca a9 LDA  #7f
+ d3cc 85 STA  [78]
+ d3ce e4 CPX  [78]
+ d3d0 20 JSR  [f8d3]
+ d3d3 c8 INY 
+ d3d4 98 TYA 
+ d3d5 aa TAX 
+ d3d6 a9 LDA  #40
+ d3d8 85 STA  [78]
+ d3da 20 JSR  [f8dd]
+ d3dd c4 CPY  [78]
+ d3df 20 JSR  [f8e2]
+ d3e2 e8 INX 
+ d3e3 a9 LDA  #3f
+ d3e5 85 STA  [78]
+ d3e7 20 JSR  [f8ee]
+ d3ea c4 CPY  [78]
+ d3ec 20 JSR  [f8f0]
+ d3ef e8 INX 
+ d3f0 a9 LDA  #41
+ d3f2 85 STA  [78]
+ d3f4 c4 CPY  [78]
+ d3f6 20 JSR  [f8fc]
+ d3f9 e8 INX 
+ d3fa a9 LDA  #0
+ d3fc 85 STA  [78]
+ d3fe 20 JSR  [f906]
+ d401 c4 CPY  [78]
+ d403 20 JSR  [f909]
+ d406 e8 INX 
+ d407 a9 LDA  #80
+ d409 85 STA  [78]
+ d40b c4 CPY  [78]
+ d40d 20 JSR  [f913]
+ d410 e8 INX 
+ d411 a9 LDA  #81
+ d413 85 STA  [78]
+ d415 c4 CPY  [78]
+ d417 20 JSR  [f91d]
+ d41a e8 INX 
+ d41b a9 LDA  #7f
+ d41d 85 STA  [78]
+ d41f c4 CPY  [78]
+ d421 20 JSR  [f927]
+ d424 e8 INX 
+ d425 8a TXA 
+ d426 a8 TAY 
+ d427 20 JSR  [f990]
+ d42a 85 STA  [78]
+ d42c 46 LSR  [78]
+ d42e a5 LDA  [78]
+ d430 20 JSR  [f99d]
+ d433 c8 INY 
+ d434 85 STA  [78]
+ d436 46 LSR  [78]
+ d438 a5 LDA  [78]
+ d43a 20 JSR  [f9ad]
+ d43d c8 INY 
+ d43e 20 JSR  [f9bd]
+ d441 85 STA  [78]
+ d443 06 ASL  [78]
+ d445 a5 LDA  [78]
+ d447 20 JSR  [f9c3]
+ d44a c8 INY 
+ d44b 85 STA  [78]
+ d44d 06 ASL  [78]
+ d44f a5 LDA  [78]
+ d451 20 JSR  [f9d4]
+ d454 c8 INY 
+ d455 20 JSR  [f9e4]
+ d458 85 STA  [78]
+ d45a 66 ROR  [78]
+ d45c a5 LDA  [78]
+ d45e 20 JSR  [f9ea]
+ d461 c8 INY 
+ d462 85 STA  [78]
+ d464 66 ROR  [78]
+ d466 a5 LDA  [78]
+ d468 20 JSR  [f9fb]
+ d46b c8 INY 
+ d46c 20 JSR  [fa0a]
+ d46f 85 STA  [78]
+ d471 26 ROL  [78]
+ d473 a5 LDA  [78]
+ d475 20 JSR  [fa10]
+ d478 c8 INY 
+ d479 85 STA  [78]
+ d47b 26 ROL  [78]
+ d47d a5 LDA  [78]
+ d47f 20 JSR  [fa21]
+ d482 a9 LDA  #ff
+ d484 85 STA  [78]
+ d486 85 STA  [1]
+ d488 24 BIT  [1]
+ d48a 38 SEC 
+ d48b e6 INC  [78]
+ d48d d0 BNE  [d49b]
+ d48f 30 BMI  [d49b]
+ d491 50 BVC  [d49b]
+ d493 90 BCC  [d49b]
+ d495 a5 LDA  [78]
+ d497 c9 CMP  #0
+ d499 f0 BEQ  [d49f]
+ d49b a9 LDA  #ab
+ d49d 85 STA  [0]
+ d49f a9 LDA  #7f
+ d4a1 85 STA  [78]
+ d4a3 b8 CLV 
+ d4a4 18 CLC 
+ d4a5 e6 INC  [78]
+ d4a7 f0 BEQ  [d4b5]
+ d4a9 10 BPL  [d4b5]
+ d4ab 70 BVS  [d4b5]
+ d4ad b0 BCS  [d4b5]
+ d4af a5 LDA  [78]
+ d4b1 c9 CMP  #80
+ d4b3 f0 BEQ  [d4b9]
+ d4b5 a9 LDA  #ac
+ d4b7 85 STA  [0]
+ d4b9 a9 LDA  #0
+ d4bb 85 STA  [78]
+ d4bd 24 BIT  [1]
+ d4bf 38 SEC 
+ d4c0 c6 DEC  [78]
+ d4c2 f0 BEQ  [d4d0]
+ d4c4 10 BPL  [d4d0]
+ d4c6 50 BVC  [d4d0]
+ d4c8 90 BCC  [d4d0]
+ d4ca a5 LDA  [78]
+ d4cc c9 CMP  #ff
+ d4ce f0 BEQ  [d4d4]
+ d4d0 a9 LDA  #ad
+ d4d2 85 STA  [0]
+ d4d4 a9 LDA  #80
+ d4d6 85 STA  [78]
+ d4d8 b8 CLV 
+ d4d9 18 CLC 
+ d4da c6 DEC  [78]
+ d4dc f0 BEQ  [d4ea]
+ d4de 30 BMI  [d4ea]
+ d4e0 70 BVS  [d4ea]
+ d4e2 b0 BCS  [d4ea]
+ d4e4 a5 LDA  [78]
+ d4e6 c9 CMP  #7f
+ d4e8 f0 BEQ  [d4ee]
+ d4ea a9 LDA  #ae
+ d4ec 85 STA  [0]
+ d4ee a9 LDA  #1
+ d4f0 85 STA  [78]
+ d4f2 c6 DEC  [78]
+ d4f4 f0 BEQ  [d4fa]
+ d4f6 a9 LDA  #af
+ d4f8 85 STA  [0]
+ d4fa 60 RTS 
+ d4fb a9 LDA  #55
+ d4fd 8d STA  [678]
+ d500 a9 LDA  #ff
+ d502 85 STA  [1]
+ d504 24 BIT  [1]
+ d506 a0 LDY  #11
+ d508 a2 LDX  #23
+ d50a a9 LDA  #0
+ d50c ad LDA  [678]
+ d50f f0 BEQ  [d521]
+ d511 30 BMI  [d521]
+ d513 c9 CMP  #55
+ d515 d0 BNE  [d521]
+ d517 c0 CPY  #11
+ d519 d0 BNE  [d521]
+ d51b e0 CPX  #23
+ d51d 50 BVC  [d521]
+ d51f f0 BEQ  [d525]
+ d521 a9 LDA  #b0
+ d523 85 STA  [0]
+ d525 a9 LDA  #46
+ d527 24 BIT  [1]
+ d529 8d STA  [678]
+ d52c f0 BEQ  [d539]
+ d52e 10 BPL  [d539]
+ d530 50 BVC  [d539]
+ d532 ad LDA  [678]
+ d535 c9 CMP  #46
+ d537 f0 BEQ  [d53d]
+ d539 a9 LDA  #b1
+ d53b 85 STA  [0]
+ d53d a9 LDA  #55
+ d53f 8d STA  [678]
+ d542 24 BIT  [1]
+ d544 a9 LDA  #11
+ d546 a2 LDX  #23
+ d548 a0 LDY  #0
+ d54a ac LDY  [678]
+ d54d f0 BEQ  [d55f]
+ d54f 30 BMI  [d55f]
+ d551 c0 CPY  #55
+ d553 d0 BNE  [d55f]
+ d555 c9 CMP  #11
+ d557 d0 BNE  [d55f]
+ d559 e0 CPX  #23
+ d55b 50 BVC  [d55f]
+ d55d f0 BEQ  [d563]
+ d55f a9 LDA  #b2
+ d561 85 STA  [0]
+ d563 a0 LDY  #46
+ d565 24 BIT  [1]
+ d567 8c STY  [678]
+ d56a f0 BEQ  [d577]
+ d56c 10 BPL  [d577]
+ d56e 50 BVC  [d577]
+ d570 ac LDY  [678]
+ d573 c0 CPY  #46
+ d575 f0 BEQ  [d57b]
+ d577 a9 LDA  #b3
+ d579 85 STA  [0]
+ d57b 24 BIT  [1]
+ d57d a9 LDA  #55
+ d57f 8d STA  [678]
+ d582 a0 LDY  #11
+ d584 a9 LDA  #23
+ d586 a2 LDX  #0
+ d588 ae LDX  [678]
+ d58b f0 BEQ  [d59d]
+ d58d 30 BMI  [d59d]
+ d58f e0 CPX  #55
+ d591 d0 BNE  [d59d]
+ d593 c0 CPY  #11
+ d595 d0 BNE  [d59d]
+ d597 c9 CMP  #23
+ d599 50 BVC  [d59d]
+ d59b f0 BEQ  [d5a1]
+ d59d a9 LDA  #b4
+ d59f 85 STA  [0]
+ d5a1 a2 LDX  #46
+ d5a3 24 BIT  [1]
+ d5a5 8e STX  [678]
+ d5a8 f0 BEQ  [d5b5]
+ d5aa 10 BPL  [d5b5]
+ d5ac 50 BVC  [d5b5]
+ d5ae ae LDX  [678]
+ d5b1 e0 CPX  #46
+ d5b3 f0 BEQ  [d5b9]
+ d5b5 a9 LDA  #b5
+ d5b7 85 STA  [0]
+ d5b9 a9 LDA  #c0
+ d5bb 8d STA  [678]
+ d5be a2 LDX  #33
+ d5c0 a0 LDY  #88
+ d5c2 a9 LDA  #5
+ d5c4 2c BIT  [678]
+ d5c7 10 BPL  [d5d9]
+ d5c9 50 BVC  [d5d9]
+ d5cb d0 BNE  [d5d9]
+ d5cd c9 CMP  #5
+ d5cf d0 BNE  [d5d9]
+ d5d1 e0 CPX  #33
+ d5d3 d0 BNE  [d5d9]
+ d5d5 c0 CPY  #88
+ d5d7 f0 BEQ  [d5dd]
+ d5d9 a9 LDA  #b6
+ d5db 85 STA  [0]
+ d5dd a9 LDA  #3
+ d5df 8d STA  [678]
+ d5e2 a9 LDA  #1
+ d5e4 2c BIT  [678]
+ d5e7 30 BMI  [d5f1]
+ d5e9 70 BVS  [d5f1]
+ d5eb f0 BEQ  [d5f1]
+ d5ed c9 CMP  #1
+ d5ef f0 BEQ  [d5f5]
+ d5f1 a9 LDA  #b7
+ d5f3 85 STA  [0]
+ d5f5 a0 LDY  #b8
+ d5f7 a9 LDA  #aa
+ d5f9 8d STA  [678]
+ d5fc 20 JSR  [f7b6]
+ d5ff 0d ORA  [678]
+ d602 20 JSR  [f7c0]
+ d605 c8 INY 
+ d606 a9 LDA  #0
+ d608 8d STA  [678]
+ d60b 20 JSR  [f7ce]
+ d60e 0d ORA  [678]
+ d611 20 JSR  [f7d3]
+ d614 c8 INY 
+ d615 a9 LDA  #aa
+ d617 8d STA  [678]
+ d61a 20 JSR  [f7df]
+ d61d 2d AND  [678]
+ d620 20 JSR  [f7e5]
+ d623 c8 INY 
+ d624 a9 LDA  #ef
+ d626 8d STA  [678]
+ d629 20 JSR  [f7f1]
+ d62c 2d AND  [678]
+ d62f 20 JSR  [f7f6]
+ d632 c8 INY 
+ d633 a9 LDA  #aa
+ d635 8d STA  [678]
+ d638 20 JSR  [f804]
+ d63b 4d EOR  [678]
+ d63e 20 JSR  [f80a]
+ d641 c8 INY 
+ d642 a9 LDA  #70
+ d644 8d STA  [678]
+ d647 20 JSR  [f818]
+ d64a 4d EOR  [678]
+ d64d 20 JSR  [f81d]
+ d650 c8 INY 
+ d651 a9 LDA  #69
+ d653 8d STA  [678]
+ d656 20 JSR  [f829]
+ d659 6d ADC  [678]
+ d65c 20 JSR  [f82f]
+ d65f c8 INY 
+ d660 20 JSR  [f83d]
+ d663 6d ADC  [678]
+ d666 20 JSR  [f843]
+ d669 c8 INY 
+ d66a a9 LDA  #7f
+ d66c 8d STA  [678]
+ d66f 20 JSR  [f851]
+ d672 6d ADC  [678]
+ d675 20 JSR  [f856]
+ d678 c8 INY 
+ d679 a9 LDA  #80
+ d67b 8d STA  [678]
+ d67e 20 JSR  [f864]
+ d681 6d ADC  [678]
+ d684 20 JSR  [f86a]
+ d687 c8 INY 
+ d688 20 JSR  [f878]
+ d68b 6d ADC  [678]
+ d68e 20 JSR  [f87d]
+ d691 c8 INY 
+ d692 a9 LDA  #40
+ d694 8d STA  [678]
+ d697 20 JSR  [f889]
+ d69a cd CMP  [678]
+ d69d 20 JSR  [f88e]
+ d6a0 c8 INY 
+ d6a1 48 PHA 
+ d6a2 a9 LDA  #3f
+ d6a4 8d STA  [678]
+ d6a7 68 PLA 
+ d6a8 20 JSR  [f89a]
+ d6ab cd CMP  [678]
+ d6ae 20 JSR  [f89c]
+ d6b1 c8 INY 
+ d6b2 48 PHA 
+ d6b3 a9 LDA  #41
+ d6b5 8d STA  [678]
+ d6b8 68 PLA 
+ d6b9 cd CMP  [678]
+ d6bc 20 JSR  [f8a8]
+ d6bf c8 INY 
+ d6c0 48 PHA 
+ d6c1 a9 LDA  #0
+ d6c3 8d STA  [678]
+ d6c6 68 PLA 
+ d6c7 20 JSR  [f8b2]
+ d6ca cd CMP  [678]
+ d6cd 20 JSR  [f8b5]
+ d6d0 c8 INY 
+ d6d1 48 PHA 
+ d6d2 a9 LDA  #80
+ d6d4 8d STA  [678]
+ d6d7 68 PLA 
+ d6d8 cd CMP  [678]
+ d6db 20 JSR  [f8bf]
+ d6de c8 INY 
+ d6df 48 PHA 
+ d6e0 a9 LDA  #81
+ d6e2 8d STA  [678]
+ d6e5 68 PLA 
+ d6e6 cd CMP  [678]
+ d6e9 20 JSR  [f8c9]
+ d6ec c8 INY 
+ d6ed 48 PHA 
+ d6ee a9 LDA  #7f
+ d6f0 8d STA  [678]
+ d6f3 68 PLA 
+ d6f4 cd CMP  [678]
+ d6f7 20 JSR  [f8d3]
+ d6fa c8 INY 
+ d6fb a9 LDA  #40
+ d6fd 8d STA  [678]
+ d700 20 JSR  [f931]
+ d703 ed SBC  #ff
+ d706 20 JSR  [f937]
+ d709 c8 INY 
+ d70a a9 LDA  #3f
+ d70c 8d STA  [678]
+ d70f 20 JSR  [f947]
+ d712 ed SBC  #ff
+ d715 20 JSR  [f94c]
+ d718 c8 INY 
+ d719 a9 LDA  #41
+ d71b 8d STA  [678]
+ d71e 20 JSR  [f95c]
+ d721 ed SBC  #ff
+ d724 20 JSR  [f962]
+ d727 c8 INY 
+ d728 a9 LDA  #0
+ d72a 8d STA  [678]
+ d72d 20 JSR  [f972]
+ d730 ed SBC  #ff
+ d733 20 JSR  [f976]
+ d736 c8 INY 
+ d737 a9 LDA  #7f
+ d739 8d STA  [678]
+ d73c 20 JSR  [f980]
+ d73f ed SBC  #ff
+ d742 20 JSR  [f984]
+ d745 c8 INY 
+ d746 a9 LDA  #40
+ d748 8d STA  [678]
+ d74b 20 JSR  [f889]
+ d74e aa TAX 
+ d74f ec CPX  [678]
+ d752 20 JSR  [f88e]
+ d755 c8 INY 
+ d756 a9 LDA  #3f
+ d758 8d STA  [678]
+ d75b 20 JSR  [f89a]
+ d75e ec CPX  [678]
+ d761 20 JSR  [f89c]
+ d764 c8 INY 
+ d765 a9 LDA  #41
+ d767 8d STA  [678]
+ d76a ec CPX  [678]
+ d76d 20 JSR  [f8a8]
+ d770 c8 INY 
+ d771 a9 LDA  #0
+ d773 8d STA  [678]
+ d776 20 JSR  [f8b2]
+ d779 aa TAX 
+ d77a ec CPX  [678]
+ d77d 20 JSR  [f8b5]
+ d780 c8 INY 
+ d781 a9 LDA  #80
+ d783 8d STA  [678]
+ d786 ec CPX  [678]
+ d789 20 JSR  [f8bf]
+ d78c c8 INY 
+ d78d a9 LDA  #81
+ d78f 8d STA  [678]
+ d792 ec CPX  [678]
+ d795 20 JSR  [f8c9]
+ d798 c8 INY 
+ d799 a9 LDA  #7f
+ d79b 8d STA  [678]
+ d79e ec CPX  [678]
+ d7a1 20 JSR  [f8d3]
+ d7a4 c8 INY 
+ d7a5 98 TYA 
+ d7a6 aa TAX 
+ d7a7 a9 LDA  #40
+ d7a9 8d STA  [678]
+ d7ac 20 JSR  [f8dd]
+ d7af cc CPY  [678]
+ d7b2 20 JSR  [f8e2]
+ d7b5 e8 INX 
+ d7b6 a9 LDA  #3f
+ d7b8 8d STA  [678]
+ d7bb 20 JSR  [f8ee]
+ d7be cc CPY  [678]
+ d7c1 20 JSR  [f8f0]
+ d7c4 e8 INX 
+ d7c5 a9 LDA  #41
+ d7c7 8d STA  [678]
+ d7ca cc CPY  [678]
+ d7cd 20 JSR  [f8fc]
+ d7d0 e8 INX 
+ d7d1 a9 LDA  #0
+ d7d3 8d STA  [678]
+ d7d6 20 JSR  [f906]
+ d7d9 cc CPY  [678]
+ d7dc 20 JSR  [f909]
+ d7df e8 INX 
+ d7e0 a9 LDA  #80
+ d7e2 8d STA  [678]
+ d7e5 cc CPY  [678]
+ d7e8 20 JSR  [f913]
+ d7eb e8 INX 
+ d7ec a9 LDA  #81
+ d7ee 8d STA  [678]
+ d7f1 cc CPY  [678]
+ d7f4 20 JSR  [f91d]
+ d7f7 e8 INX 
+ d7f8 a9 LDA  #7f
+ d7fa 8d STA  [678]
+ d7fd cc CPY  [678]
+ d800 20 JSR  [f927]
+ d803 e8 INX 
+ d804 8a TXA 
+ d805 a8 TAY 
+ d806 20 JSR  [f990]
+ d809 8d STA  [678]
+ d80c 4e LSR  [678]
+ d80f ad LDA  [678]
+ d812 20 JSR  [f99d]
+ d815 c8 INY 
+ d816 8d STA  [678]
+ d819 4e LSR  [678]
+ d81c ad LDA  [678]
+ d81f 20 JSR  [f9ad]
+ d822 c8 INY 
+ d823 20 JSR  [f9bd]
+ d826 8d STA  [678]
+ d829 0e ASL  [678]
+ d82c ad LDA  [678]
+ d82f 20 JSR  [f9c3]
+ d832 c8 INY 
+ d833 8d STA  [678]
+ d836 0e ASL  [678]
+ d839 ad LDA  [678]
+ d83c 20 JSR  [f9d4]
+ d83f c8 INY 
+ d840 20 JSR  [f9e4]
+ d843 8d STA  [678]
+ d846 6e ROR  [678]
+ d849 ad LDA  [678]
+ d84c 20 JSR  [f9ea]
+ d84f c8 INY 
+ d850 8d STA  [678]
+ d853 6e ROR  [678]
+ d856 ad LDA  [678]
+ d859 20 JSR  [f9fb]
+ d85c c8 INY 
+ d85d 20 JSR  [fa0a]
+ d860 8d STA  [678]
+ d863 2e ROL  [678]
+ d866 ad LDA  [678]
+ d869 20 JSR  [fa10]
+ d86c c8 INY 
+ d86d 8d STA  [678]
+ d870 2e ROL  [678]
+ d873 ad LDA  [678]
+ d876 20 JSR  [fa21]
+ d879 a9 LDA  #ff
+ d87b 8d STA  [678]
+ d87e 85 STA  [1]
+ d880 24 BIT  [1]
+ d882 38 SEC 
+ d883 ee INC  [678]
+ d886 d0 BNE  [d895]
+ d888 30 BMI  [d895]
+ d88a 50 BVC  [d895]
+ d88c 90 BCC  [d895]
+ d88e ad LDA  [678]
+ d891 c9 CMP  #0
+ d893 f0 BEQ  [d899]
+ d895 a9 LDA  #e5
+ d897 85 STA  [0]
+ d899 a9 LDA  #7f
+ d89b 8d STA  [678]
+ d89e b8 CLV 
+ d89f 18 CLC 
+ d8a0 ee INC  [678]
+ d8a3 f0 BEQ  [d8b2]
+ d8a5 10 BPL  [d8b2]
+ d8a7 70 BVS  [d8b2]
+ d8a9 b0 BCS  [d8b2]
+ d8ab ad LDA  [678]
+ d8ae c9 CMP  #80
+ d8b0 f0 BEQ  [d8b6]
+ d8b2 a9 LDA  #e6
+ d8b4 85 STA  [0]
+ d8b6 a9 LDA  #0
+ d8b8 8d STA  [678]
+ d8bb 24 BIT  [1]
+ d8bd 38 SEC 
+ d8be ce DEC  [678]
+ d8c1 f0 BEQ  [d8d0]
+ d8c3 10 BPL  [d8d0]
+ d8c5 50 BVC  [d8d0]
+ d8c7 90 BCC  [d8d0]
+ d8c9 ad LDA  [678]
+ d8cc c9 CMP  #ff
+ d8ce f0 BEQ  [d8d4]
+ d8d0 a9 LDA  #e7
+ d8d2 85 STA  [0]
+ d8d4 a9 LDA  #80
+ d8d6 8d STA  [678]
+ d8d9 b8 CLV 
+ d8da 18 CLC 
+ d8db ce DEC  [678]
+ d8de f0 BEQ  [d8ed]
+ d8e0 30 BMI  [d8ed]
+ d8e2 70 BVS  [d8ed]
+ d8e4 b0 BCS  [d8ed]
+ d8e6 ad LDA  [678]
+ d8e9 c9 CMP  #7f
+ d8eb f0 BEQ  [d8f1]
+ d8ed a9 LDA  #e8
+ d8ef 85 STA  [0]
+ d8f1 a9 LDA  #1
+ d8f3 8d STA  [678]
+ d8f6 ce DEC  [678]
+ d8f9 f0 BEQ  [d8ff]
+ d8fb a9 LDA  #e9
+ d8fd 85 STA  [0]
+ d8ff 60 RTS 
+ d900 a9 LDA  #a3
+ d902 85 STA  [33]
+ d904 a9 LDA  #89
+ d906 8d STA  [300]
+ d909 a9 LDA  #12
+ d90b 8d STA  [245]
+ d90e a9 LDA  #ff
+ d910 85 STA  [1]
+ d912 a2 LDX  #65
+ d914 a9 LDA  #0
+ d916 85 STA  [89]
+ d918 a9 LDA  #3
+ d91a 85 STA  [8a]
+ d91c a0 LDY  #0
+ d91e 38 SEC 
+ d91f a9 LDA  #0
+ d921 b8 CLV 
+ d922 b1 LDA  [0]
+ d924 f0 BEQ  [d932]
+ d926 90 BCC  [d932]
+ d928 70 BVS  [d932]
+ d92a c9 CMP  #89
+ d92c d0 BNE  [d932]
+ d92e e0 CPX  #65
+ d930 f0 BEQ  [d936]
+ d932 a9 LDA  #ea
+ d934 85 STA  [0]
+ d936 a9 LDA  #ff
+ d938 85 STA  [97]
+ d93a 85 STA  [98]
+ d93c 24 BIT  [98]
+ d93e a0 LDY  #34
+ d940 b1 LDA  [34]
+ d942 c9 CMP  #a3
+ d944 d0 BNE  [d948]
+ d946 b0 BCS  [d94c]
+ d948 a9 LDA  #eb
+ d94a 85 STA  [0]
+ d94c a5 LDA  [0]
+ d94e 48 PHA 
+ d94f a9 LDA  #46
+ d951 85 STA  [ff]
+ d953 a9 LDA  #1
+ d955 85 STA  [0]
+ d957 a0 LDY  #ff
+ d959 b1 LDA  [ff]
+ d95b c9 CMP  #12
+ d95d f0 BEQ  [d963]
+ d95f 68 PLA 
+ d960 a9 LDA  #ec
+ d962 48 PHA 
+ d963 68 PLA 
+ d964 85 STA  [0]
+ d966 a2 LDX  #ed
+ d968 a9 LDA  #0
+ d96a 85 STA  [33]
+ d96c a9 LDA  #4
+ d96e 85 STA  [34]
+ d970 a0 LDY  #0
+ d972 18 CLC 
+ d973 a9 LDA  #ff
+ d975 85 STA  [1]
+ d977 24 BIT  [1]
+ d979 a9 LDA  #aa
+ d97b 8d STA  [400]
+ d97e a9 LDA  #55
+ d980 11 ORA  [0]
+ d982 b0 BCS  [d98c]
+ d984 10 BPL  [d98c]
+ d986 c9 CMP  #ff
+ d988 d0 BNE  [d98c]
+ d98a 70 BVS  [d98e]
+ d98c 86 STX  [0]
+ d98e e8 INX 
+ d98f 38 SEC 
+ d990 b8 CLV 
+ d991 a9 LDA  #0
+ d993 11 ORA  [0]
+ d995 f0 BEQ  [d99d]
+ d997 70 BVS  [d99d]
+ d999 90 BCC  [d99d]
+ d99b 30 BMI  [d99f]
+ d99d 86 STX  [0]
+ d99f e8 INX 
+ d9a0 18 CLC 
+ d9a1 24 BIT  [1]
+ d9a3 a9 LDA  #55
+ d9a5 31 AND  [0]
+ d9a7 d0 BNE  [d9af]
+ d9a9 50 BVC  [d9af]
+ d9ab b0 BCS  [d9af]
+ d9ad 10 BPL  [d9b1]
+ d9af 86 STX  [0]
+ d9b1 e8 INX 
+ d9b2 38 SEC 
+ d9b3 b8 CLV 
+ d9b4 a9 LDA  #ef
+ d9b6 8d STA  [400]
+ d9b9 a9 LDA  #f8
+ d9bb 31 AND  [0]
+ d9bd 90 BCC  [d9c7]
+ d9bf 10 BPL  [d9c7]
+ d9c1 c9 CMP  #e8
+ d9c3 d0 BNE  [d9c7]
+ d9c5 50 BVC  [d9c9]
+ d9c7 86 STX  [0]
+ d9c9 e8 INX 
+ d9ca 18 CLC 
+ d9cb 24 BIT  [1]
+ d9cd a9 LDA  #aa
+ d9cf 8d STA  [400]
+ d9d2 a9 LDA  #5f
+ d9d4 51 EOR  [0]
+ d9d6 b0 BCS  [d9e0]
+ d9d8 10 BPL  [d9e0]
+ d9da c9 CMP  #f5
+ d9dc d0 BNE  [d9e0]
+ d9de 70 BVS  [d9e2]
+ d9e0 86 STX  [0]
+ d9e2 e8 INX 
+ d9e3 38 SEC 
+ d9e4 b8 CLV 
+ d9e5 a9 LDA  #70
+ d9e7 8d STA  [400]
+ d9ea 51 EOR  [0]
+ d9ec d0 BNE  [d9f4]
+ d9ee 70 BVS  [d9f4]
+ d9f0 90 BCC  [d9f4]
+ d9f2 10 BPL  [d9f6]
+ d9f4 86 STX  [0]
+ d9f6 e8 INX 
+ d9f7 18 CLC 
+ d9f8 24 BIT  [1]
+ d9fa a9 LDA  #69
+ d9fc 8d STA  [400]
+ d9ff a9 LDA  #0
+ da01 71 ADC  [0]
+ da03 30 BMI  [da0d]
+ da05 b0 BCS  [da0d]
+ da07 c9 CMP  #69
+ da09 d0 BNE  [da0d]
+ da0b 50 BVC  [da0f]
+ da0d 86 STX  [0]
+ da0f e8 INX 
+ da10 38 SEC 
+ da11 24 BIT  [1]
+ da13 a9 LDA  #0
+ da15 71 ADC  [0]
+ da17 30 BMI  [da21]
+ da19 b0 BCS  [da21]
+ da1b c9 CMP  #6a
+ da1d d0 BNE  [da21]
+ da1f 50 BVC  [da23]
+ da21 86 STX  [0]
+ da23 e8 INX 
+ da24 38 SEC 
+ da25 b8 CLV 
+ da26 a9 LDA  #7f
+ da28 8d STA  [400]
+ da2b 71 ADC  [0]
+ da2d 10 BPL  [da37]
+ da2f b0 BCS  [da37]
+ da31 c9 CMP  #ff
+ da33 d0 BNE  [da37]
+ da35 70 BVS  [da39]
+ da37 86 STX  [0]
+ da39 e8 INX 
+ da3a 18 CLC 
+ da3b 24 BIT  [1]
+ da3d a9 LDA  #80
+ da3f 8d STA  [400]
+ da42 a9 LDA  #7f
+ da44 71 ADC  [0]
+ da46 10 BPL  [da50]
+ da48 b0 BCS  [da50]
+ da4a c9 CMP  #ff
+ da4c d0 BNE  [da50]
+ da4e 50 BVC  [da52]
+ da50 86 STX  [0]
+ da52 e8 INX 
+ da53 38 SEC 
+ da54 b8 CLV 
+ da55 a9 LDA  #80
+ da57 8d STA  [400]
+ da5a a9 LDA  #7f
+ da5c 71 ADC  [0]
+ da5e d0 BNE  [da66]
+ da60 30 BMI  [da66]
+ da62 70 BVS  [da66]
+ da64 b0 BCS  [da68]
+ da66 86 STX  [0]
+ da68 e8 INX 
+ da69 24 BIT  [1]
+ da6b a9 LDA  #40
+ da6d 8d STA  [400]
+ da70 d1 CMP  [0]
+ da72 30 BMI  [da7a]
+ da74 90 BCC  [da7a]
+ da76 d0 BNE  [da7a]
+ da78 70 BVS  [da7c]
+ da7a 86 STX  [0]
+ da7c e8 INX 
+ da7d b8 CLV 
+ da7e ce DEC  [400]
+ da81 d1 CMP  [0]
+ da83 f0 BEQ  [da8b]
+ da85 30 BMI  [da8b]
+ da87 90 BCC  [da8b]
+ da89 50 BVC  [da8d]
+ da8b 86 STX  [0]
+ da8d e8 INX 
+ da8e ee INC  [400]
+ da91 ee INC  [400]
+ da94 d1 CMP  [0]
+ da96 f0 BEQ  [da9a]
+ da98 30 BMI  [da9c]
+ da9a 86 STX  [0]
+ da9c e8 INX 
+ da9d a9 LDA  #0
+ da9f 8d STA  [400]
+ daa2 a9 LDA  #80
+ daa4 d1 CMP  [0]
+ daa6 f0 BEQ  [daac]
+ daa8 10 BPL  [daac]
+ daaa b0 BCS  [daae]
+ daac 86 STX  [0]
+ daae e8 INX 
+ daaf a0 LDY  #80
+ dab1 8c STY  [400]
+ dab4 a0 LDY  #0
+ dab6 d1 CMP  [0]
+ dab8 d0 BNE  [dabe]
+ daba 30 BMI  [dabe]
+ dabc b0 BCS  [dac0]
+ dabe 86 STX  [0]
+ dac0 e8 INX 
+ dac1 ee INC  [400]
+ dac4 d1 CMP  [0]
+ dac6 b0 BCS  [dacc]
+ dac8 f0 BEQ  [dacc]
+ daca 30 BMI  [dace]
+ dacc 86 STX  [0]
+ dace e8 INX 
+ dacf ce DEC  [400]
+ dad2 ce DEC  [400]
+ dad5 d1 CMP  [0]
+ dad7 90 BCC  [dadd]
+ dad9 f0 BEQ  [dadd]
+ dadb 10 BPL  [dadf]
+ dadd 86 STX  [0]
+ dadf 60 RTS 
+ dae0 a9 LDA  #0
+ dae2 85 STA  [33]
+ dae4 a9 LDA  #4
+ dae6 85 STA  [34]
+ dae8 a0 LDY  #0
+ daea a2 LDX  #1
+ daec 24 BIT  [1]
+ daee a9 LDA  #40
+ daf0 8d STA  [400]
+ daf3 38 SEC 
+ daf4 f1 SBC  #ff
+ daf6 30 BMI  [db02]
+ daf8 90 BCC  [db02]
+ dafa d0 BNE  [db02]
+ dafc 70 BVS  [db02]
+ dafe c9 CMP  #0
+ db00 f0 BEQ  [db04]
+ db02 86 STX  [0]
+ db04 e8 INX 
+ db05 b8 CLV 
+ db06 38 SEC 
+ db07 a9 LDA  #40
+ db09 ce DEC  [400]
+ db0c f1 SBC  #ff
+ db0e f0 BEQ  [db1a]
+ db10 30 BMI  [db1a]
+ db12 90 BCC  [db1a]
+ db14 70 BVS  [db1a]
+ db16 c9 CMP  #1
+ db18 f0 BEQ  [db1c]
+ db1a 86 STX  [0]
+ db1c e8 INX 
+ db1d a9 LDA  #40
+ db1f 38 SEC 
+ db20 24 BIT  [1]
+ db22 ee INC  [400]
+ db25 ee INC  [400]
+ db28 f1 SBC  #ff
+ db2a b0 BCS  [db36]
+ db2c f0 BEQ  [db36]
+ db2e 10 BPL  [db36]
+ db30 70 BVS  [db36]
+ db32 c9 CMP  #ff
+ db34 f0 BEQ  [db38]
+ db36 86 STX  [0]
+ db38 e8 INX 
+ db39 18 CLC 
+ db3a a9 LDA  #0
+ db3c 8d STA  [400]
+ db3f a9 LDA  #80
+ db41 f1 SBC  #ff
+ db43 90 BCC  [db49]
+ db45 c9 CMP  #7f
+ db47 f0 BEQ  [db4b]
+ db49 86 STX  [0]
+ db4b e8 INX 
+ db4c 38 SEC 
+ db4d a9 LDA  #7f
+ db4f 8d STA  [400]
+ db52 a9 LDA  #81
+ db54 f1 SBC  #ff
+ db56 50 BVC  [db5e]
+ db58 90 BCC  [db5e]
+ db5a c9 CMP  #2
+ db5c f0 BEQ  [db60]
+ db5e 86 STX  [0]
+ db60 e8 INX 
+ db61 a9 LDA  #0
+ db63 a9 LDA  #87
+ db65 91 STA  [0]
+ db67 ad LDA  [400]
+ db6a c9 CMP  #87
+ db6c f0 BEQ  [db70]
+ db6e 86 STX  [0]
+ db70 e8 INX 
+ db71 a9 LDA  #7e
+ db73 8d STA  [200]
+ db76 a9 LDA  #db
+ db78 8d STA  [201]
+ db7b 6c JMP  [[200]]
+ db7e a9 LDA  #0
+ db80 8d STA  [2ff]
+ db83 a9 LDA  #1
+ db85 8d STA  [300]
+ db88 a9 LDA  #3
+ db8a 8d STA  [200]
+ db8d a9 LDA  #a9
+ db8f 8d STA  [100]
+ db92 a9 LDA  #55
+ db94 8d STA  [101]
+ db97 a9 LDA  #60
+ db99 8d STA  [102]
+ db9c a9 LDA  #a9
+ db9e 8d STA  [300]
+ dba1 a9 LDA  #aa
+ dba3 8d STA  [301]
+ dba6 a9 LDA  #60
+ dba8 8d STA  [302]
+ dbab 20 JSR  [dbb5]
+ dbae c9 CMP  #aa
+ dbb0 f0 BEQ  [dbb4]
+ dbb2 86 STX  [0]
+ dbb4 60 RTS 
+ dbb5 6c JMP  [[2ff]]
+ dbb8 a9 LDA  #ff
+ dbba 85 STA  [1]
+ dbbc a9 LDA  #aa
+ dbbe 85 STA  [33]
+ dbc0 a9 LDA  #bb
+ dbc2 85 STA  [89]
+ dbc4 a2 LDX  #0
+ dbc6 a9 LDA  #66
+ dbc8 24 BIT  [1]
+ dbca 38 SEC 
+ dbcb a0 LDY  #0
+ dbcd b4 LDY  [33]
+ dbcf 10 BPL  [dbe3]
+ dbd1 f0 BEQ  [dbe3]
+ dbd3 50 BVC  [dbe3]
+ dbd5 90 BCC  [dbe3]
+ dbd7 c9 CMP  #66
+ dbd9 d0 BNE  [dbe3]
+ dbdb e0 CPX  #0
+ dbdd d0 BNE  [dbe3]
+ dbdf c0 CPY  #aa
+ dbe1 f0 BEQ  [dbe7]
+ dbe3 a9 LDA  #8
+ dbe5 85 STA  [0]
+ dbe7 a2 LDX  #8a
+ dbe9 a9 LDA  #66
+ dbeb b8 CLV 
+ dbec 18 CLC 
+ dbed a0 LDY  #0
+ dbef b4 LDY  [89]
+ dbf1 10 BPL  [dc05]
+ dbf3 f0 BEQ  [dc05]
+ dbf5 70 BVS  [dc05]
+ dbf7 b0 BCS  [dc05]
+ dbf9 c0 CPY  #bb
+ dbfb d0 BNE  [dc05]
+ dbfd c9 CMP  #66
+ dbff d0 BNE  [dc05]
+ dc01 e0 CPX  #8a
+ dc03 f0 BEQ  [dc09]
+ dc05 a9 LDA  #9
+ dc07 85 STA  [0]
+ dc09 24 BIT  [1]
+ dc0b 38 SEC 
+ dc0c a0 LDY  #44
+ dc0e a2 LDX  #0
+ dc10 94 STY  [33]
+ dc12 a5 LDA  [33]
+ dc14 90 BCC  [dc2e]
+ dc16 c9 CMP  #44
+ dc18 d0 BNE  [dc2e]
+ dc1a 50 BVC  [dc2e]
+ dc1c 18 CLC 
+ dc1d b8 CLV 
+ dc1e a0 LDY  #99
+ dc20 a2 LDX  #80
+ dc22 94 STY  [5]
+ dc24 a5 LDA  [5]
+ dc26 b0 BCS  [dc2e]
+ dc28 c9 CMP  #99
+ dc2a d0 BNE  [dc2e]
+ dc2c 50 BVC  [dc32]
+ dc2e a9 LDA  #a
+ dc30 85 STA  [0]
+ dc32 a0 LDY  #b
+ dc34 a9 LDA  #aa
+ dc36 a2 LDX  #78
+ dc38 85 STA  [78]
+ dc3a 20 JSR  [f7b6]
+ dc3d 15 ORA  [78]
+ dc3f 20 JSR  [f7c0]
+ dc42 c8 INY 
+ dc43 a9 LDA  #0
+ dc45 85 STA  [78]
+ dc47 20 JSR  [f7ce]
+ dc4a 15 ORA  [78]
+ dc4c 20 JSR  [f7d3]
+ dc4f c8 INY 
+ dc50 a9 LDA  #aa
+ dc52 85 STA  [78]
+ dc54 20 JSR  [f7df]
+ dc57 35 AND  [78]
+ dc59 20 JSR  [f7e5]
+ dc5c c8 INY 
+ dc5d a9 LDA  #ef
+ dc5f 85 STA  [78]
+ dc61 20 JSR  [f7f1]
+ dc64 35 AND  [78]
+ dc66 20 JSR  [f7f6]
+ dc69 c8 INY 
+ dc6a a9 LDA  #aa
+ dc6c 85 STA  [78]
+ dc6e 20 JSR  [f804]
+ dc71 55 EOR  [78]
+ dc73 20 JSR  [f80a]
+ dc76 c8 INY 
+ dc77 a9 LDA  #70
+ dc79 85 STA  [78]
+ dc7b 20 JSR  [f818]
+ dc7e 55 EOR  [78]
+ dc80 20 JSR  [f81d]
+ dc83 c8 INY 
+ dc84 a9 LDA  #69
+ dc86 85 STA  [78]
+ dc88 20 JSR  [f829]
+ dc8b 75 ADC  [78]
+ dc8d 20 JSR  [f82f]
+ dc90 c8 INY 
+ dc91 20 JSR  [f83d]
+ dc94 75 ADC  [78]
+ dc96 20 JSR  [f843]
+ dc99 c8 INY 
+ dc9a a9 LDA  #7f
+ dc9c 85 STA  [78]
+ dc9e 20 JSR  [f851]
+ dca1 75 ADC  [78]
+ dca3 20 JSR  [f856]
+ dca6 c8 INY 
+ dca7 a9 LDA  #80
+ dca9 85 STA  [78]
+ dcab 20 JSR  [f864]
+ dcae 75 ADC  [78]
+ dcb0 20 JSR  [f86a]
+ dcb3 c8 INY 
+ dcb4 20 JSR  [f878]
+ dcb7 75 ADC  [78]
+ dcb9 20 JSR  [f87d]
+ dcbc c8 INY 
+ dcbd a9 LDA  #40
+ dcbf 85 STA  [78]
+ dcc1 20 JSR  [f889]
+ dcc4 d5 CMP  [78]
+ dcc6 20 JSR  [f88e]
+ dcc9 c8 INY 
+ dcca 48 PHA 
+ dccb a9 LDA  #3f
+ dccd 85 STA  [78]
+ dccf 68 PLA 
+ dcd0 20 JSR  [f89a]
+ dcd3 d5 CMP  [78]
+ dcd5 20 JSR  [f89c]
+ dcd8 c8 INY 
+ dcd9 48 PHA 
+ dcda a9 LDA  #41
+ dcdc 85 STA  [78]
+ dcde 68 PLA 
+ dcdf d5 CMP  [78]
+ dce1 20 JSR  [f8a8]
+ dce4 c8 INY 
+ dce5 48 PHA 
+ dce6 a9 LDA  #0
+ dce8 85 STA  [78]
+ dcea 68 PLA 
+ dceb 20 JSR  [f8b2]
+ dcee d5 CMP  [78]
+ dcf0 20 JSR  [f8b5]
+ dcf3 c8 INY 
+ dcf4 48 PHA 
+ dcf5 a9 LDA  #80
+ dcf7 85 STA  [78]
+ dcf9 68 PLA 
+ dcfa d5 CMP  [78]
+ dcfc 20 JSR  [f8bf]
+ dcff c8 INY 
+ dd00 48 PHA 
+ dd01 a9 LDA  #81
+ dd03 85 STA  [78]
+ dd05 68 PLA 
+ dd06 d5 CMP  [78]
+ dd08 20 JSR  [f8c9]
+ dd0b c8 INY 
+ dd0c 48 PHA 
+ dd0d a9 LDA  #7f
+ dd0f 85 STA  [78]
+ dd11 68 PLA 
+ dd12 d5 CMP  [78]
+ dd14 20 JSR  [f8d3]
+ dd17 c8 INY 
+ dd18 a9 LDA  #40
+ dd1a 85 STA  [78]
+ dd1c 20 JSR  [f931]
+ dd1f f5 SBC  #ff
+ dd21 20 JSR  [f937]
+ dd24 c8 INY 
+ dd25 a9 LDA  #3f
+ dd27 85 STA  [78]
+ dd29 20 JSR  [f947]
+ dd2c f5 SBC  #ff
+ dd2e 20 JSR  [f94c]
+ dd31 c8 INY 
+ dd32 a9 LDA  #41
+ dd34 85 STA  [78]
+ dd36 20 JSR  [f95c]
+ dd39 f5 SBC  #ff
+ dd3b 20 JSR  [f962]
+ dd3e c8 INY 
+ dd3f a9 LDA  #0
+ dd41 85 STA  [78]
+ dd43 20 JSR  [f972]
+ dd46 f5 SBC  #ff
+ dd48 20 JSR  [f976]
+ dd4b c8 INY 
+ dd4c a9 LDA  #7f
+ dd4e 85 STA  [78]
+ dd50 20 JSR  [f980]
+ dd53 f5 SBC  #ff
+ dd55 20 JSR  [f984]
+ dd58 a9 LDA  #aa
+ dd5a 85 STA  [33]
+ dd5c a9 LDA  #bb
+ dd5e 85 STA  [89]
+ dd60 a2 LDX  #0
+ dd62 a0 LDY  #66
+ dd64 24 BIT  [1]
+ dd66 38 SEC 
+ dd67 a9 LDA  #0
+ dd69 b5 LDA  [33]
+ dd6b 10 BPL  [dd7f]
+ dd6d f0 BEQ  [dd7f]
+ dd6f 50 BVC  [dd7f]
+ dd71 90 BCC  [dd7f]
+ dd73 c0 CPY  #66
+ dd75 d0 BNE  [dd7f]
+ dd77 e0 CPX  #0
+ dd79 d0 BNE  [dd7f]
+ dd7b c9 CMP  #aa
+ dd7d f0 BEQ  [dd83]
+ dd7f a9 LDA  #22
+ dd81 85 STA  [0]
+ dd83 a2 LDX  #8a
+ dd85 a0 LDY  #66
+ dd87 b8 CLV 
+ dd88 18 CLC 
+ dd89 a9 LDA  #0
+ dd8b b5 LDA  [89]
+ dd8d 10 BPL  [dda1]
+ dd8f f0 BEQ  [dda1]
+ dd91 70 BVS  [dda1]
+ dd93 b0 BCS  [dda1]
+ dd95 c9 CMP  #bb
+ dd97 d0 BNE  [dda1]
+ dd99 c0 CPY  #66
+ dd9b d0 BNE  [dda1]
+ dd9d e0 CPX  #8a
+ dd9f f0 BEQ  [dda5]
+ dda1 a9 LDA  #23
+ dda3 85 STA  [0]
+ dda5 24 BIT  [1]
+ dda7 38 SEC 
+ dda8 a9 LDA  #44
+ ddaa a2 LDX  #0
+ ddac 95 STA  [33]
+ ddae a5 LDA  [33]
+ ddb0 90 BCC  [ddca]
+ ddb2 c9 CMP  #44
+ ddb4 d0 BNE  [ddca]
+ ddb6 50 BVC  [ddca]
+ ddb8 18 CLC 
+ ddb9 b8 CLV 
+ ddba a9 LDA  #99
+ ddbc a2 LDX  #80
+ ddbe 95 STA  [5]
+ ddc0 a5 LDA  [5]
+ ddc2 b0 BCS  [ddca]
+ ddc4 c9 CMP  #99
+ ddc6 d0 BNE  [ddca]
+ ddc8 50 BVC  [ddce]
+ ddca a9 LDA  #24
+ ddcc 85 STA  [0]
+ ddce a0 LDY  #25
+ ddd0 a2 LDX  #78
+ ddd2 20 JSR  [f990]
+ ddd5 95 STA  [78]
+ ddd7 56 LSR  [78]
+ ddd9 b5 LDA  [78]
+ dddb 20 JSR  [f99d]
+ ddde c8 INY 
+ dddf 95 STA  [78]
+ dde1 56 LSR  [78]
+ dde3 b5 LDA  [78]
+ dde5 20 JSR  [f9ad]
+ dde8 c8 INY 
+ dde9 20 JSR  [f9bd]
+ ddec 95 STA  [78]
+ ddee 16 ASL  [78]
+ ddf0 b5 LDA  [78]
+ ddf2 20 JSR  [f9c3]
+ ddf5 c8 INY 
+ ddf6 95 STA  [78]
+ ddf8 16 ASL  [78]
+ ddfa b5 LDA  [78]
+ ddfc 20 JSR  [f9d4]
+ ddff c8 INY 
+ de00 20 JSR  [f9e4]
+ de03 95 STA  [78]
+ de05 76 ROR  [78]
+ de07 b5 LDA  [78]
+ de09 20 JSR  [f9ea]
+ de0c c8 INY 
+ de0d 95 STA  [78]
+ de0f 76 ROR  [78]
+ de11 b5 LDA  [78]
+ de13 20 JSR  [f9fb]
+ de16 c8 INY 
+ de17 20 JSR  [fa0a]
+ de1a 95 STA  [78]
+ de1c 36 ROL  [78]
+ de1e b5 LDA  [78]
+ de20 20 JSR  [fa10]
+ de23 c8 INY 
+ de24 95 STA  [78]
+ de26 36 ROL  [78]
+ de28 b5 LDA  [78]
+ de2a 20 JSR  [fa21]
+ de2d a9 LDA  #ff
+ de2f 95 STA  [78]
+ de31 85 STA  [1]
+ de33 24 BIT  [1]
+ de35 38 SEC 
+ de36 f6 INC  [78]
+ de38 d0 BNE  [de46]
+ de3a 30 BMI  [de46]
+ de3c 50 BVC  [de46]
+ de3e 90 BCC  [de46]
+ de40 b5 LDA  [78]
+ de42 c9 CMP  #0
+ de44 f0 BEQ  [de4a]
+ de46 a9 LDA  #2d
+ de48 85 STA  [0]
+ de4a a9 LDA  #7f
+ de4c 95 STA  [78]
+ de4e b8 CLV 
+ de4f 18 CLC 
+ de50 f6 INC  [78]
+ de52 f0 BEQ  [de60]
+ de54 10 BPL  [de60]
+ de56 70 BVS  [de60]
+ de58 b0 BCS  [de60]
+ de5a b5 LDA  [78]
+ de5c c9 CMP  #80
+ de5e f0 BEQ  [de64]
+ de60 a9 LDA  #2e
+ de62 85 STA  [0]
+ de64 a9 LDA  #0
+ de66 95 STA  [78]
+ de68 24 BIT  [1]
+ de6a 38 SEC 
+ de6b d6 DEC  [78]
+ de6d f0 BEQ  [de7b]
+ de6f 10 BPL  [de7b]
+ de71 50 BVC  [de7b]
+ de73 90 BCC  [de7b]
+ de75 b5 LDA  [78]
+ de77 c9 CMP  #ff
+ de79 f0 BEQ  [de7f]
+ de7b a9 LDA  #2f
+ de7d 85 STA  [0]
+ de7f a9 LDA  #80
+ de81 95 STA  [78]
+ de83 b8 CLV 
+ de84 18 CLC 
+ de85 d6 DEC  [78]
+ de87 f0 BEQ  [de95]
+ de89 30 BMI  [de95]
+ de8b 70 BVS  [de95]
+ de8d b0 BCS  [de95]
+ de8f b5 LDA  [78]
+ de91 c9 CMP  #7f
+ de93 f0 BEQ  [de99]
+ de95 a9 LDA  #30
+ de97 85 STA  [0]
+ de99 a9 LDA  #1
+ de9b 95 STA  [78]
+ de9d d6 DEC  [78]
+ de9f f0 BEQ  [dea5]
+ dea1 a9 LDA  #31
+ dea3 85 STA  [0]
+ dea5 a9 LDA  #33
+ dea7 85 STA  [78]
+ dea9 a9 LDA  #44
+ deab a0 LDY  #78
+ dead a2 LDX  #0
+ deaf 38 SEC 
+ deb0 24 BIT  [1]
+ deb2 b6 LDX  [78]
+ deb4 90 BCC  [dec8]
+ deb6 50 BVC  [dec8]
+ deb8 30 BMI  [dec8]
+ deba f0 BEQ  [dec8]
+ debc e0 CPX  #33
+ debe d0 BNE  [dec8]
+ dec0 c0 CPY  #78
+ dec2 d0 BNE  [dec8]
+ dec4 c9 CMP  #44
+ dec6 f0 BEQ  [decc]
+ dec8 a9 LDA  #32
+ deca 85 STA  [0]
+ decc a9 LDA  #97
+ dece 85 STA  [7f]
+ ded0 a9 LDA  #47
+ ded2 a0 LDY  #ff
+ ded4 a2 LDX  #0
+ ded6 18 CLC 
+ ded7 b8 CLV 
+ ded8 b6 LDX  [7f]
+ deda b0 BCS  [deee]
+ dedc 70 BVS  [deee]
+ dede 10 BPL  [deee]
+ dee0 f0 BEQ  [deee]
+ dee2 e0 CPX  #97
+ dee4 d0 BNE  [deee]
+ dee6 c0 CPY  #ff
+ dee8 d0 BNE  [deee]
+ deea c9 CMP  #47
+ deec f0 BEQ  [def2]
+ deee a9 LDA  #33
+ def0 85 STA  [0]
+ def2 a9 LDA  #0
+ def4 85 STA  [7f]
+ def6 a9 LDA  #47
+ def8 a0 LDY  #ff
+ defa a2 LDX  #69
+ defc 18 CLC 
+ defd b8 CLV 
+ defe 96 STX  [7f]
+ df00 b0 BCS  [df1a]
+ df02 70 BVS  [df1a]
+ df04 30 BMI  [df1a]
+ df06 f0 BEQ  [df1a]
+ df08 e0 CPX  #69
+ df0a d0 BNE  [df1a]
+ df0c c0 CPY  #ff
+ df0e d0 BNE  [df1a]
+ df10 c9 CMP  #47
+ df12 d0 BNE  [df1a]
+ df14 a5 LDA  [7f]
+ df16 c9 CMP  #69
+ df18 f0 BEQ  [df1e]
+ df1a a9 LDA  #34
+ df1c 85 STA  [0]
+ df1e a9 LDA  #f5
+ df20 85 STA  [4f]
+ df22 a9 LDA  #47
+ df24 a0 LDY  #4f
+ df26 24 BIT  [1]
+ df28 a2 LDX  #0
+ df2a 38 SEC 
+ df2b 96 STX  [4f]
+ df2d 90 BCC  [df45]
+ df2f 50 BVC  [df45]
+ df31 30 BMI  [df45]
+ df33 d0 BNE  [df45]
+ df35 e0 CPX  #0
+ df37 d0 BNE  [df45]
+ df39 c0 CPY  #4f
+ df3b d0 BNE  [df45]
+ df3d c9 CMP  #47
+ df3f d0 BNE  [df45]
+ df41 a5 LDA  [4f]
+ df43 f0 BEQ  [df49]
+ df45 a9 LDA  #35
+ df47 85 STA  [0]
+ df49 60 RTS 
+ df4a a9 LDA  #89
+ df4c 8d STA  [300]
+ df4f a9 LDA  #a3
+ df51 85 STA  [33]
+ df53 a9 LDA  #12
+ df55 8d STA  [245]
+ df58 a2 LDX  #65
+ df5a a0 LDY  #0
+ df5c 38 SEC 
+ df5d a9 LDA  #0
+ df5f b8 CLV 
+ df60 b9 LDA  [300]
+ df63 f0 BEQ  [df71]
+ df65 90 BCC  [df71]
+ df67 70 BVS  [df71]
+ df69 c9 CMP  #89
+ df6b d0 BNE  [df71]
+ df6d e0 CPX  #65
+ df6f f0 BEQ  [df75]
+ df71 a9 LDA  #36
+ df73 85 STA  [0]
+ df75 a9 LDA  #ff
+ df77 85 STA  [1]
+ df79 24 BIT  [1]
+ df7b a0 LDY  #34
+ df7d b9 LDA  [33]
+ df80 c9 CMP  #a3
+ df82 d0 BNE  [df86]
+ df84 b0 BCS  [df8a]
+ df86 a9 LDA  #37
+ df88 85 STA  [0]
+ df8a a9 LDA  #46
+ df8c 85 STA  [ff]
+ df8e a0 LDY  #ff
+ df90 b9 LDA  [245]
+ df93 c9 CMP  #12
+ df95 f0 BEQ  [df9b]
+ df97 a9 LDA  #38
+ df99 85 STA  [0]
+ df9b a2 LDX  #39
+ df9d 18 CLC 
+ df9e a9 LDA  #ff
+ dfa0 85 STA  [1]
+ dfa2 24 BIT  [1]
+ dfa4 a9 LDA  #aa
+ dfa6 8d STA  [400]
+ dfa9 a9 LDA  #55
+ dfab a0 LDY  #0
+ dfad 19 ORA  [400]
+ dfb0 b0 BCS  [dfba]
+ dfb2 10 BPL  [dfba]
+ dfb4 c9 CMP  #ff
+ dfb6 d0 BNE  [dfba]
+ dfb8 70 BVS  [dfbc]
+ dfba 86 STX  [0]
+ dfbc e8 INX 
+ dfbd 38 SEC 
+ dfbe b8 CLV 
+ dfbf a9 LDA  #0
+ dfc1 19 ORA  [400]
+ dfc4 f0 BEQ  [dfcc]
+ dfc6 70 BVS  [dfcc]
+ dfc8 90 BCC  [dfcc]
+ dfca 30 BMI  [dfce]
+ dfcc 86 STX  [0]
+ dfce e8 INX 
+ dfcf 18 CLC 
+ dfd0 24 BIT  [1]
+ dfd2 a9 LDA  #55
+ dfd4 39 AND  [400]
+ dfd7 d0 BNE  [dfdf]
+ dfd9 50 BVC  [dfdf]
+ dfdb b0 BCS  [dfdf]
+ dfdd 10 BPL  [dfe1]
+ dfdf 86 STX  [0]
+ dfe1 e8 INX 
+ dfe2 38 SEC 
+ dfe3 b8 CLV 
+ dfe4 a9 LDA  #ef
+ dfe6 8d STA  [400]
+ dfe9 a9 LDA  #f8
+ dfeb 39 AND  [400]
+ dfee 90 BCC  [dff8]
+ dff0 10 BPL  [dff8]
+ dff2 c9 CMP  #e8
+ dff4 d0 BNE  [dff8]
+ dff6 50 BVC  [dffa]
+ dff8 86 STX  [0]
+ dffa e8 INX 
+ dffb 18 CLC 
+ dffc 24 BIT  [1]
+ dffe a9 LDA  #aa
+ e000 8d STA  [400]
+ e003 a9 LDA  #5f
+ e005 59 EOR  [400]
+ e008 b0 BCS  [e012]
+ e00a 10 BPL  [e012]
+ e00c c9 CMP  #f5
+ e00e d0 BNE  [e012]
+ e010 70 BVS  [e014]
+ e012 86 STX  [0]
+ e014 e8 INX 
+ e015 38 SEC 
+ e016 b8 CLV 
+ e017 a9 LDA  #70
+ e019 8d STA  [400]
+ e01c 59 EOR  [400]
+ e01f d0 BNE  [e027]
+ e021 70 BVS  [e027]
+ e023 90 BCC  [e027]
+ e025 10 BPL  [e029]
+ e027 86 STX  [0]
+ e029 e8 INX 
+ e02a 18 CLC 
+ e02b 24 BIT  [1]
+ e02d a9 LDA  #69
+ e02f 8d STA  [400]
+ e032 a9 LDA  #0
+ e034 79 ADC  [400]
+ e037 30 BMI  [e041]
+ e039 b0 BCS  [e041]
+ e03b c9 CMP  #69
+ e03d d0 BNE  [e041]
+ e03f 50 BVC  [e043]
+ e041 86 STX  [0]
+ e043 e8 INX 
+ e044 38 SEC 
+ e045 24 BIT  [1]
+ e047 a9 LDA  #0
+ e049 79 ADC  [400]
+ e04c 30 BMI  [e056]
+ e04e b0 BCS  [e056]
+ e050 c9 CMP  #6a
+ e052 d0 BNE  [e056]
+ e054 50 BVC  [e058]
+ e056 86 STX  [0]
+ e058 e8 INX 
+ e059 38 SEC 
+ e05a b8 CLV 
+ e05b a9 LDA  #7f
+ e05d 8d STA  [400]
+ e060 79 ADC  [400]
+ e063 10 BPL  [e06d]
+ e065 b0 BCS  [e06d]
+ e067 c9 CMP  #ff
+ e069 d0 BNE  [e06d]
+ e06b 70 BVS  [e06f]
+ e06d 86 STX  [0]
+ e06f e8 INX 
+ e070 18 CLC 
+ e071 24 BIT  [1]
+ e073 a9 LDA  #80
+ e075 8d STA  [400]
+ e078 a9 LDA  #7f
+ e07a 79 ADC  [400]
+ e07d 10 BPL  [e087]
+ e07f b0 BCS  [e087]
+ e081 c9 CMP  #ff
+ e083 d0 BNE  [e087]
+ e085 50 BVC  [e089]
+ e087 86 STX  [0]
+ e089 e8 INX 
+ e08a 38 SEC 
+ e08b b8 CLV 
+ e08c a9 LDA  #80
+ e08e 8d STA  [400]
+ e091 a9 LDA  #7f
+ e093 79 ADC  [400]
+ e096 d0 BNE  [e09e]
+ e098 30 BMI  [e09e]
+ e09a 70 BVS  [e09e]
+ e09c b0 BCS  [e0a0]
+ e09e 86 STX  [0]
+ e0a0 e8 INX 
+ e0a1 24 BIT  [1]
+ e0a3 a9 LDA  #40
+ e0a5 8d STA  [400]
+ e0a8 d9 CMP  [400]
+ e0ab 30 BMI  [e0b3]
+ e0ad 90 BCC  [e0b3]
+ e0af d0 BNE  [e0b3]
+ e0b1 70 BVS  [e0b5]
+ e0b3 86 STX  [0]
+ e0b5 e8 INX 
+ e0b6 b8 CLV 
+ e0b7 ce DEC  [400]
+ e0ba d9 CMP  [400]
+ e0bd f0 BEQ  [e0c5]
+ e0bf 30 BMI  [e0c5]
+ e0c1 90 BCC  [e0c5]
+ e0c3 50 BVC  [e0c7]
+ e0c5 86 STX  [0]
+ e0c7 e8 INX 
+ e0c8 ee INC  [400]
+ e0cb ee INC  [400]
+ e0ce d9 CMP  [400]
+ e0d1 f0 BEQ  [e0d5]
+ e0d3 30 BMI  [e0d7]
+ e0d5 86 STX  [0]
+ e0d7 e8 INX 
+ e0d8 a9 LDA  #0
+ e0da 8d STA  [400]
+ e0dd a9 LDA  #80
+ e0df d9 CMP  [400]
+ e0e2 f0 BEQ  [e0e8]
+ e0e4 10 BPL  [e0e8]
+ e0e6 b0 BCS  [e0ea]
+ e0e8 86 STX  [0]
+ e0ea e8 INX 
+ e0eb a0 LDY  #80
+ e0ed 8c STY  [400]
+ e0f0 a0 LDY  #0
+ e0f2 d9 CMP  [400]
+ e0f5 d0 BNE  [e0fb]
+ e0f7 30 BMI  [e0fb]
+ e0f9 b0 BCS  [e0fd]
+ e0fb 86 STX  [0]
+ e0fd e8 INX 
+ e0fe ee INC  [400]
+ e101 d9 CMP  [400]
+ e104 b0 BCS  [e10a]
+ e106 f0 BEQ  [e10a]
+ e108 30 BMI  [e10c]
+ e10a 86 STX  [0]
+ e10c e8 INX 
+ e10d ce DEC  [400]
+ e110 ce DEC  [400]
+ e113 d9 CMP  [400]
+ e116 90 BCC  [e11c]
+ e118 f0 BEQ  [e11c]
+ e11a 10 BPL  [e11e]
+ e11c 86 STX  [0]
+ e11e e8 INX 
+ e11f 24 BIT  [1]
+ e121 a9 LDA  #40
+ e123 8d STA  [400]
+ e126 38 SEC 
+ e127 f9 SBC  #ff
+ e12a 30 BMI  [e136]
+ e12c 90 BCC  [e136]
+ e12e d0 BNE  [e136]
+ e130 70 BVS  [e136]
+ e132 c9 CMP  #0
+ e134 f0 BEQ  [e138]
+ e136 86 STX  [0]
+ e138 e8 INX 
+ e139 b8 CLV 
+ e13a 38 SEC 
+ e13b a9 LDA  #40
+ e13d ce DEC  [400]
+ e140 f9 SBC  #ff
+ e143 f0 BEQ  [e14f]
+ e145 30 BMI  [e14f]
+ e147 90 BCC  [e14f]
+ e149 70 BVS  [e14f]
+ e14b c9 CMP  #1
+ e14d f0 BEQ  [e151]
+ e14f 86 STX  [0]
+ e151 e8 INX 
+ e152 a9 LDA  #40
+ e154 38 SEC 
+ e155 24 BIT  [1]
+ e157 ee INC  [400]
+ e15a ee INC  [400]
+ e15d f9 SBC  #ff
+ e160 b0 BCS  [e16c]
+ e162 f0 BEQ  [e16c]
+ e164 10 BPL  [e16c]
+ e166 70 BVS  [e16c]
+ e168 c9 CMP  #ff
+ e16a f0 BEQ  [e16e]
+ e16c 86 STX  [0]
+ e16e e8 INX 
+ e16f 18 CLC 
+ e170 a9 LDA  #0
+ e172 8d STA  [400]
+ e175 a9 LDA  #80
+ e177 f9 SBC  #ff
+ e17a 90 BCC  [e180]
+ e17c c9 CMP  #7f
+ e17e f0 BEQ  [e182]
+ e180 86 STX  [0]
+ e182 e8 INX 
+ e183 38 SEC 
+ e184 a9 LDA  #7f
+ e186 8d STA  [400]
+ e189 a9 LDA  #81
+ e18b f9 SBC  #ff
+ e18e 50 BVC  [e196]
+ e190 90 BCC  [e196]
+ e192 c9 CMP  #2
+ e194 f0 BEQ  [e198]
+ e196 86 STX  [0]
+ e198 e8 INX 
+ e199 a9 LDA  #0
+ e19b a9 LDA  #87
+ e19d 99 STA  [400]
+ e1a0 ad LDA  [400]
+ e1a3 c9 CMP  #87
+ e1a5 f0 BEQ  [e1a9]
+ e1a7 86 STX  [0]
+ e1a9 60 RTS 
+ e1aa a9 LDA  #ff
+ e1ac 85 STA  [1]
+ e1ae a9 LDA  #aa
+ e1b0 8d STA  [633]
+ e1b3 a9 LDA  #bb
+ e1b5 8d STA  [689]
+ e1b8 a2 LDX  #0
+ e1ba a9 LDA  #66
+ e1bc 24 BIT  [1]
+ e1be 38 SEC 
+ e1bf a0 LDY  #0
+ e1c1 bc LDY  [633]
+ e1c4 10 BPL  [e1d8]
+ e1c6 f0 BEQ  [e1d8]
+ e1c8 50 BVC  [e1d8]
+ e1ca 90 BCC  [e1d8]
+ e1cc c9 CMP  #66
+ e1ce d0 BNE  [e1d8]
+ e1d0 e0 CPX  #0
+ e1d2 d0 BNE  [e1d8]
+ e1d4 c0 CPY  #aa
+ e1d6 f0 BEQ  [e1dc]
+ e1d8 a9 LDA  #51
+ e1da 85 STA  [0]
+ e1dc a2 LDX  #8a
+ e1de a9 LDA  #66
+ e1e0 b8 CLV 
+ e1e1 18 CLC 
+ e1e2 a0 LDY  #0
+ e1e4 bc LDY  [689]
+ e1e7 10 BPL  [e1fb]
+ e1e9 f0 BEQ  [e1fb]
+ e1eb 70 BVS  [e1fb]
+ e1ed b0 BCS  [e1fb]
+ e1ef c0 CPY  #bb
+ e1f1 d0 BNE  [e1fb]
+ e1f3 c9 CMP  #66
+ e1f5 d0 BNE  [e1fb]
+ e1f7 e0 CPX  #8a
+ e1f9 f0 BEQ  [e1ff]
+ e1fb a9 LDA  #52
+ e1fd 85 STA  [0]
+ e1ff a0 LDY  #53
+ e201 a9 LDA  #aa
+ e203 a2 LDX  #78
+ e205 8d STA  [678]
+ e208 20 JSR  [f7b6]
+ e20b 1d ORA  [678]
+ e20e 20 JSR  [f7c0]
+ e211 c8 INY 
+ e212 a9 LDA  #0
+ e214 8d STA  [678]
+ e217 20 JSR  [f7ce]
+ e21a 1d ORA  [678]
+ e21d 20 JSR  [f7d3]
+ e220 c8 INY 
+ e221 a9 LDA  #aa
+ e223 8d STA  [678]
+ e226 20 JSR  [f7df]
+ e229 3d AND  [678]
+ e22c 20 JSR  [f7e5]
+ e22f c8 INY 
+ e230 a9 LDA  #ef
+ e232 8d STA  [678]
+ e235 20 JSR  [f7f1]
+ e238 3d AND  [678]
+ e23b 20 JSR  [f7f6]
+ e23e c8 INY 
+ e23f a9 LDA  #aa
+ e241 8d STA  [678]
+ e244 20 JSR  [f804]
+ e247 5d EOR  [678]
+ e24a 20 JSR  [f80a]
+ e24d c8 INY 
+ e24e a9 LDA  #70
+ e250 8d STA  [678]
+ e253 20 JSR  [f818]
+ e256 5d EOR  [678]
+ e259 20 JSR  [f81d]
+ e25c c8 INY 
+ e25d a9 LDA  #69
+ e25f 8d STA  [678]
+ e262 20 JSR  [f829]
+ e265 7d ADC  [678]
+ e268 20 JSR  [f82f]
+ e26b c8 INY 
+ e26c 20 JSR  [f83d]
+ e26f 7d ADC  [678]
+ e272 20 JSR  [f843]
+ e275 c8 INY 
+ e276 a9 LDA  #7f
+ e278 8d STA  [678]
+ e27b 20 JSR  [f851]
+ e27e 7d ADC  [678]
+ e281 20 JSR  [f856]
+ e284 c8 INY 
+ e285 a9 LDA  #80
+ e287 8d STA  [678]
+ e28a 20 JSR  [f864]
+ e28d 7d ADC  [678]
+ e290 20 JSR  [f86a]
+ e293 c8 INY 
+ e294 20 JSR  [f878]
+ e297 7d ADC  [678]
+ e29a 20 JSR  [f87d]
+ e29d c8 INY 
+ e29e a9 LDA  #40
+ e2a0 8d STA  [678]
+ e2a3 20 JSR  [f889]
+ e2a6 dd CMP  [678]
+ e2a9 20 JSR  [f88e]
+ e2ac c8 INY 
+ e2ad 48 PHA 
+ e2ae a9 LDA  #3f
+ e2b0 8d STA  [678]
+ e2b3 68 PLA 
+ e2b4 20 JSR  [f89a]
+ e2b7 dd CMP  [678]
+ e2ba 20 JSR  [f89c]
+ e2bd c8 INY 
+ e2be 48 PHA 
+ e2bf a9 LDA  #41
+ e2c1 8d STA  [678]
+ e2c4 68 PLA 
+ e2c5 dd CMP  [678]
+ e2c8 20 JSR  [f8a8]
+ e2cb c8 INY 
+ e2cc 48 PHA 
+ e2cd a9 LDA  #0
+ e2cf 8d STA  [678]
+ e2d2 68 PLA 
+ e2d3 20 JSR  [f8b2]
+ e2d6 dd CMP  [678]
+ e2d9 20 JSR  [f8b5]
+ e2dc c8 INY 
+ e2dd 48 PHA 
+ e2de a9 LDA  #80
+ e2e0 8d STA  [678]
+ e2e3 68 PLA 
+ e2e4 dd CMP  [678]
+ e2e7 20 JSR  [f8bf]
+ e2ea c8 INY 
+ e2eb 48 PHA 
+ e2ec a9 LDA  #81
+ e2ee 8d STA  [678]
+ e2f1 68 PLA 
+ e2f2 dd CMP  [678]
+ e2f5 20 JSR  [f8c9]
+ e2f8 c8 INY 
+ e2f9 48 PHA 
+ e2fa a9 LDA  #7f
+ e2fc 8d STA  [678]
+ e2ff 68 PLA 
+ e300 dd CMP  [678]
+ e303 20 JSR  [f8d3]
+ e306 c8 INY 
+ e307 a9 LDA  #40
+ e309 8d STA  [678]
+ e30c 20 JSR  [f931]
+ e30f fd SBC  #ff
+ e312 20 JSR  [f937]
+ e315 c8 INY 
+ e316 a9 LDA  #3f
+ e318 8d STA  [678]
+ e31b 20 JSR  [f947]
+ e31e fd SBC  #ff
+ e321 20 JSR  [f94c]
+ e324 c8 INY 
+ e325 a9 LDA  #41
+ e327 8d STA  [678]
+ e32a 20 JSR  [f95c]
+ e32d fd SBC  #ff
+ e330 20 JSR  [f962]
+ e333 c8 INY 
+ e334 a9 LDA  #0
+ e336 8d STA  [678]
+ e339 20 JSR  [f972]
+ e33c fd SBC  #ff
+ e33f 20 JSR  [f976]
+ e342 c8 INY 
+ e343 a9 LDA  #7f
+ e345 8d STA  [678]
+ e348 20 JSR  [f980]
+ e34b fd SBC  #ff
+ e34e 20 JSR  [f984]
+ e351 a9 LDA  #aa
+ e353 8d STA  [633]
+ e356 a9 LDA  #bb
+ e358 8d STA  [689]
+ e35b a2 LDX  #0
+ e35d a0 LDY  #66
+ e35f 24 BIT  [1]
+ e361 38 SEC 
+ e362 a9 LDA  #0
+ e364 bd LDA  [633]
+ e367 10 BPL  [e37b]
+ e369 f0 BEQ  [e37b]
+ e36b 50 BVC  [e37b]
+ e36d 90 BCC  [e37b]
+ e36f c0 CPY  #66
+ e371 d0 BNE  [e37b]
+ e373 e0 CPX  #0
+ e375 d0 BNE  [e37b]
+ e377 c9 CMP  #aa
+ e379 f0 BEQ  [e37f]
+ e37b a9 LDA  #6a
+ e37d 85 STA  [0]
+ e37f a2 LDX  #8a
+ e381 a0 LDY  #66
+ e383 b8 CLV 
+ e384 18 CLC 
+ e385 a9 LDA  #0
+ e387 bd LDA  [689]
+ e38a 10 BPL  [e39e]
+ e38c f0 BEQ  [e39e]
+ e38e 70 BVS  [e39e]
+ e390 b0 BCS  [e39e]
+ e392 c9 CMP  #bb
+ e394 d0 BNE  [e39e]
+ e396 c0 CPY  #66
+ e398 d0 BNE  [e39e]
+ e39a e0 CPX  #8a
+ e39c f0 BEQ  [e3a2]
+ e39e a9 LDA  #6b
+ e3a0 85 STA  [0]
+ e3a2 24 BIT  [1]
+ e3a4 38 SEC 
+ e3a5 a9 LDA  #44
+ e3a7 a2 LDX  #0
+ e3a9 9d STA  [633]
+ e3ac ad LDA  [633]
+ e3af 90 BCC  [e3cb]
+ e3b1 c9 CMP  #44
+ e3b3 d0 BNE  [e3cb]
+ e3b5 50 BVC  [e3cb]
+ e3b7 18 CLC 
+ e3b8 b8 CLV 
+ e3b9 a9 LDA  #99
+ e3bb a2 LDX  #80
+ e3bd 9d STA  [605]
+ e3c0 ad LDA  [605]
+ e3c3 b0 BCS  [e3cb]
+ e3c5 c9 CMP  #99
+ e3c7 d0 BNE  [e3cb]
+ e3c9 50 BVC  [e3cf]
+ e3cb a9 LDA  #6c
+ e3cd 85 STA  [0]
+ e3cf a0 LDY  #6d
+ e3d1 a2 LDX  #6d
+ e3d3 20 JSR  [f990]
+ e3d6 9d STA  [66d]
+ e3d9 5e LSR  [66d]
+ e3dc bd LDA  [66d]
+ e3df 20 JSR  [f99d]
+ e3e2 c8 INY 
+ e3e3 9d STA  [66d]
+ e3e6 5e LSR  [66d]
+ e3e9 bd LDA  [66d]
+ e3ec 20 JSR  [f9ad]
+ e3ef c8 INY 
+ e3f0 20 JSR  [f9bd]
+ e3f3 9d STA  [66d]
+ e3f6 1e ASL  [66d]
+ e3f9 bd LDA  [66d]
+ e3fc 20 JSR  [f9c3]
+ e3ff c8 INY 
+ e400 9d STA  [66d]
+ e403 1e ASL  [66d]
+ e406 bd LDA  [66d]
+ e409 20 JSR  [f9d4]
+ e40c c8 INY 
+ e40d 20 JSR  [f9e4]
+ e410 9d STA  [66d]
+ e413 7e ROR  [66d]
+ e416 bd LDA  [66d]
+ e419 20 JSR  [f9ea]
+ e41c c8 INY 
+ e41d 9d STA  [66d]
+ e420 7e ROR  [66d]
+ e423 bd LDA  [66d]
+ e426 20 JSR  [f9fb]
+ e429 c8 INY 
+ e42a 20 JSR  [fa0a]
+ e42d 9d STA  [66d]
+ e430 3e ROL  [66d]
+ e433 bd LDA  [66d]
+ e436 20 JSR  [fa10]
+ e439 c8 INY 
+ e43a 9d STA  [66d]
+ e43d 3e ROL  [66d]
+ e440 bd LDA  [66d]
+ e443 20 JSR  [fa21]
+ e446 a9 LDA  #ff
+ e448 9d STA  [66d]
+ e44b 85 STA  [1]
+ e44d 24 BIT  [1]
+ e44f 38 SEC 
+ e450 fe INC  [66d]
+ e453 d0 BNE  [e462]
+ e455 30 BMI  [e462]
+ e457 50 BVC  [e462]
+ e459 90 BCC  [e462]
+ e45b bd LDA  [66d]
+ e45e c9 CMP  #0
+ e460 f0 BEQ  [e466]
+ e462 a9 LDA  #75
+ e464 85 STA  [0]
+ e466 a9 LDA  #7f
+ e468 9d STA  [66d]
+ e46b b8 CLV 
+ e46c 18 CLC 
+ e46d fe INC  [66d]
+ e470 f0 BEQ  [e47f]
+ e472 10 BPL  [e47f]
+ e474 70 BVS  [e47f]
+ e476 b0 BCS  [e47f]
+ e478 bd LDA  [66d]
+ e47b c9 CMP  #80
+ e47d f0 BEQ  [e483]
+ e47f a9 LDA  #76
+ e481 85 STA  [0]
+ e483 a9 LDA  #0
+ e485 9d STA  [66d]
+ e488 24 BIT  [1]
+ e48a 38 SEC 
+ e48b de DEC  [66d]
+ e48e f0 BEQ  [e49d]
+ e490 10 BPL  [e49d]
+ e492 50 BVC  [e49d]
+ e494 90 BCC  [e49d]
+ e496 bd LDA  [66d]
+ e499 c9 CMP  #ff
+ e49b f0 BEQ  [e4a1]
+ e49d a9 LDA  #77
+ e49f 85 STA  [0]
+ e4a1 a9 LDA  #80
+ e4a3 9d STA  [66d]
+ e4a6 b8 CLV 
+ e4a7 18 CLC 
+ e4a8 de DEC  [66d]
+ e4ab f0 BEQ  [e4ba]
+ e4ad 30 BMI  [e4ba]
+ e4af 70 BVS  [e4ba]
+ e4b1 b0 BCS  [e4ba]
+ e4b3 bd LDA  [66d]
+ e4b6 c9 CMP  #7f
+ e4b8 f0 BEQ  [e4be]
+ e4ba a9 LDA  #78
+ e4bc 85 STA  [0]
+ e4be a9 LDA  #1
+ e4c0 9d STA  [66d]
+ e4c3 de DEC  [66d]
+ e4c6 f0 BEQ  [e4cc]
+ e4c8 a9 LDA  #79
+ e4ca 85 STA  [0]
+ e4cc a9 LDA  #33
+ e4ce 8d STA  [678]
+ e4d1 a9 LDA  #44
+ e4d3 a0 LDY  #78
+ e4d5 a2 LDX  #0
+ e4d7 38 SEC 
+ e4d8 24 BIT  [1]
+ e4da be LDX  [678]
+ e4dd 90 BCC  [e4f1]
+ e4df 50 BVC  [e4f1]
+ e4e1 30 BMI  [e4f1]
+ e4e3 f0 BEQ  [e4f1]
+ e4e5 e0 CPX  #33
+ e4e7 d0 BNE  [e4f1]
+ e4e9 c0 CPY  #78
+ e4eb d0 BNE  [e4f1]
+ e4ed c9 CMP  #44
+ e4ef f0 BEQ  [e4f5]
+ e4f1 a9 LDA  #7a
+ e4f3 85 STA  [0]
+ e4f5 a9 LDA  #97
+ e4f7 8d STA  [67f]
+ e4fa a9 LDA  #47
+ e4fc a0 LDY  #ff
+ e4fe a2 LDX  #0
+ e500 18 CLC 
+ e501 b8 CLV 
+ e502 be LDX  [67f]
+ e505 b0 BCS  [e519]
+ e507 70 BVS  [e519]
+ e509 10 BPL  [e519]
+ e50b f0 BEQ  [e519]
+ e50d e0 CPX  #97
+ e50f d0 BNE  [e519]
+ e511 c0 CPY  #ff
+ e513 d0 BNE  [e519]
+ e515 c9 CMP  #47
+ e517 f0 BEQ  [e51d]
+ e519 a9 LDA  #7b
+ e51b 85 STA  [0]
+ e51d 60 RTS 
+ e51e a9 LDA  #55
+ e520 8d STA  [580]
+ e523 a9 LDA  #aa
+ e525 8d STA  [432]
+ e528 a9 LDA  #80
+ e52a 85 STA  [43]
+ e52c a9 LDA  #5
+ e52e 85 STA  [44]
+ e530 a9 LDA  #32
+ e532 85 STA  [45]
+ e534 a9 LDA  #4
+ e536 85 STA  [46]
+ e538 a2 LDX  #3
+ e53a a0 LDY  #77
+ e53c a9 LDA  #ff
+ e53e 85 STA  [1]
+ e540 24 BIT  [1]
+ e542 38 SEC 
+ e543 a9 LDA  #0
+ e545 a3 LAX 
+ e547 ea NOP 
+ e548 ea NOP 
+ e549 ea NOP 
+ e54a ea NOP 
+ e54b f0 BEQ  [e55f]
+ e54d 30 BMI  [e55f]
+ e54f 50 BVC  [e55f]
+ e551 90 BCC  [e55f]
+ e553 c9 CMP  #55
+ e555 d0 BNE  [e55f]
+ e557 e0 CPX  #55
+ e559 d0 BNE  [e55f]
+ e55b c0 CPY  #77
+ e55d f0 BEQ  [e563]
+ e55f a9 LDA  #7c
+ e561 85 STA  [0]
+ e563 a2 LDX  #5
+ e565 a0 LDY  #33
+ e567 b8 CLV 
+ e568 18 CLC 
+ e569 a9 LDA  #0
+ e56b a3 LAX 
+ e56d ea NOP 
+ e56e ea NOP 
+ e56f ea NOP 
+ e570 ea NOP 
+ e571 f0 BEQ  [e585]
+ e573 10 BPL  [e585]
+ e575 70 BVS  [e585]
+ e577 b0 BCS  [e585]
+ e579 c9 CMP  #aa
+ e57b d0 BNE  [e585]
+ e57d e0 CPX  #aa
+ e57f d0 BNE  [e585]
+ e581 c0 CPY  #33
+ e583 f0 BEQ  [e589]
+ e585 a9 LDA  #7d
+ e587 85 STA  [0]
+ e589 a9 LDA  #87
+ e58b 85 STA  [67]
+ e58d a9 LDA  #32
+ e58f 85 STA  [68]
+ e591 a0 LDY  #57
+ e593 24 BIT  [1]
+ e595 38 SEC 
+ e596 a9 LDA  #0
+ e598 a7 LAX 
+ e59a ea NOP 
+ e59b ea NOP 
+ e59c ea NOP 
+ e59d ea NOP 
+ e59e f0 BEQ  [e5b2]
+ e5a0 10 BPL  [e5b2]
+ e5a2 50 BVC  [e5b2]
+ e5a4 90 BCC  [e5b2]
+ e5a6 c9 CMP  #87
+ e5a8 d0 BNE  [e5b2]
+ e5aa e0 CPX  #87
+ e5ac d0 BNE  [e5b2]
+ e5ae c0 CPY  #57
+ e5b0 f0 BEQ  [e5b6]
+ e5b2 a9 LDA  #7e
+ e5b4 85 STA  [0]
+ e5b6 a0 LDY  #53
+ e5b8 b8 CLV 
+ e5b9 18 CLC 
+ e5ba a9 LDA  #0
+ e5bc a7 LAX 
+ e5be ea NOP 
+ e5bf ea NOP 
+ e5c0 ea NOP 
+ e5c1 ea NOP 
+ e5c2 f0 BEQ  [e5d6]
+ e5c4 30 BMI  [e5d6]
+ e5c6 70 BVS  [e5d6]
+ e5c8 b0 BCS  [e5d6]
+ e5ca c9 CMP  #32
+ e5cc d0 BNE  [e5d6]
+ e5ce e0 CPX  #32
+ e5d0 d0 BNE  [e5d6]
+ e5d2 c0 CPY  #53
+ e5d4 f0 BEQ  [e5da]
+ e5d6 a9 LDA  #7f
+ e5d8 85 STA  [0]
+ e5da a9 LDA  #87
+ e5dc 8d STA  [577]
+ e5df a9 LDA  #32
+ e5e1 8d STA  [578]
+ e5e4 a0 LDY  #57
+ e5e6 24 BIT  [1]
+ e5e8 38 SEC 
+ e5e9 a9 LDA  #0
+ e5eb af LAX 
+ e5ee ea NOP 
+ e5ef ea NOP 
+ e5f0 ea NOP 
+ e5f1 ea NOP 
+ e5f2 f0 BEQ  [e606]
+ e5f4 10 BPL  [e606]
+ e5f6 50 BVC  [e606]
+ e5f8 90 BCC  [e606]
+ e5fa c9 CMP  #87
+ e5fc d0 BNE  [e606]
+ e5fe e0 CPX  #87
+ e600 d0 BNE  [e606]
+ e602 c0 CPY  #57
+ e604 f0 BEQ  [e60a]
+ e606 a9 LDA  #80
+ e608 85 STA  [0]
+ e60a a0 LDY  #53
+ e60c b8 CLV 
+ e60d 18 CLC 
+ e60e a9 LDA  #0
+ e610 af LAX 
+ e613 ea NOP 
+ e614 ea NOP 
+ e615 ea NOP 
+ e616 ea NOP 
+ e617 f0 BEQ  [e62b]
+ e619 30 BMI  [e62b]
+ e61b 70 BVS  [e62b]
+ e61d b0 BCS  [e62b]
+ e61f c9 CMP  #32
+ e621 d0 BNE  [e62b]
+ e623 e0 CPX  #32
+ e625 d0 BNE  [e62b]
+ e627 c0 CPY  #53
+ e629 f0 BEQ  [e62f]
+ e62b a9 LDA  #81
+ e62d 85 STA  [0]
+ e62f a9 LDA  #ff
+ e631 85 STA  [43]
+ e633 a9 LDA  #4
+ e635 85 STA  [44]
+ e637 a9 LDA  #32
+ e639 85 STA  [45]
+ e63b a9 LDA  #4
+ e63d 85 STA  [46]
+ e63f a9 LDA  #55
+ e641 8d STA  [580]
+ e644 a9 LDA  #aa
+ e646 8d STA  [432]
+ e649 a2 LDX  #3
+ e64b a0 LDY  #81
+ e64d 24 BIT  [1]
+ e64f 38 SEC 
+ e650 a9 LDA  #0
+ e652 b3 LAX 
+ e654 ea NOP 
+ e655 ea NOP 
+ e656 ea NOP 
+ e657 ea NOP 
+ e658 f0 BEQ  [e66c]
+ e65a 30 BMI  [e66c]
+ e65c 50 BVC  [e66c]
+ e65e 90 BCC  [e66c]
+ e660 c9 CMP  #55
+ e662 d0 BNE  [e66c]
+ e664 e0 CPX  #55
+ e666 d0 BNE  [e66c]
+ e668 c0 CPY  #81
+ e66a f0 BEQ  [e670]
+ e66c a9 LDA  #82
+ e66e 85 STA  [0]
+ e670 a2 LDX  #5
+ e672 a0 LDY  #0
+ e674 b8 CLV 
+ e675 18 CLC 
+ e676 a9 LDA  #0
+ e678 b3 LAX 
+ e67a ea NOP 
+ e67b ea NOP 
+ e67c ea NOP 
+ e67d ea NOP 
+ e67e f0 BEQ  [e692]
+ e680 10 BPL  [e692]
+ e682 70 BVS  [e692]
+ e684 b0 BCS  [e692]
+ e686 c9 CMP  #aa
+ e688 d0 BNE  [e692]
+ e68a e0 CPX  #aa
+ e68c d0 BNE  [e692]
+ e68e c0 CPY  #0
+ e690 f0 BEQ  [e696]
+ e692 a9 LDA  #83
+ e694 85 STA  [0]
+ e696 a9 LDA  #87
+ e698 85 STA  [67]
+ e69a a9 LDA  #32
+ e69c 85 STA  [68]
+ e69e a0 LDY  #57
+ e6a0 24 BIT  [1]
+ e6a2 38 SEC 
+ e6a3 a9 LDA  #0
+ e6a5 b7 LAX 
+ e6a7 ea NOP 
+ e6a8 ea NOP 
+ e6a9 ea NOP 
+ e6aa ea NOP 
+ e6ab f0 BEQ  [e6bf]
+ e6ad 10 BPL  [e6bf]
+ e6af 50 BVC  [e6bf]
+ e6b1 90 BCC  [e6bf]
+ e6b3 c9 CMP  #87
+ e6b5 d0 BNE  [e6bf]
+ e6b7 e0 CPX  #87
+ e6b9 d0 BNE  [e6bf]
+ e6bb c0 CPY  #57
+ e6bd f0 BEQ  [e6c3]
+ e6bf a9 LDA  #84
+ e6c1 85 STA  [0]
+ e6c3 a0 LDY  #ff
+ e6c5 b8 CLV 
+ e6c6 18 CLC 
+ e6c7 a9 LDA  #0
+ e6c9 b7 LAX 
+ e6cb ea NOP 
+ e6cc ea NOP 
+ e6cd ea NOP 
+ e6ce ea NOP 
+ e6cf f0 BEQ  [e6e3]
+ e6d1 30 BMI  [e6e3]
+ e6d3 70 BVS  [e6e3]
+ e6d5 b0 BCS  [e6e3]
+ e6d7 c9 CMP  #32
+ e6d9 d0 BNE  [e6e3]
+ e6db e0 CPX  #32
+ e6dd d0 BNE  [e6e3]
+ e6df c0 CPY  #ff
+ e6e1 f0 BEQ  [e6e7]
+ e6e3 a9 LDA  #85
+ e6e5 85 STA  [0]
+ e6e7 a9 LDA  #87
+ e6e9 8d STA  [587]
+ e6ec a9 LDA  #32
+ e6ee 8d STA  [588]
+ e6f1 a0 LDY  #30
+ e6f3 24 BIT  [1]
+ e6f5 38 SEC 
+ e6f6 a9 LDA  #0
+ e6f8 bf LAX 
+ e6fb ea NOP 
+ e6fc ea NOP 
+ e6fd ea NOP 
+ e6fe ea NOP 
+ e6ff f0 BEQ  [e713]
+ e701 10 BPL  [e713]
+ e703 50 BVC  [e713]
+ e705 90 BCC  [e713]
+ e707 c9 CMP  #87
+ e709 d0 BNE  [e713]
+ e70b e0 CPX  #87
+ e70d d0 BNE  [e713]
+ e70f c0 CPY  #30
+ e711 f0 BEQ  [e717]
+ e713 a9 LDA  #86
+ e715 85 STA  [0]
+ e717 a0 LDY  #40
+ e719 b8 CLV 
+ e71a 18 CLC 
+ e71b a9 LDA  #0
+ e71d bf LAX 
+ e720 ea NOP 
+ e721 ea NOP 
+ e722 ea NOP 
+ e723 ea NOP 
+ e724 f0 BEQ  [e738]
+ e726 30 BMI  [e738]
+ e728 70 BVS  [e738]
+ e72a b0 BCS  [e738]
+ e72c c9 CMP  #32
+ e72e d0 BNE  [e738]
+ e730 e0 CPX  #32
+ e732 d0 BNE  [e738]
+ e734 c0 CPY  #40
+ e736 f0 BEQ  [e73c]
+ e738 a9 LDA  #87
+ e73a 85 STA  [0]
+ e73c 60 RTS 
+ e73d a9 LDA  #c0
+ e73f 85 STA  [1]
+ e741 a9 LDA  #0
+ e743 8d STA  [489]
+ e746 a9 LDA  #89
+ e748 85 STA  [60]
+ e74a a9 LDA  #4
+ e74c 85 STA  [61]
+ e74e a0 LDY  #44
+ e750 a2 LDX  #17
+ e752 a9 LDA  #3e
+ e754 24 BIT  [1]
+ e756 18 CLC 
+ e757 83 SAX 
+ e759 ea NOP 
+ e75a ea NOP 
+ e75b ea NOP 
+ e75c ea NOP 
+ e75d d0 BNE  [e778]
+ e75f b0 BCS  [e778]
+ e761 50 BVC  [e778]
+ e763 10 BPL  [e778]
+ e765 c9 CMP  #3e
+ e767 d0 BNE  [e778]
+ e769 c0 CPY  #44
+ e76b d0 BNE  [e778]
+ e76d e0 CPX  #17
+ e76f d0 BNE  [e778]
+ e771 ad LDA  [489]
+ e774 c9 CMP  #16
+ e776 f0 BEQ  [e77c]
+ e778 a9 LDA  #88
+ e77a 85 STA  [0]
+ e77c a0 LDY  #44
+ e77e a2 LDX  #7a
+ e780 a9 LDA  #66
+ e782 38 SEC 
+ e783 b8 CLV 
+ e784 83 SAX 
+ e786 ea NOP 
+ e787 ea NOP 
+ e788 ea NOP 
+ e789 ea NOP 
+ e78a f0 BEQ  [e7a5]
+ e78c 90 BCC  [e7a5]
+ e78e 70 BVS  [e7a5]
+ e790 30 BMI  [e7a5]
+ e792 c9 CMP  #66
+ e794 d0 BNE  [e7a5]
+ e796 c0 CPY  #44
+ e798 d0 BNE  [e7a5]
+ e79a e0 CPX  #7a
+ e79c d0 BNE  [e7a5]
+ e79e ad LDA  [489]
+ e7a1 c9 CMP  #62
+ e7a3 f0 BEQ  [e7a9]
+ e7a5 a9 LDA  #89
+ e7a7 85 STA  [0]
+ e7a9 a9 LDA  #ff
+ e7ab 85 STA  [49]
+ e7ad a0 LDY  #44
+ e7af a2 LDX  #aa
+ e7b1 a9 LDA  #55
+ e7b3 24 BIT  [1]
+ e7b5 18 CLC 
+ e7b6 87 SAX 
+ e7b8 ea NOP 
+ e7b9 ea NOP 
+ e7ba ea NOP 
+ e7bb ea NOP 
+ e7bc f0 BEQ  [e7d6]
+ e7be b0 BCS  [e7d6]
+ e7c0 50 BVC  [e7d6]
+ e7c2 10 BPL  [e7d6]
+ e7c4 c9 CMP  #55
+ e7c6 d0 BNE  [e7d6]
+ e7c8 c0 CPY  #44
+ e7ca d0 BNE  [e7d6]
+ e7cc e0 CPX  #aa
+ e7ce d0 BNE  [e7d6]
+ e7d0 a5 LDA  [49]
+ e7d2 c9 CMP  #0
+ e7d4 f0 BEQ  [e7da]
+ e7d6 a9 LDA  #8a
+ e7d8 85 STA  [0]
+ e7da a9 LDA  #0
+ e7dc 85 STA  [56]
+ e7de a0 LDY  #58
+ e7e0 a2 LDX  #ef
+ e7e2 a9 LDA  #66
+ e7e4 38 SEC 
+ e7e5 b8 CLV 
+ e7e6 87 SAX 
+ e7e8 ea NOP 
+ e7e9 ea NOP 
+ e7ea ea NOP 
+ e7eb ea NOP 
+ e7ec f0 BEQ  [e806]
+ e7ee 90 BCC  [e806]
+ e7f0 70 BVS  [e806]
+ e7f2 30 BMI  [e806]
+ e7f4 c9 CMP  #66
+ e7f6 d0 BNE  [e806]
+ e7f8 c0 CPY  #58
+ e7fa d0 BNE  [e806]
+ e7fc e0 CPX  #ef
+ e7fe d0 BNE  [e806]
+ e800 a5 LDA  [56]
+ e802 c9 CMP  #66
+ e804 f0 BEQ  [e80a]
+ e806 a9 LDA  #8b
+ e808 85 STA  [0]
+ e80a a9 LDA  #ff
+ e80c 8d STA  [549]
+ e80f a0 LDY  #e5
+ e811 a2 LDX  #af
+ e813 a9 LDA  #f5
+ e815 24 BIT  [1]
+ e817 18 CLC 
+ e818 8f SAX 
+ e81b ea NOP 
+ e81c ea NOP 
+ e81d ea NOP 
+ e81e ea NOP 
+ e81f f0 BEQ  [e83a]
+ e821 b0 BCS  [e83a]
+ e823 50 BVC  [e83a]
+ e825 10 BPL  [e83a]
+ e827 c9 CMP  #f5
+ e829 d0 BNE  [e83a]
+ e82b c0 CPY  #e5
+ e82d d0 BNE  [e83a]
+ e82f e0 CPX  #af
+ e831 d0 BNE  [e83a]
+ e833 ad LDA  [549]
+ e836 c9 CMP  #a5
+ e838 f0 BEQ  [e83e]
+ e83a a9 LDA  #8c
+ e83c 85 STA  [0]
+ e83e a9 LDA  #0
+ e840 8d STA  [556]
+ e843 a0 LDY  #58
+ e845 a2 LDX  #b3
+ e847 a9 LDA  #97
+ e849 38 SEC 
+ e84a b8 CLV 
+ e84b 8f SAX 
+ e84e ea NOP 
+ e84f ea NOP 
+ e850 ea NOP 
+ e851 ea NOP 
+ e852 f0 BEQ  [e86d]
+ e854 90 BCC  [e86d]
+ e856 70 BVS  [e86d]
+ e858 10 BPL  [e86d]
+ e85a c9 CMP  #97
+ e85c d0 BNE  [e86d]
+ e85e c0 CPY  #58
+ e860 d0 BNE  [e86d]
+ e862 e0 CPX  #b3
+ e864 d0 BNE  [e86d]
+ e866 ad LDA  [556]
+ e869 c9 CMP  #93
+ e86b f0 BEQ  [e871]
+ e86d a9 LDA  #8d
+ e86f 85 STA  [0]
+ e871 a9 LDA  #ff
+ e873 85 STA  [49]
+ e875 a0 LDY  #ff
+ e877 a2 LDX  #aa
+ e879 a9 LDA  #55
+ e87b 24 BIT  [1]
+ e87d 18 CLC 
+ e87e 97 SAX 
+ e880 ea NOP 
+ e881 ea NOP 
+ e882 ea NOP 
+ e883 ea NOP 
+ e884 f0 BEQ  [e89e]
+ e886 b0 BCS  [e89e]
+ e888 50 BVC  [e89e]
+ e88a 10 BPL  [e89e]
+ e88c c9 CMP  #55
+ e88e d0 BNE  [e89e]
+ e890 c0 CPY  #ff
+ e892 d0 BNE  [e89e]
+ e894 e0 CPX  #aa
+ e896 d0 BNE  [e89e]
+ e898 a5 LDA  [49]
+ e89a c9 CMP  #0
+ e89c f0 BEQ  [e8a2]
+ e89e a9 LDA  #8e
+ e8a0 85 STA  [0]
+ e8a2 a9 LDA  #0
+ e8a4 85 STA  [56]
+ e8a6 a0 LDY  #6
+ e8a8 a2 LDX  #ef
+ e8aa a9 LDA  #66
+ e8ac 38 SEC 
+ e8ad b8 CLV 
+ e8ae 97 SAX 
+ e8b0 ea NOP 
+ e8b1 ea NOP 
+ e8b2 ea NOP 
+ e8b3 ea NOP 
+ e8b4 f0 BEQ  [e8ce]
+ e8b6 90 BCC  [e8ce]
+ e8b8 70 BVS  [e8ce]
+ e8ba 30 BMI  [e8ce]
+ e8bc c9 CMP  #66
+ e8be d0 BNE  [e8ce]
+ e8c0 c0 CPY  #6
+ e8c2 d0 BNE  [e8ce]
+ e8c4 e0 CPX  #ef
+ e8c6 d0 BNE  [e8ce]
+ e8c8 a5 LDA  [56]
+ e8ca c9 CMP  #66
+ e8cc f0 BEQ  [e8d2]
+ e8ce a9 LDA  #8f
+ e8d0 85 STA  [0]
+ e8d2 60 RTS 
+ e8d3 a0 LDY  #90
+ e8d5 20 JSR  [f931]
+ e8d8 eb SBC  #bf
+ e8da ea NOP 
+ e8db ea NOP 
+ e8dc ea NOP 
+ e8dd ea NOP 
+ e8de 20 JSR  [f937]
+ e8e1 c8 INY 
+ e8e2 20 JSR  [f947]
+ e8e5 eb SBC  #c0
+ e8e7 ea NOP 
+ e8e8 ea NOP 
+ e8e9 ea NOP 
+ e8ea ea NOP 
+ e8eb 20 JSR  [f94c]
+ e8ee c8 INY 
+ e8ef 20 JSR  [f95c]
+ e8f2 eb SBC  #be
+ e8f4 ea NOP 
+ e8f5 ea NOP 
+ e8f6 ea NOP 
+ e8f7 ea NOP 
+ e8f8 20 JSR  [f962]
+ e8fb c8 INY 
+ e8fc 20 JSR  [f972]
+ e8ff eb SBC  #ff
+ e901 ea NOP 
+ e902 ea NOP 
+ e903 ea NOP 
+ e904 ea NOP 
+ e905 20 JSR  [f976]
+ e908 c8 INY 
+ e909 20 JSR  [f980]
+ e90c eb SBC  #80
+ e90e ea NOP 
+ e90f ea NOP 
+ e910 ea NOP 
+ e911 ea NOP 
+ e912 20 JSR  [f984]
+ e915 60 RTS 
+ e916 a9 LDA  #ff
+ e918 85 STA  [1]
+ e91a a0 LDY  #95
+ e91c a2 LDX  #2
+ e91e a9 LDA  #47
+ e920 85 STA  [47]
+ e922 a9 LDA  #6
+ e924 85 STA  [48]
+ e926 a9 LDA  #eb
+ e928 8d STA  [647]
+ e92b 20 JSR  [fa31]
+ e92e c3 DCP 
+ e930 ea NOP 
+ e931 ea NOP 
+ e932 ea NOP 
+ e933 ea NOP 
+ e934 20 JSR  [fa37]
+ e937 ad LDA  [647]
+ e93a c9 CMP  #ea
+ e93c f0 BEQ  [e940]
+ e93e 84 STY  [0]
+ e940 c8 INY 
+ e941 a9 LDA  #0
+ e943 8d STA  [647]
+ e946 20 JSR  [fa42]
+ e949 c3 DCP 
+ e94b ea NOP 
+ e94c ea NOP 
+ e94d ea NOP 
+ e94e ea NOP 
+ e94f 20 JSR  [fa47]
+ e952 ad LDA  [647]
+ e955 c9 CMP  #ff
+ e957 f0 BEQ  [e95b]
+ e959 84 STY  [0]
+ e95b c8 INY 
+ e95c a9 LDA  #37
+ e95e 8d STA  [647]
+ e961 20 JSR  [fa54]
+ e964 c3 DCP 
+ e966 ea NOP 
+ e967 ea NOP 
+ e968 ea NOP 
+ e969 ea NOP 
+ e96a 20 JSR  [fa59]
+ e96d ad LDA  [647]
+ e970 c9 CMP  #36
+ e972 f0 BEQ  [e976]
+ e974 84 STY  [0]
+ e976 c8 INY 
+ e977 a9 LDA  #eb
+ e979 85 STA  [47]
+ e97b 20 JSR  [fa31]
+ e97e c7 DCP 
+ e980 ea NOP 
+ e981 ea NOP 
+ e982 ea NOP 
+ e983 ea NOP 
+ e984 20 JSR  [fa37]
+ e987 a5 LDA  [47]
+ e989 c9 CMP  #ea
+ e98b f0 BEQ  [e98f]
+ e98d 84 STY  [0]
+ e98f c8 INY 
+ e990 a9 LDA  #0
+ e992 85 STA  [47]
+ e994 20 JSR  [fa42]
+ e997 c7 DCP 
+ e999 ea NOP 
+ e99a ea NOP 
+ e99b ea NOP 
+ e99c ea NOP 
+ e99d 20 JSR  [fa47]
+ e9a0 a5 LDA  [47]
+ e9a2 c9 CMP  #ff
+ e9a4 f0 BEQ  [e9a8]
+ e9a6 84 STY  [0]
+ e9a8 c8 INY 
+ e9a9 a9 LDA  #37
+ e9ab 85 STA  [47]
+ e9ad 20 JSR  [fa54]
+ e9b0 c7 DCP 
+ e9b2 ea NOP 
+ e9b3 ea NOP 
+ e9b4 ea NOP 
+ e9b5 ea NOP 
+ e9b6 20 JSR  [fa59]
+ e9b9 a5 LDA  [47]
+ e9bb c9 CMP  #36
+ e9bd f0 BEQ  [e9c1]
+ e9bf 84 STY  [0]
+ e9c1 c8 INY 
+ e9c2 a9 LDA  #eb
+ e9c4 8d STA  [647]
+ e9c7 20 JSR  [fa31]
+ e9ca cf DCP 
+ e9cd ea NOP 
+ e9ce ea NOP 
+ e9cf ea NOP 
+ e9d0 ea NOP 
+ e9d1 20 JSR  [fa37]
+ e9d4 ad LDA  [647]
+ e9d7 c9 CMP  #ea
+ e9d9 f0 BEQ  [e9dd]
+ e9db 84 STY  [0]
+ e9dd c8 INY 
+ e9de a9 LDA  #0
+ e9e0 8d STA  [647]
+ e9e3 20 JSR  [fa42]
+ e9e6 cf DCP 
+ e9e9 ea NOP 
+ e9ea ea NOP 
+ e9eb ea NOP 
+ e9ec ea NOP 
+ e9ed 20 JSR  [fa47]
+ e9f0 ad LDA  [647]
+ e9f3 c9 CMP  #ff
+ e9f5 f0 BEQ  [e9f9]
+ e9f7 84 STY  [0]
+ e9f9 c8 INY 
+ e9fa a9 LDA  #37
+ e9fc 8d STA  [647]
+ e9ff 20 JSR  [fa54]
+ ea02 cf DCP 
+ ea05 ea NOP 
+ ea06 ea NOP 
+ ea07 ea NOP 
+ ea08 ea NOP 
+ ea09 20 JSR  [fa59]
+ ea0c ad LDA  [647]
+ ea0f c9 CMP  #36
+ ea11 f0 BEQ  [ea15]
+ ea13 84 STY  [0]
+ ea15 a9 LDA  #eb
+ ea17 8d STA  [647]
+ ea1a a9 LDA  #48
+ ea1c 85 STA  [45]
+ ea1e a9 LDA  #5
+ ea20 85 STA  [46]
+ ea22 a0 LDY  #ff
+ ea24 20 JSR  [fa31]
+ ea27 d3 DCP 
+ ea29 ea NOP 
+ ea2a ea NOP 
+ ea2b 08 PHP 
+ ea2c 48 PHA 
+ ea2d a0 LDY  #9e
+ ea2f 68 PLA 
+ ea30 28 PLP 
+ ea31 20 JSR  [fa37]
+ ea34 ad LDA  [647]
+ ea37 c9 CMP  #ea
+ ea39 f0 BEQ  [ea3d]
+ ea3b 84 STY  [0]
+ ea3d a0 LDY  #ff
+ ea3f a9 LDA  #0
+ ea41 8d STA  [647]
+ ea44 20 JSR  [fa42]
+ ea47 d3 DCP 
+ ea49 ea NOP 
+ ea4a ea NOP 
+ ea4b 08 PHP 
+ ea4c 48 PHA 
+ ea4d a0 LDY  #9f
+ ea4f 68 PLA 
+ ea50 28 PLP 
+ ea51 20 JSR  [fa47]
+ ea54 ad LDA  [647]
+ ea57 c9 CMP  #ff
+ ea59 f0 BEQ  [ea5d]
+ ea5b 84 STY  [0]
+ ea5d a0 LDY  #ff
+ ea5f a9 LDA  #37
+ ea61 8d STA  [647]
+ ea64 20 JSR  [fa54]
+ ea67 d3 DCP 
+ ea69 ea NOP 
+ ea6a ea NOP 
+ ea6b 08 PHP 
+ ea6c 48 PHA 
+ ea6d a0 LDY  #a0
+ ea6f 68 PLA 
+ ea70 28 PLP 
+ ea71 20 JSR  [fa59]
+ ea74 ad LDA  [647]
+ ea77 c9 CMP  #36
+ ea79 f0 BEQ  [ea7d]
+ ea7b 84 STY  [0]
+ ea7d a0 LDY  #a1
+ ea7f a2 LDX  #ff
+ ea81 a9 LDA  #eb
+ ea83 85 STA  [47]
+ ea85 20 JSR  [fa31]
+ ea88 d7 DCP 
+ ea8a ea NOP 
+ ea8b ea NOP 
+ ea8c ea NOP 
+ ea8d ea NOP 
+ ea8e 20 JSR  [fa37]
+ ea91 a5 LDA  [47]
+ ea93 c9 CMP  #ea
+ ea95 f0 BEQ  [ea99]
+ ea97 84 STY  [0]
+ ea99 c8 INY 
+ ea9a a9 LDA  #0
+ ea9c 85 STA  [47]
+ ea9e 20 JSR  [fa42]
+ eaa1 d7 DCP 
+ eaa3 ea NOP 
+ eaa4 ea NOP 
+ eaa5 ea NOP 
+ eaa6 ea NOP 
+ eaa7 20 JSR  [fa47]
+ eaaa a5 LDA  [47]
+ eaac c9 CMP  #ff
+ eaae f0 BEQ  [eab2]
+ eab0 84 STY  [0]
+ eab2 c8 INY 
+ eab3 a9 LDA  #37
+ eab5 85 STA  [47]
+ eab7 20 JSR  [fa54]
+ eaba d7 DCP 
+ eabc ea NOP 
+ eabd ea NOP 
+ eabe ea NOP 
+ eabf ea NOP 
+ eac0 20 JSR  [fa59]
+ eac3 a5 LDA  [47]
+ eac5 c9 CMP  #36
+ eac7 f0 BEQ  [eacb]
+ eac9 84 STY  [0]
+ eacb a9 LDA  #eb
+ eacd 8d STA  [647]
+ ead0 a0 LDY  #ff
+ ead2 20 JSR  [fa31]
+ ead5 db DCP 
+ ead8 ea NOP 
+ ead9 ea NOP 
+ eada 08 PHP 
+ eadb 48 PHA 
+ eadc a0 LDY  #a4
+ eade 68 PLA 
+ eadf 28 PLP 
+ eae0 20 JSR  [fa37]
+ eae3 ad LDA  [647]
+ eae6 c9 CMP  #ea
+ eae8 f0 BEQ  [eaec]
+ eaea 84 STY  [0]
+ eaec a0 LDY  #ff
+ eaee a9 LDA  #0
+ eaf0 8d STA  [647]
+ eaf3 20 JSR  [fa42]
+ eaf6 db DCP 
+ eaf9 ea NOP 
+ eafa ea NOP 
+ eafb 08 PHP 
+ eafc 48 PHA 
+ eafd a0 LDY  #a5
+ eaff 68 PLA 
+ eb00 28 PLP 
+ eb01 20 JSR  [fa47]
+ eb04 ad LDA  [647]
+ eb07 c9 CMP  #ff
+ eb09 f0 BEQ  [eb0d]
+ eb0b 84 STY  [0]
+ eb0d a0 LDY  #ff
+ eb0f a9 LDA  #37
+ eb11 8d STA  [647]
+ eb14 20 JSR  [fa54]
+ eb17 db DCP 
+ eb1a ea NOP 
+ eb1b ea NOP 
+ eb1c 08 PHP 
+ eb1d 48 PHA 
+ eb1e a0 LDY  #a6
+ eb20 68 PLA 
+ eb21 28 PLP 
+ eb22 20 JSR  [fa59]
+ eb25 ad LDA  [647]
+ eb28 c9 CMP  #36
+ eb2a f0 BEQ  [eb2e]
+ eb2c 84 STY  [0]
+ eb2e a0 LDY  #a7
+ eb30 a2 LDX  #ff
+ eb32 a9 LDA  #eb
+ eb34 8d STA  [647]
+ eb37 20 JSR  [fa31]
+ eb3a df DCP 
+ eb3d ea NOP 
+ eb3e ea NOP 
+ eb3f ea NOP 
+ eb40 ea NOP 
+ eb41 20 JSR  [fa37]
+ eb44 ad LDA  [647]
+ eb47 c9 CMP  #ea
+ eb49 f0 BEQ  [eb4d]
+ eb4b 84 STY  [0]
+ eb4d c8 INY 
+ eb4e a9 LDA  #0
+ eb50 8d STA  [647]
+ eb53 20 JSR  [fa42]
+ eb56 df DCP 
+ eb59 ea NOP 
+ eb5a ea NOP 
+ eb5b ea NOP 
+ eb5c ea NOP 
+ eb5d 20 JSR  [fa47]
+ eb60 ad LDA  [647]
+ eb63 c9 CMP  #ff
+ eb65 f0 BEQ  [eb69]
+ eb67 84 STY  [0]
+ eb69 c8 INY 
+ eb6a a9 LDA  #37
+ eb6c 8d STA  [647]
+ eb6f 20 JSR  [fa54]
+ eb72 df DCP 
+ eb75 ea NOP 
+ eb76 ea NOP 
+ eb77 ea NOP 
+ eb78 ea NOP 
+ eb79 20 JSR  [fa59]
+ eb7c ad LDA  [647]
+ eb7f c9 CMP  #36
+ eb81 f0 BEQ  [eb85]
+ eb83 84 STY  [0]
+ eb85 60 RTS 
+ eb86 a9 LDA  #ff
+ eb88 85 STA  [1]
+ eb8a a0 LDY  #aa
+ eb8c a2 LDX  #2
+ eb8e a9 LDA  #47
+ eb90 85 STA  [47]
+ eb92 a9 LDA  #6
+ eb94 85 STA  [48]
+ eb96 a9 LDA  #eb
+ eb98 8d STA  [647]
+ eb9b 20 JSR  [fab1]
+ eb9e e3 ISC 
+ eba0 ea NOP 
+ eba1 ea NOP 
+ eba2 ea NOP 
+ eba3 ea NOP 
+ eba4 20 JSR  [fab7]
+ eba7 ad LDA  [647]
+ ebaa c9 CMP  #ec
+ ebac f0 BEQ  [ebb0]
+ ebae 84 STY  [0]
+ ebb0 c8 INY 
+ ebb1 a9 LDA  #ff
+ ebb3 8d STA  [647]
+ ebb6 20 JSR  [fac2]
+ ebb9 e3 ISC 
+ ebbb ea NOP 
+ ebbc ea NOP 
+ ebbd ea NOP 
+ ebbe ea NOP 
+ ebbf 20 JSR  [fac7]
+ ebc2 ad LDA  [647]
+ ebc5 c9 CMP  #0
+ ebc7 f0 BEQ  [ebcb]
+ ebc9 84 STY  [0]
+ ebcb c8 INY 
+ ebcc a9 LDA  #37
+ ebce 8d STA  [647]
+ ebd1 20 JSR  [fad4]
+ ebd4 e3 ISC 
+ ebd6 ea NOP 
+ ebd7 ea NOP 
+ ebd8 ea NOP 
+ ebd9 ea NOP 
+ ebda 20 JSR  [fada]
+ ebdd ad LDA  [647]
+ ebe0 c9 CMP  #38
+ ebe2 f0 BEQ  [ebe6]
+ ebe4 84 STY  [0]
+ ebe6 c8 INY 
+ ebe7 a9 LDA  #eb
+ ebe9 85 STA  [47]
+ ebeb 20 JSR  [fab1]
+ ebee e7 ISC 
+ ebf0 ea NOP 
+ ebf1 ea NOP 
+ ebf2 ea NOP 
+ ebf3 ea NOP 
+ ebf4 20 JSR  [fab7]
+ ebf7 a5 LDA  [47]
+ ebf9 c9 CMP  #ec
+ ebfb f0 BEQ  [ebff]
+ ebfd 84 STY  [0]
+ ebff c8 INY 
+ ec00 a9 LDA  #ff
+ ec02 85 STA  [47]
+ ec04 20 JSR  [fac2]
+ ec07 e7 ISC 
+ ec09 ea NOP 
+ ec0a ea NOP 
+ ec0b ea NOP 
+ ec0c ea NOP 
+ ec0d 20 JSR  [fac7]
+ ec10 a5 LDA  [47]
+ ec12 c9 CMP  #0
+ ec14 f0 BEQ  [ec18]
+ ec16 84 STY  [0]
+ ec18 c8 INY 
+ ec19 a9 LDA  #37
+ ec1b 85 STA  [47]
+ ec1d 20 JSR  [fad4]
+ ec20 e7 ISC 
+ ec22 ea NOP 
+ ec23 ea NOP 
+ ec24 ea NOP 
+ ec25 ea NOP 
+ ec26 20 JSR  [fada]
+ ec29 a5 LDA  [47]
+ ec2b c9 CMP  #38
+ ec2d f0 BEQ  [ec31]
+ ec2f 84 STY  [0]
+ ec31 c8 INY 
+ ec32 a9 LDA  #eb
+ ec34 8d STA  [647]
+ ec37 20 JSR  [fab1]
+ ec3a ef ISC 
+ ec3d ea NOP 
+ ec3e ea NOP 
+ ec3f ea NOP 
+ ec40 ea NOP 
+ ec41 20 JSR  [fab7]
+ ec44 ad LDA  [647]
+ ec47 c9 CMP  #ec
+ ec49 f0 BEQ  [ec4d]
+ ec4b 84 STY  [0]
+ ec4d c8 INY 
+ ec4e a9 LDA  #ff
+ ec50 8d STA  [647]
+ ec53 20 JSR  [fac2]
+ ec56 ef ISC 
+ ec59 ea NOP 
+ ec5a ea NOP 
+ ec5b ea NOP 
+ ec5c ea NOP 
+ ec5d 20 JSR  [fac7]
+ ec60 ad LDA  [647]
+ ec63 c9 CMP  #0
+ ec65 f0 BEQ  [ec69]
+ ec67 84 STY  [0]
+ ec69 c8 INY 
+ ec6a a9 LDA  #37
+ ec6c 8d STA  [647]
+ ec6f 20 JSR  [fad4]
+ ec72 ef ISC 
+ ec75 ea NOP 
+ ec76 ea NOP 
+ ec77 ea NOP 
+ ec78 ea NOP 
+ ec79 20 JSR  [fada]
+ ec7c ad LDA  [647]
+ ec7f c9 CMP  #38
+ ec81 f0 BEQ  [ec85]
+ ec83 84 STY  [0]
+ ec85 a9 LDA  #eb
+ ec87 8d STA  [647]
+ ec8a a9 LDA  #48
+ ec8c 85 STA  [45]
+ ec8e a9 LDA  #5
+ ec90 85 STA  [46]
+ ec92 a0 LDY  #ff
+ ec94 20 JSR  [fab1]
+ ec97 f3 ISC 
+ ec99 ea NOP 
+ ec9a ea NOP 
+ ec9b 08 PHP 
+ ec9c 48 PHA 
+ ec9d a0 LDY  #b3
+ ec9f 68 PLA 
+ eca0 28 PLP 
+ eca1 20 JSR  [fab7]
+ eca4 ad LDA  [647]
+ eca7 c9 CMP  #ec
+ eca9 f0 BEQ  [ecad]
+ ecab 84 STY  [0]
+ ecad a0 LDY  #ff
+ ecaf a9 LDA  #ff
+ ecb1 8d STA  [647]
+ ecb4 20 JSR  [fac2]
+ ecb7 f3 ISC 
+ ecb9 ea NOP 
+ ecba ea NOP 
+ ecbb 08 PHP 
+ ecbc 48 PHA 
+ ecbd a0 LDY  #b4
+ ecbf 68 PLA 
+ ecc0 28 PLP 
+ ecc1 20 JSR  [fac7]
+ ecc4 ad LDA  [647]
+ ecc7 c9 CMP  #0
+ ecc9 f0 BEQ  [eccd]
+ eccb 84 STY  [0]
+ eccd a0 LDY  #ff
+ eccf a9 LDA  #37
+ ecd1 8d STA  [647]
+ ecd4 20 JSR  [fad4]
+ ecd7 f3 ISC 
+ ecd9 ea NOP 
+ ecda ea NOP 
+ ecdb 08 PHP 
+ ecdc 48 PHA 
+ ecdd a0 LDY  #b5
+ ecdf 68 PLA 
+ ece0 28 PLP 
+ ece1 20 JSR  [fada]
+ ece4 ad LDA  [647]
+ ece7 c9 CMP  #38
+ ece9 f0 BEQ  [eced]
+ eceb 84 STY  [0]
+ eced a0 LDY  #b6
+ ecef a2 LDX  #ff
+ ecf1 a9 LDA  #eb
+ ecf3 85 STA  [47]
+ ecf5 20 JSR  [fab1]
+ ecf8 f7 ISC 
+ ecfa ea NOP 
+ ecfb ea NOP 
+ ecfc ea NOP 
+ ecfd ea NOP 
+ ecfe 20 JSR  [fab7]
+ ed01 a5 LDA  [47]
+ ed03 c9 CMP  #ec
+ ed05 f0 BEQ  [ed09]
+ ed07 84 STY  [0]
+ ed09 c8 INY 
+ ed0a a9 LDA  #ff
+ ed0c 85 STA  [47]
+ ed0e 20 JSR  [fac2]
+ ed11 f7 ISC 
+ ed13 ea NOP 
+ ed14 ea NOP 
+ ed15 ea NOP 
+ ed16 ea NOP 
+ ed17 20 JSR  [fac7]
+ ed1a a5 LDA  [47]
+ ed1c c9 CMP  #0
+ ed1e f0 BEQ  [ed22]
+ ed20 84 STY  [0]
+ ed22 c8 INY 
+ ed23 a9 LDA  #37
+ ed25 85 STA  [47]
+ ed27 20 JSR  [fad4]
+ ed2a f7 ISC 
+ ed2c ea NOP 
+ ed2d ea NOP 
+ ed2e ea NOP 
+ ed2f ea NOP 
+ ed30 20 JSR  [fada]
+ ed33 a5 LDA  [47]
+ ed35 c9 CMP  #38
+ ed37 f0 BEQ  [ed3b]
+ ed39 84 STY  [0]
+ ed3b a9 LDA  #eb
+ ed3d 8d STA  [647]
+ ed40 a0 LDY  #ff
+ ed42 20 JSR  [fab1]
+ ed45 fb ISC 
+ ed48 ea NOP 
+ ed49 ea NOP 
+ ed4a 08 PHP 
+ ed4b 48 PHA 
+ ed4c a0 LDY  #b9
+ ed4e 68 PLA 
+ ed4f 28 PLP 
+ ed50 20 JSR  [fab7]
+ ed53 ad LDA  [647]
+ ed56 c9 CMP  #ec
+ ed58 f0 BEQ  [ed5c]
+ ed5a 84 STY  [0]
+ ed5c a0 LDY  #ff
+ ed5e a9 LDA  #ff
+ ed60 8d STA  [647]
+ ed63 20 JSR  [fac2]
+ ed66 fb ISC 
+ ed69 ea NOP 
+ ed6a ea NOP 
+ ed6b 08 PHP 
+ ed6c 48 PHA 
+ ed6d a0 LDY  #ba
+ ed6f 68 PLA 
+ ed70 28 PLP 
+ ed71 20 JSR  [fac7]
+ ed74 ad LDA  [647]
+ ed77 c9 CMP  #0
+ ed79 f0 BEQ  [ed7d]
+ ed7b 84 STY  [0]
+ ed7d a0 LDY  #ff
+ ed7f a9 LDA  #37
+ ed81 8d STA  [647]
+ ed84 20 JSR  [fad4]
+ ed87 fb ISC 
+ ed8a ea NOP 
+ ed8b ea NOP 
+ ed8c 08 PHP 
+ ed8d 48 PHA 
+ ed8e a0 LDY  #bb
+ ed90 68 PLA 
+ ed91 28 PLP 
+ ed92 20 JSR  [fada]
+ ed95 ad LDA  [647]
+ ed98 c9 CMP  #38
+ ed9a f0 BEQ  [ed9e]
+ ed9c 84 STY  [0]
+ ed9e a0 LDY  #bc
+ eda0 a2 LDX  #ff
+ eda2 a9 LDA  #eb
+ eda4 8d STA  [647]
+ eda7 20 JSR  [fab1]
+ edaa ff ISC 
+ edad ea NOP 
+ edae ea NOP 
+ edaf ea NOP 
+ edb0 ea NOP 
+ edb1 20 JSR  [fab7]
+ edb4 ad LDA  [647]
+ edb7 c9 CMP  #ec
+ edb9 f0 BEQ  [edbd]
+ edbb 84 STY  [0]
+ edbd c8 INY 
+ edbe a9 LDA  #ff
+ edc0 8d STA  [647]
+ edc3 20 JSR  [fac2]
+ edc6 ff ISC 
+ edc9 ea NOP 
+ edca ea NOP 
+ edcb ea NOP 
+ edcc ea NOP 
+ edcd 20 JSR  [fac7]
+ edd0 ad LDA  [647]
+ edd3 c9 CMP  #0
+ edd5 f0 BEQ  [edd9]
+ edd7 84 STY  [0]
+ edd9 c8 INY 
+ edda a9 LDA  #37
+ eddc 8d STA  [647]
+ eddf 20 JSR  [fad4]
+ ede2 ff ISC 
+ ede5 ea NOP 
+ ede6 ea NOP 
+ ede7 ea NOP 
+ ede8 ea NOP 
+ ede9 20 JSR  [fada]
+ edec ad LDA  [647]
+ edef c9 CMP  #38
+ edf1 f0 BEQ  [edf5]
+ edf3 84 STY  [0]
+ edf5 60 RTS 
+ edf6 a9 LDA  #ff
+ edf8 85 STA  [1]
+ edfa a0 LDY  #bf
+ edfc a2 LDX  #2
+ edfe a9 LDA  #47
+ ee00 85 STA  [47]
+ ee02 a9 LDA  #6
+ ee04 85 STA  [48]
+ ee06 a9 LDA  #a5
+ ee08 8d STA  [647]
+ ee0b 20 JSR  [fa7b]
+ ee0e 03 SLO 
+ ee10 ea NOP 
+ ee11 ea NOP 
+ ee12 ea NOP 
+ ee13 ea NOP 
+ ee14 20 JSR  [fa81]
+ ee17 ad LDA  [647]
+ ee1a c9 CMP  #4a
+ ee1c f0 BEQ  [ee20]
+ ee1e 84 STY  [0]
+ ee20 c8 INY 
+ ee21 a9 LDA  #29
+ ee23 8d STA  [647]
+ ee26 20 JSR  [fa8c]
+ ee29 03 SLO 
+ ee2b ea NOP 
+ ee2c ea NOP 
+ ee2d ea NOP 
+ ee2e ea NOP 
+ ee2f 20 JSR  [fa91]
+ ee32 ad LDA  [647]
+ ee35 c9 CMP  #52
+ ee37 f0 BEQ  [ee3b]
+ ee39 84 STY  [0]
+ ee3b c8 INY 
+ ee3c a9 LDA  #37
+ ee3e 8d STA  [647]
+ ee41 20 JSR  [fa9e]
+ ee44 03 SLO 
+ ee46 ea NOP 
+ ee47 ea NOP 
+ ee48 ea NOP 
+ ee49 ea NOP 
+ ee4a 20 JSR  [faa4]
+ ee4d ad LDA  [647]
+ ee50 c9 CMP  #6e
+ ee52 f0 BEQ  [ee56]
+ ee54 84 STY  [0]
+ ee56 c8 INY 
+ ee57 a9 LDA  #a5
+ ee59 85 STA  [47]
+ ee5b 20 JSR  [fa7b]
+ ee5e 07 SLO 
+ ee60 ea NOP 
+ ee61 ea NOP 
+ ee62 ea NOP 
+ ee63 ea NOP 
+ ee64 20 JSR  [fa81]
+ ee67 a5 LDA  [47]
+ ee69 c9 CMP  #4a
+ ee6b f0 BEQ  [ee6f]
+ ee6d 84 STY  [0]
+ ee6f c8 INY 
+ ee70 a9 LDA  #29
+ ee72 85 STA  [47]
+ ee74 20 JSR  [fa8c]
+ ee77 07 SLO 
+ ee79 ea NOP 
+ ee7a ea NOP 
+ ee7b ea NOP 
+ ee7c ea NOP 
+ ee7d 20 JSR  [fa91]
+ ee80 a5 LDA  [47]
+ ee82 c9 CMP  #52
+ ee84 f0 BEQ  [ee88]
+ ee86 84 STY  [0]
+ ee88 c8 INY 
+ ee89 a9 LDA  #37
+ ee8b 85 STA  [47]
+ ee8d 20 JSR  [fa9e]
+ ee90 07 SLO 
+ ee92 ea NOP 
+ ee93 ea NOP 
+ ee94 ea NOP 
+ ee95 ea NOP 
+ ee96 20 JSR  [faa4]
+ ee99 a5 LDA  [47]
+ ee9b c9 CMP  #6e
+ ee9d f0 BEQ  [eea1]
+ ee9f 84 STY  [0]
+ eea1 c8 INY 
+ eea2 a9 LDA  #a5
+ eea4 8d STA  [647]
+ eea7 20 JSR  [fa7b]
+ eeaa 0f SLO 
+ eead ea NOP 
+ eeae ea NOP 
+ eeaf ea NOP 
+ eeb0 ea NOP 
+ eeb1 20 JSR  [fa81]
+ eeb4 ad LDA  [647]
+ eeb7 c9 CMP  #4a
+ eeb9 f0 BEQ  [eebd]
+ eebb 84 STY  [0]
+ eebd c8 INY 
+ eebe a9 LDA  #29
+ eec0 8d STA  [647]
+ eec3 20 JSR  [fa8c]
+ eec6 0f SLO 
+ eec9 ea NOP 
+ eeca ea NOP 
+ eecb ea NOP 
+ eecc ea NOP 
+ eecd 20 JSR  [fa91]
+ eed0 ad LDA  [647]
+ eed3 c9 CMP  #52
+ eed5 f0 BEQ  [eed9]
+ eed7 84 STY  [0]
+ eed9 c8 INY 
+ eeda a9 LDA  #37
+ eedc 8d STA  [647]
+ eedf 20 JSR  [fa9e]
+ eee2 0f SLO 
+ eee5 ea NOP 
+ eee6 ea NOP 
+ eee7 ea NOP 
+ eee8 ea NOP 
+ eee9 20 JSR  [faa4]
+ eeec ad LDA  [647]
+ eeef c9 CMP  #6e
+ eef1 f0 BEQ  [eef5]
+ eef3 84 STY  [0]
+ eef5 a9 LDA  #a5
+ eef7 8d STA  [647]
+ eefa a9 LDA  #48
+ eefc 85 STA  [45]
+ eefe a9 LDA  #5
+ ef00 85 STA  [46]
+ ef02 a0 LDY  #ff
+ ef04 20 JSR  [fa7b]
+ ef07 13 SLO 
+ ef09 ea NOP 
+ ef0a ea NOP 
+ ef0b 08 PHP 
+ ef0c 48 PHA 
+ ef0d a0 LDY  #c8
+ ef0f 68 PLA 
+ ef10 28 PLP 
+ ef11 20 JSR  [fa81]
+ ef14 ad LDA  [647]
+ ef17 c9 CMP  #4a
+ ef19 f0 BEQ  [ef1d]
+ ef1b 84 STY  [0]
+ ef1d a0 LDY  #ff
+ ef1f a9 LDA  #29
+ ef21 8d STA  [647]
+ ef24 20 JSR  [fa8c]
+ ef27 13 SLO 
+ ef29 ea NOP 
+ ef2a ea NOP 
+ ef2b 08 PHP 
+ ef2c 48 PHA 
+ ef2d a0 LDY  #c9
+ ef2f 68 PLA 
+ ef30 28 PLP 
+ ef31 20 JSR  [fa91]
+ ef34 ad LDA  [647]
+ ef37 c9 CMP  #52
+ ef39 f0 BEQ  [ef3d]
+ ef3b 84 STY  [0]
+ ef3d a0 LDY  #ff
+ ef3f a9 LDA  #37
+ ef41 8d STA  [647]
+ ef44 20 JSR  [fa9e]
+ ef47 13 SLO 
+ ef49 ea NOP 
+ ef4a ea NOP 
+ ef4b 08 PHP 
+ ef4c 48 PHA 
+ ef4d a0 LDY  #ca
+ ef4f 68 PLA 
+ ef50 28 PLP 
+ ef51 20 JSR  [faa4]
+ ef54 ad LDA  [647]
+ ef57 c9 CMP  #6e
+ ef59 f0 BEQ  [ef5d]
+ ef5b 84 STY  [0]
+ ef5d a0 LDY  #cb
+ ef5f a2 LDX  #ff
+ ef61 a9 LDA  #a5
+ ef63 85 STA  [47]
+ ef65 20 JSR  [fa7b]
+ ef68 17 SLO 
+ ef6a ea NOP 
+ ef6b ea NOP 
+ ef6c ea NOP 
+ ef6d ea NOP 
+ ef6e 20 JSR  [fa81]
+ ef71 a5 LDA  [47]
+ ef73 c9 CMP  #4a
+ ef75 f0 BEQ  [ef79]
+ ef77 84 STY  [0]
+ ef79 c8 INY 
+ ef7a a9 LDA  #29
+ ef7c 85 STA  [47]
+ ef7e 20 JSR  [fa8c]
+ ef81 17 SLO 
+ ef83 ea NOP 
+ ef84 ea NOP 
+ ef85 ea NOP 
+ ef86 ea NOP 
+ ef87 20 JSR  [fa91]
+ ef8a a5 LDA  [47]
+ ef8c c9 CMP  #52
+ ef8e f0 BEQ  [ef92]
+ ef90 84 STY  [0]
+ ef92 c8 INY 
+ ef93 a9 LDA  #37
+ ef95 85 STA  [47]
+ ef97 20 JSR  [fa9e]
+ ef9a 17 SLO 
+ ef9c ea NOP 
+ ef9d ea NOP 
+ ef9e ea NOP 
+ ef9f ea NOP 
+ efa0 20 JSR  [faa4]
+ efa3 a5 LDA  [47]
+ efa5 c9 CMP  #6e
+ efa7 f0 BEQ  [efab]
+ efa9 84 STY  [0]
+ efab a9 LDA  #a5
+ efad 8d STA  [647]
+ efb0 a0 LDY  #ff
+ efb2 20 JSR  [fa7b]
+ efb5 1b SLO 
+ efb8 ea NOP 
+ efb9 ea NOP 
+ efba 08 PHP 
+ efbb 48 PHA 
+ efbc a0 LDY  #ce
+ efbe 68 PLA 
+ efbf 28 PLP 
+ efc0 20 JSR  [fa81]
+ efc3 ad LDA  [647]
+ efc6 c9 CMP  #4a
+ efc8 f0 BEQ  [efcc]
+ efca 84 STY  [0]
+ efcc a0 LDY  #ff
+ efce a9 LDA  #29
+ efd0 8d STA  [647]
+ efd3 20 JSR  [fa8c]
+ efd6 1b SLO 
+ efd9 ea NOP 
+ efda ea NOP 
+ efdb 08 PHP 
+ efdc 48 PHA 
+ efdd a0 LDY  #cf
+ efdf 68 PLA 
+ efe0 28 PLP 
+ efe1 20 JSR  [fa91]
+ efe4 ad LDA  [647]
+ efe7 c9 CMP  #52
+ efe9 f0 BEQ  [efed]
+ efeb 84 STY  [0]
+ efed a0 LDY  #ff
+ efef a9 LDA  #37
+ eff1 8d STA  [647]
+ eff4 20 JSR  [fa9e]
+ eff7 1b SLO 
+ effa ea NOP 
+ effb ea NOP 
+ effc 08 PHP 
+ effd 48 PHA 
+ effe a0 LDY  #d0
+ f000 68 PLA 
+ f001 28 PLP 
+ f002 20 JSR  [faa4]
+ f005 ad LDA  [647]
+ f008 c9 CMP  #6e
+ f00a f0 BEQ  [f00e]
+ f00c 84 STY  [0]
+ f00e a0 LDY  #d1
+ f010 a2 LDX  #ff
+ f012 a9 LDA  #a5
+ f014 8d STA  [647]
+ f017 20 JSR  [fa7b]
+ f01a 1f SLO 
+ f01d ea NOP 
+ f01e ea NOP 
+ f01f ea NOP 
+ f020 ea NOP 
+ f021 20 JSR  [fa81]
+ f024 ad LDA  [647]
+ f027 c9 CMP  #4a
+ f029 f0 BEQ  [f02d]
+ f02b 84 STY  [0]
+ f02d c8 INY 
+ f02e a9 LDA  #29
+ f030 8d STA  [647]
+ f033 20 JSR  [fa8c]
+ f036 1f SLO 
+ f039 ea NOP 
+ f03a ea NOP 
+ f03b ea NOP 
+ f03c ea NOP 
+ f03d 20 JSR  [fa91]
+ f040 ad LDA  [647]
+ f043 c9 CMP  #52
+ f045 f0 BEQ  [f049]
+ f047 84 STY  [0]
+ f049 c8 INY 
+ f04a a9 LDA  #37
+ f04c 8d STA  [647]
+ f04f 20 JSR  [fa9e]
+ f052 1f SLO 
+ f055 ea NOP 
+ f056 ea NOP 
+ f057 ea NOP 
+ f058 ea NOP 
+ f059 20 JSR  [faa4]
+ f05c ad LDA  [647]
+ f05f c9 CMP  #6e
+ f061 f0 BEQ  [f065]
+ f063 84 STY  [0]
+ f065 60 RTS 
+ f066 a9 LDA  #ff
+ f068 85 STA  [1]
+ f06a a0 LDY  #d4
+ f06c a2 LDX  #2
+ f06e a9 LDA  #47
+ f070 85 STA  [47]
+ f072 a9 LDA  #6
+ f074 85 STA  [48]
+ f076 a9 LDA  #a5
+ f078 8d STA  [647]
+ f07b 20 JSR  [fb53]
+ f07e 23 RLA 
+ f080 ea NOP 
+ f081 ea NOP 
+ f082 ea NOP 
+ f083 ea NOP 
+ f084 20 JSR  [fb59]
+ f087 ad LDA  [647]
+ f08a c9 CMP  #4a
+ f08c f0 BEQ  [f090]
+ f08e 84 STY  [0]
+ f090 c8 INY 
+ f091 a9 LDA  #29
+ f093 8d STA  [647]
+ f096 20 JSR  [fb64]
+ f099 23 RLA 
+ f09b ea NOP 
+ f09c ea NOP 
+ f09d ea NOP 
+ f09e ea NOP 
+ f09f 20 JSR  [fb69]
+ f0a2 ad LDA  [647]
+ f0a5 c9 CMP  #52
+ f0a7 f0 BEQ  [f0ab]
+ f0a9 84 STY  [0]
+ f0ab c8 INY 
+ f0ac a9 LDA  #37
+ f0ae 8d STA  [647]
+ f0b1 20 JSR  [fa68]
+ f0b4 23 RLA 
+ f0b6 ea NOP 
+ f0b7 ea NOP 
+ f0b8 ea NOP 
+ f0b9 ea NOP 
+ f0ba 20 JSR  [fa6e]
+ f0bd ad LDA  [647]
+ f0c0 c9 CMP  #6f
+ f0c2 f0 BEQ  [f0c6]
+ f0c4 84 STY  [0]
+ f0c6 c8 INY 
+ f0c7 a9 LDA  #a5
+ f0c9 85 STA  [47]
+ f0cb 20 JSR  [fb53]
+ f0ce 27 RLA 
+ f0d0 ea NOP 
+ f0d1 ea NOP 
+ f0d2 ea NOP 
+ f0d3 ea NOP 
+ f0d4 20 JSR  [fb59]
+ f0d7 a5 LDA  [47]
+ f0d9 c9 CMP  #4a
+ f0db f0 BEQ  [f0df]
+ f0dd 84 STY  [0]
+ f0df c8 INY 
+ f0e0 a9 LDA  #29
+ f0e2 85 STA  [47]
+ f0e4 20 JSR  [fb64]
+ f0e7 27 RLA 
+ f0e9 ea NOP 
+ f0ea ea NOP 
+ f0eb ea NOP 
+ f0ec ea NOP 
+ f0ed 20 JSR  [fb69]
+ f0f0 a5 LDA  [47]
+ f0f2 c9 CMP  #52
+ f0f4 f0 BEQ  [f0f8]
+ f0f6 84 STY  [0]
+ f0f8 c8 INY 
+ f0f9 a9 LDA  #37
+ f0fb 85 STA  [47]
+ f0fd 20 JSR  [fa68]
+ f100 27 RLA 
+ f102 ea NOP 
+ f103 ea NOP 
+ f104 ea NOP 
+ f105 ea NOP 
+ f106 20 JSR  [fa6e]
+ f109 a5 LDA  [47]
+ f10b c9 CMP  #6f
+ f10d f0 BEQ  [f111]
+ f10f 84 STY  [0]
+ f111 c8 INY 
+ f112 a9 LDA  #a5
+ f114 8d STA  [647]
+ f117 20 JSR  [fb53]
+ f11a 2f RLA 
+ f11d ea NOP 
+ f11e ea NOP 
+ f11f ea NOP 
+ f120 ea NOP 
+ f121 20 JSR  [fb59]
+ f124 ad LDA  [647]
+ f127 c9 CMP  #4a
+ f129 f0 BEQ  [f12d]
+ f12b 84 STY  [0]
+ f12d c8 INY 
+ f12e a9 LDA  #29
+ f130 8d STA  [647]
+ f133 20 JSR  [fb64]
+ f136 2f RLA 
+ f139 ea NOP 
+ f13a ea NOP 
+ f13b ea NOP 
+ f13c ea NOP 
+ f13d 20 JSR  [fb69]
+ f140 ad LDA  [647]
+ f143 c9 CMP  #52
+ f145 f0 BEQ  [f149]
+ f147 84 STY  [0]
+ f149 c8 INY 
+ f14a a9 LDA  #37
+ f14c 8d STA  [647]
+ f14f 20 JSR  [fa68]
+ f152 2f RLA 
+ f155 ea NOP 
+ f156 ea NOP 
+ f157 ea NOP 
+ f158 ea NOP 
+ f159 20 JSR  [fa6e]
+ f15c ad LDA  [647]
+ f15f c9 CMP  #6f
+ f161 f0 BEQ  [f165]
+ f163 84 STY  [0]
+ f165 a9 LDA  #a5
+ f167 8d STA  [647]
+ f16a a9 LDA  #48
+ f16c 85 STA  [45]
+ f16e a9 LDA  #5
+ f170 85 STA  [46]
+ f172 a0 LDY  #ff
+ f174 20 JSR  [fb53]
+ f177 33 RLA 
+ f179 ea NOP 
+ f17a ea NOP 
+ f17b 08 PHP 
+ f17c 48 PHA 
+ f17d a0 LDY  #dd
+ f17f 68 PLA 
+ f180 28 PLP 
+ f181 20 JSR  [fb59]
+ f184 ad LDA  [647]
+ f187 c9 CMP  #4a
+ f189 f0 BEQ  [f18d]
+ f18b 84 STY  [0]
+ f18d a0 LDY  #ff
+ f18f a9 LDA  #29
+ f191 8d STA  [647]
+ f194 20 JSR  [fb64]
+ f197 33 RLA 
+ f199 ea NOP 
+ f19a ea NOP 
+ f19b 08 PHP 
+ f19c 48 PHA 
+ f19d a0 LDY  #de
+ f19f 68 PLA 
+ f1a0 28 PLP 
+ f1a1 20 JSR  [fb69]
+ f1a4 ad LDA  [647]
+ f1a7 c9 CMP  #52
+ f1a9 f0 BEQ  [f1ad]
+ f1ab 84 STY  [0]
+ f1ad a0 LDY  #ff
+ f1af a9 LDA  #37
+ f1b1 8d STA  [647]
+ f1b4 20 JSR  [fa68]
+ f1b7 33 RLA 
+ f1b9 ea NOP 
+ f1ba ea NOP 
+ f1bb 08 PHP 
+ f1bc 48 PHA 
+ f1bd a0 LDY  #df
+ f1bf 68 PLA 
+ f1c0 28 PLP 
+ f1c1 20 JSR  [fa6e]
+ f1c4 ad LDA  [647]
+ f1c7 c9 CMP  #6f
+ f1c9 f0 BEQ  [f1cd]
+ f1cb 84 STY  [0]
+ f1cd a0 LDY  #e0
+ f1cf a2 LDX  #ff
+ f1d1 a9 LDA  #a5
+ f1d3 85 STA  [47]
+ f1d5 20 JSR  [fb53]
+ f1d8 37 RLA 
+ f1da ea NOP 
+ f1db ea NOP 
+ f1dc ea NOP 
+ f1dd ea NOP 
+ f1de 20 JSR  [fb59]
+ f1e1 a5 LDA  [47]
+ f1e3 c9 CMP  #4a
+ f1e5 f0 BEQ  [f1e9]
+ f1e7 84 STY  [0]
+ f1e9 c8 INY 
+ f1ea a9 LDA  #29
+ f1ec 85 STA  [47]
+ f1ee 20 JSR  [fb64]
+ f1f1 37 RLA 
+ f1f3 ea NOP 
+ f1f4 ea NOP 
+ f1f5 ea NOP 
+ f1f6 ea NOP 
+ f1f7 20 JSR  [fb69]
+ f1fa a5 LDA  [47]
+ f1fc c9 CMP  #52
+ f1fe f0 BEQ  [f202]
+ f200 84 STY  [0]
+ f202 c8 INY 
+ f203 a9 LDA  #37
+ f205 85 STA  [47]
+ f207 20 JSR  [fa68]
+ f20a 37 RLA 
+ f20c ea NOP 
+ f20d ea NOP 
+ f20e ea NOP 
+ f20f ea NOP 
+ f210 20 JSR  [fa6e]
+ f213 a5 LDA  [47]
+ f215 c9 CMP  #6f
+ f217 f0 BEQ  [f21b]
+ f219 84 STY  [0]
+ f21b a9 LDA  #a5
+ f21d 8d STA  [647]
+ f220 a0 LDY  #ff
+ f222 20 JSR  [fb53]
+ f225 3b RLA 
+ f228 ea NOP 
+ f229 ea NOP 
+ f22a 08 PHP 
+ f22b 48 PHA 
+ f22c a0 LDY  #e3
+ f22e 68 PLA 
+ f22f 28 PLP 
+ f230 20 JSR  [fb59]
+ f233 ad LDA  [647]
+ f236 c9 CMP  #4a
+ f238 f0 BEQ  [f23c]
+ f23a 84 STY  [0]
+ f23c a0 LDY  #ff
+ f23e a9 LDA  #29
+ f240 8d STA  [647]
+ f243 20 JSR  [fb64]
+ f246 3b RLA 
+ f249 ea NOP 
+ f24a ea NOP 
+ f24b 08 PHP 
+ f24c 48 PHA 
+ f24d a0 LDY  #e4
+ f24f 68 PLA 
+ f250 28 PLP 
+ f251 20 JSR  [fb69]
+ f254 ad LDA  [647]
+ f257 c9 CMP  #52
+ f259 f0 BEQ  [f25d]
+ f25b 84 STY  [0]
+ f25d a0 LDY  #ff
+ f25f a9 LDA  #37
+ f261 8d STA  [647]
+ f264 20 JSR  [fa68]
+ f267 3b RLA 
+ f26a ea NOP 
+ f26b ea NOP 
+ f26c 08 PHP 
+ f26d 48 PHA 
+ f26e a0 LDY  #e5
+ f270 68 PLA 
+ f271 28 PLP 
+ f272 20 JSR  [fa6e]
+ f275 ad LDA  [647]
+ f278 c9 CMP  #6f
+ f27a f0 BEQ  [f27e]
+ f27c 84 STY  [0]
+ f27e a0 LDY  #e6
+ f280 a2 LDX  #ff
+ f282 a9 LDA  #a5
+ f284 8d STA  [647]
+ f287 20 JSR  [fb53]
+ f28a 3f RLA 
+ f28d ea NOP 
+ f28e ea NOP 
+ f28f ea NOP 
+ f290 ea NOP 
+ f291 20 JSR  [fb59]
+ f294 ad LDA  [647]
+ f297 c9 CMP  #4a
+ f299 f0 BEQ  [f29d]
+ f29b 84 STY  [0]
+ f29d c8 INY 
+ f29e a9 LDA  #29
+ f2a0 8d STA  [647]
+ f2a3 20 JSR  [fb64]
+ f2a6 3f RLA 
+ f2a9 ea NOP 
+ f2aa ea NOP 
+ f2ab ea NOP 
+ f2ac ea NOP 
+ f2ad 20 JSR  [fb69]
+ f2b0 ad LDA  [647]
+ f2b3 c9 CMP  #52
+ f2b5 f0 BEQ  [f2b9]
+ f2b7 84 STY  [0]
+ f2b9 c8 INY 
+ f2ba a9 LDA  #37
+ f2bc 8d STA  [647]
+ f2bf 20 JSR  [fa68]
+ f2c2 3f RLA 
+ f2c5 ea NOP 
+ f2c6 ea NOP 
+ f2c7 ea NOP 
+ f2c8 ea NOP 
+ f2c9 20 JSR  [fa6e]
+ f2cc ad LDA  [647]
+ f2cf c9 CMP  #6f
+ f2d1 f0 BEQ  [f2d5]
+ f2d3 84 STY  [0]
+ f2d5 60 RTS 
+ f2d6 a9 LDA  #ff
+ f2d8 85 STA  [1]
+ f2da a0 LDY  #e9
+ f2dc a2 LDX  #2
+ f2de a9 LDA  #47
+ f2e0 85 STA  [47]
+ f2e2 a9 LDA  #6
+ f2e4 85 STA  [48]
+ f2e6 a9 LDA  #a5
+ f2e8 8d STA  [647]
+ f2eb 20 JSR  [fb1d]
+ f2ee 43 SRE 
+ f2f0 ea NOP 
+ f2f1 ea NOP 
+ f2f2 ea NOP 
+ f2f3 ea NOP 
+ f2f4 20 JSR  [fb23]
+ f2f7 ad LDA  [647]
+ f2fa c9 CMP  #52
+ f2fc f0 BEQ  [f300]
+ f2fe 84 STY  [0]
+ f300 c8 INY 
+ f301 a9 LDA  #29
+ f303 8d STA  [647]
+ f306 20 JSR  [fb2e]
+ f309 43 SRE 
+ f30b ea NOP 
+ f30c ea NOP 
+ f30d ea NOP 
+ f30e ea NOP 
+ f30f 20 JSR  [fb33]
+ f312 ad LDA  [647]
+ f315 c9 CMP  #14
+ f317 f0 BEQ  [f31b]
+ f319 84 STY  [0]
+ f31b c8 INY 
+ f31c a9 LDA  #37
+ f31e 8d STA  [647]
+ f321 20 JSR  [fb40]
+ f324 43 SRE 
+ f326 ea NOP 
+ f327 ea NOP 
+ f328 ea NOP 
+ f329 ea NOP 
+ f32a 20 JSR  [fb46]
+ f32d ad LDA  [647]
+ f330 c9 CMP  #1b
+ f332 f0 BEQ  [f336]
+ f334 84 STY  [0]
+ f336 c8 INY 
+ f337 a9 LDA  #a5
+ f339 85 STA  [47]
+ f33b 20 JSR  [fb1d]
+ f33e 47 SRE 
+ f340 ea NOP 
+ f341 ea NOP 
+ f342 ea NOP 
+ f343 ea NOP 
+ f344 20 JSR  [fb23]
+ f347 a5 LDA  [47]
+ f349 c9 CMP  #52
+ f34b f0 BEQ  [f34f]
+ f34d 84 STY  [0]
+ f34f c8 INY 
+ f350 a9 LDA  #29
+ f352 85 STA  [47]
+ f354 20 JSR  [fb2e]
+ f357 47 SRE 
+ f359 ea NOP 
+ f35a ea NOP 
+ f35b ea NOP 
+ f35c ea NOP 
+ f35d 20 JSR  [fb33]
+ f360 a5 LDA  [47]
+ f362 c9 CMP  #14
+ f364 f0 BEQ  [f368]
+ f366 84 STY  [0]
+ f368 c8 INY 
+ f369 a9 LDA  #37
+ f36b 85 STA  [47]
+ f36d 20 JSR  [fb40]
+ f370 47 SRE 
+ f372 ea NOP 
+ f373 ea NOP 
+ f374 ea NOP 
+ f375 ea NOP 
+ f376 20 JSR  [fb46]
+ f379 a5 LDA  [47]
+ f37b c9 CMP  #1b
+ f37d f0 BEQ  [f381]
+ f37f 84 STY  [0]
+ f381 c8 INY 
+ f382 a9 LDA  #a5
+ f384 8d STA  [647]
+ f387 20 JSR  [fb1d]
+ f38a 4f SRE 
+ f38d ea NOP 
+ f38e ea NOP 
+ f38f ea NOP 
+ f390 ea NOP 
+ f391 20 JSR  [fb23]
+ f394 ad LDA  [647]
+ f397 c9 CMP  #52
+ f399 f0 BEQ  [f39d]
+ f39b 84 STY  [0]
+ f39d c8 INY 
+ f39e a9 LDA  #29
+ f3a0 8d STA  [647]
+ f3a3 20 JSR  [fb2e]
+ f3a6 4f SRE 
+ f3a9 ea NOP 
+ f3aa ea NOP 
+ f3ab ea NOP 
+ f3ac ea NOP 
+ f3ad 20 JSR  [fb33]
+ f3b0 ad LDA  [647]
+ f3b3 c9 CMP  #14
+ f3b5 f0 BEQ  [f3b9]
+ f3b7 84 STY  [0]
+ f3b9 c8 INY 
+ f3ba a9 LDA  #37
+ f3bc 8d STA  [647]
+ f3bf 20 JSR  [fb40]
+ f3c2 4f SRE 
+ f3c5 ea NOP 
+ f3c6 ea NOP 
+ f3c7 ea NOP 
+ f3c8 ea NOP 
+ f3c9 20 JSR  [fb46]
+ f3cc ad LDA  [647]
+ f3cf c9 CMP  #1b
+ f3d1 f0 BEQ  [f3d5]
+ f3d3 84 STY  [0]
+ f3d5 a9 LDA  #a5
+ f3d7 8d STA  [647]
+ f3da a9 LDA  #48
+ f3dc 85 STA  [45]
+ f3de a9 LDA  #5
+ f3e0 85 STA  [46]
+ f3e2 a0 LDY  #ff
+ f3e4 20 JSR  [fb1d]
+ f3e7 53 SRE 
+ f3e9 ea NOP 
+ f3ea ea NOP 
+ f3eb 08 PHP 
+ f3ec 48 PHA 
+ f3ed a0 LDY  #f2
+ f3ef 68 PLA 
+ f3f0 28 PLP 
+ f3f1 20 JSR  [fb23]
+ f3f4 ad LDA  [647]
+ f3f7 c9 CMP  #52
+ f3f9 f0 BEQ  [f3fd]
+ f3fb 84 STY  [0]
+ f3fd a0 LDY  #ff
+ f3ff a9 LDA  #29
+ f401 8d STA  [647]
+ f404 20 JSR  [fb2e]
+ f407 53 SRE 
+ f409 ea NOP 
+ f40a ea NOP 
+ f40b 08 PHP 
+ f40c 48 PHA 
+ f40d a0 LDY  #f3
+ f40f 68 PLA 
+ f410 28 PLP 
+ f411 20 JSR  [fb33]
+ f414 ad LDA  [647]
+ f417 c9 CMP  #14
+ f419 f0 BEQ  [f41d]
+ f41b 84 STY  [0]
+ f41d a0 LDY  #ff
+ f41f a9 LDA  #37
+ f421 8d STA  [647]
+ f424 20 JSR  [fb40]
+ f427 53 SRE 
+ f429 ea NOP 
+ f42a ea NOP 
+ f42b 08 PHP 
+ f42c 48 PHA 
+ f42d a0 LDY  #f4
+ f42f 68 PLA 
+ f430 28 PLP 
+ f431 20 JSR  [fb46]
+ f434 ad LDA  [647]
+ f437 c9 CMP  #1b
+ f439 f0 BEQ  [f43d]
+ f43b 84 STY  [0]
+ f43d a0 LDY  #f5
+ f43f a2 LDX  #ff
+ f441 a9 LDA  #a5
+ f443 85 STA  [47]
+ f445 20 JSR  [fb1d]
+ f448 57 SRE 
+ f44a ea NOP 
+ f44b ea NOP 
+ f44c ea NOP 
+ f44d ea NOP 
+ f44e 20 JSR  [fb23]
+ f451 a5 LDA  [47]
+ f453 c9 CMP  #52
+ f455 f0 BEQ  [f459]
+ f457 84 STY  [0]
+ f459 c8 INY 
+ f45a a9 LDA  #29
+ f45c 85 STA  [47]
+ f45e 20 JSR  [fb2e]
+ f461 57 SRE 
+ f463 ea NOP 
+ f464 ea NOP 
+ f465 ea NOP 
+ f466 ea NOP 
+ f467 20 JSR  [fb33]
+ f46a a5 LDA  [47]
+ f46c c9 CMP  #14
+ f46e f0 BEQ  [f472]
+ f470 84 STY  [0]
+ f472 c8 INY 
+ f473 a9 LDA  #37
+ f475 85 STA  [47]
+ f477 20 JSR  [fb40]
+ f47a 57 SRE 
+ f47c ea NOP 
+ f47d ea NOP 
+ f47e ea NOP 
+ f47f ea NOP 
+ f480 20 JSR  [fb46]
+ f483 a5 LDA  [47]
+ f485 c9 CMP  #1b
+ f487 f0 BEQ  [f48b]
+ f489 84 STY  [0]
+ f48b a9 LDA  #a5
+ f48d 8d STA  [647]
+ f490 a0 LDY  #ff
+ f492 20 JSR  [fb1d]
+ f495 5b SRE 
+ f498 ea NOP 
+ f499 ea NOP 
+ f49a 08 PHP 
+ f49b 48 PHA 
+ f49c a0 LDY  #f8
+ f49e 68 PLA 
+ f49f 28 PLP 
+ f4a0 20 JSR  [fb23]
+ f4a3 ad LDA  [647]
+ f4a6 c9 CMP  #52
+ f4a8 f0 BEQ  [f4ac]
+ f4aa 84 STY  [0]
+ f4ac a0 LDY  #ff
+ f4ae a9 LDA  #29
+ f4b0 8d STA  [647]
+ f4b3 20 JSR  [fb2e]
+ f4b6 5b SRE 
+ f4b9 ea NOP 
+ f4ba ea NOP 
+ f4bb 08 PHP 
+ f4bc 48 PHA 
+ f4bd a0 LDY  #f9
+ f4bf 68 PLA 
+ f4c0 28 PLP 
+ f4c1 20 JSR  [fb33]
+ f4c4 ad LDA  [647]
+ f4c7 c9 CMP  #14
+ f4c9 f0 BEQ  [f4cd]
+ f4cb 84 STY  [0]
+ f4cd a0 LDY  #ff
+ f4cf a9 LDA  #37
+ f4d1 8d STA  [647]
+ f4d4 20 JSR  [fb40]
+ f4d7 5b SRE 
+ f4da ea NOP 
+ f4db ea NOP 
+ f4dc 08 PHP 
+ f4dd 48 PHA 
+ f4de a0 LDY  #fa
+ f4e0 68 PLA 
+ f4e1 28 PLP 
+ f4e2 20 JSR  [fb46]
+ f4e5 ad LDA  [647]
+ f4e8 c9 CMP  #1b
+ f4ea f0 BEQ  [f4ee]
+ f4ec 84 STY  [0]
+ f4ee a0 LDY  #fb
+ f4f0 a2 LDX  #ff
+ f4f2 a9 LDA  #a5
+ f4f4 8d STA  [647]
+ f4f7 20 JSR  [fb1d]
+ f4fa 5f SRE 
+ f4fd ea NOP 
+ f4fe ea NOP 
+ f4ff ea NOP 
+ f500 ea NOP 
+ f501 20 JSR  [fb23]
+ f504 ad LDA  [647]
+ f507 c9 CMP  #52
+ f509 f0 BEQ  [f50d]
+ f50b 84 STY  [0]
+ f50d c8 INY 
+ f50e a9 LDA  #29
+ f510 8d STA  [647]
+ f513 20 JSR  [fb2e]
+ f516 5f SRE 
+ f519 ea NOP 
+ f51a ea NOP 
+ f51b ea NOP 
+ f51c ea NOP 
+ f51d 20 JSR  [fb33]
+ f520 ad LDA  [647]
+ f523 c9 CMP  #14
+ f525 f0 BEQ  [f529]
+ f527 84 STY  [0]
+ f529 c8 INY 
+ f52a a9 LDA  #37
+ f52c 8d STA  [647]
+ f52f 20 JSR  [fb40]
+ f532 5f SRE 
+ f535 ea NOP 
+ f536 ea NOP 
+ f537 ea NOP 
+ f538 ea NOP 
+ f539 20 JSR  [fb46]
+ f53c ad LDA  [647]
+ f53f c9 CMP  #1b
+ f541 f0 BEQ  [f545]
+ f543 84 STY  [0]
+ f545 60 RTS 
+ f546 a9 LDA  #ff
+ f548 85 STA  [1]
+ f54a a0 LDY  #1
+ f54c a2 LDX  #2
+ f54e a9 LDA  #47
+ f550 85 STA  [47]
+ f552 a9 LDA  #6
+ f554 85 STA  [48]
+ f556 a9 LDA  #a5
+ f558 8d STA  [647]
+ f55b 20 JSR  [fae9]
+ f55e 63 RRA 
+ f560 ea NOP 
+ f561 ea NOP 
+ f562 ea NOP 
+ f563 ea NOP 
+ f564 20 JSR  [faef]
+ f567 ad LDA  [647]
+ f56a c9 CMP  #52
+ f56c f0 BEQ  [f570]
+ f56e 84 STY  [0]
+ f570 c8 INY 
+ f571 a9 LDA  #29
+ f573 8d STA  [647]
+ f576 20 JSR  [fafa]
+ f579 63 RRA 
+ f57b ea NOP 
+ f57c ea NOP 
+ f57d ea NOP 
+ f57e ea NOP 
+ f57f 20 JSR  [faff]
+ f582 ad LDA  [647]
+ f585 c9 CMP  #14
+ f587 f0 BEQ  [f58b]
+ f589 84 STY  [0]
+ f58b c8 INY 
+ f58c a9 LDA  #37
+ f58e 8d STA  [647]
+ f591 20 JSR  [fb0a]
+ f594 63 RRA 
+ f596 ea NOP 
+ f597 ea NOP 
+ f598 ea NOP 
+ f599 ea NOP 
+ f59a 20 JSR  [fb10]
+ f59d ad LDA  [647]
+ f5a0 c9 CMP  #9b
+ f5a2 f0 BEQ  [f5a6]
+ f5a4 84 STY  [0]
+ f5a6 c8 INY 
+ f5a7 a9 LDA  #a5
+ f5a9 85 STA  [47]
+ f5ab 20 JSR  [fae9]
+ f5ae 67 RRA 
+ f5b0 ea NOP 
+ f5b1 ea NOP 
+ f5b2 ea NOP 
+ f5b3 ea NOP 
+ f5b4 20 JSR  [faef]
+ f5b7 a5 LDA  [47]
+ f5b9 c9 CMP  #52
+ f5bb f0 BEQ  [f5bf]
+ f5bd 84 STY  [0]
+ f5bf c8 INY 
+ f5c0 a9 LDA  #29
+ f5c2 85 STA  [47]
+ f5c4 20 JSR  [fafa]
+ f5c7 67 RRA 
+ f5c9 ea NOP 
+ f5ca ea NOP 
+ f5cb ea NOP 
+ f5cc ea NOP 
+ f5cd 20 JSR  [faff]
+ f5d0 a5 LDA  [47]
+ f5d2 c9 CMP  #14
+ f5d4 f0 BEQ  [f5d8]
+ f5d6 84 STY  [0]
+ f5d8 c8 INY 
+ f5d9 a9 LDA  #37
+ f5db 85 STA  [47]
+ f5dd 20 JSR  [fb0a]
+ f5e0 67 RRA 
+ f5e2 ea NOP 
+ f5e3 ea NOP 
+ f5e4 ea NOP 
+ f5e5 ea NOP 
+ f5e6 20 JSR  [fb10]
+ f5e9 a5 LDA  [47]
+ f5eb c9 CMP  #9b
+ f5ed f0 BEQ  [f5f1]
+ f5ef 84 STY  [0]
+ f5f1 c8 INY 
+ f5f2 a9 LDA  #a5
+ f5f4 8d STA  [647]
+ f5f7 20 JSR  [fae9]
+ f5fa 6f RRA 
+ f5fd ea NOP 
+ f5fe ea NOP 
+ f5ff ea NOP 
+ f600 ea NOP 
+ f601 20 JSR  [faef]
+ f604 ad LDA  [647]
+ f607 c9 CMP  #52
+ f609 f0 BEQ  [f60d]
+ f60b 84 STY  [0]
+ f60d c8 INY 
+ f60e a9 LDA  #29
+ f610 8d STA  [647]
+ f613 20 JSR  [fafa]
+ f616 6f RRA 
+ f619 ea NOP 
+ f61a ea NOP 
+ f61b ea NOP 
+ f61c ea NOP 
+ f61d 20 JSR  [faff]
+ f620 ad LDA  [647]
+ f623 c9 CMP  #14
+ f625 f0 BEQ  [f629]
+ f627 84 STY  [0]
+ f629 c8 INY 
+ f62a a9 LDA  #37
+ f62c 8d STA  [647]
+ f62f 20 JSR  [fb0a]
+ f632 6f RRA 
+ f635 ea NOP 
+ f636 ea NOP 
+ f637 ea NOP 
+ f638 ea NOP 
+ f639 20 JSR  [fb10]
+ f63c ad LDA  [647]
+ f63f c9 CMP  #9b
+ f641 f0 BEQ  [f645]
+ f643 84 STY  [0]
+ f645 a9 LDA  #a5
+ f647 8d STA  [647]
+ f64a a9 LDA  #48
+ f64c 85 STA  [45]
+ f64e a9 LDA  #5
+ f650 85 STA  [46]
+ f652 a0 LDY  #ff
+ f654 20 JSR  [fae9]
+ f657 73 RRA 
+ f659 ea NOP 
+ f65a ea NOP 
+ f65b 08 PHP 
+ f65c 48 PHA 
+ f65d a0 LDY  #a
+ f65f 68 PLA 
+ f660 28 PLP 
+ f661 20 JSR  [faef]
+ f664 ad LDA  [647]
+ f667 c9 CMP  #52
+ f669 f0 BEQ  [f66d]
+ f66b 84 STY  [0]
+ f66d a0 LDY  #ff
+ f66f a9 LDA  #29
+ f671 8d STA  [647]
+ f674 20 JSR  [fafa]
+ f677 73 RRA 
+ f679 ea NOP 
+ f67a ea NOP 
+ f67b 08 PHP 
+ f67c 48 PHA 
+ f67d a0 LDY  #b
+ f67f 68 PLA 
+ f680 28 PLP 
+ f681 20 JSR  [faff]
+ f684 ad LDA  [647]
+ f687 c9 CMP  #14
+ f689 f0 BEQ  [f68d]
+ f68b 84 STY  [0]
+ f68d a0 LDY  #ff
+ f68f a9 LDA  #37
+ f691 8d STA  [647]
+ f694 20 JSR  [fb0a]
+ f697 73 RRA 
+ f699 ea NOP 
+ f69a ea NOP 
+ f69b 08 PHP 
+ f69c 48 PHA 
+ f69d a0 LDY  #c
+ f69f 68 PLA 
+ f6a0 28 PLP 
+ f6a1 20 JSR  [fb10]
+ f6a4 ad LDA  [647]
+ f6a7 c9 CMP  #9b
+ f6a9 f0 BEQ  [f6ad]
+ f6ab 84 STY  [0]
+ f6ad a0 LDY  #d
+ f6af a2 LDX  #ff
+ f6b1 a9 LDA  #a5
+ f6b3 85 STA  [47]
+ f6b5 20 JSR  [fae9]
+ f6b8 77 RRA 
+ f6ba ea NOP 
+ f6bb ea NOP 
+ f6bc ea NOP 
+ f6bd ea NOP 
+ f6be 20 JSR  [faef]
+ f6c1 a5 LDA  [47]
+ f6c3 c9 CMP  #52
+ f6c5 f0 BEQ  [f6c9]
+ f6c7 84 STY  [0]
+ f6c9 c8 INY 
+ f6ca a9 LDA  #29
+ f6cc 85 STA  [47]
+ f6ce 20 JSR  [fafa]
+ f6d1 77 RRA 
+ f6d3 ea NOP 
+ f6d4 ea NOP 
+ f6d5 ea NOP 
+ f6d6 ea NOP 
+ f6d7 20 JSR  [faff]
+ f6da a5 LDA  [47]
+ f6dc c9 CMP  #14
+ f6de f0 BEQ  [f6e2]
+ f6e0 84 STY  [0]
+ f6e2 c8 INY 
+ f6e3 a9 LDA  #37
+ f6e5 85 STA  [47]
+ f6e7 20 JSR  [fb0a]
+ f6ea 77 RRA 
+ f6ec ea NOP 
+ f6ed ea NOP 
+ f6ee ea NOP 
+ f6ef ea NOP 
+ f6f0 20 JSR  [fb10]
+ f6f3 a5 LDA  [47]
+ f6f5 c9 CMP  #9b
+ f6f7 f0 BEQ  [f6fb]
+ f6f9 84 STY  [0]
+ f6fb a9 LDA  #a5
+ f6fd 8d STA  [647]
+ f700 a0 LDY  #ff
+ f702 20 JSR  [fae9]
+ f705 7b RRA 
+ f708 ea NOP 
+ f709 ea NOP 
+ f70a 08 PHP 
+ f70b 48 PHA 
+ f70c a0 LDY  #10
+ f70e 68 PLA 
+ f70f 28 PLP 
+ f710 20 JSR  [faef]
+ f713 ad LDA  [647]
+ f716 c9 CMP  #52
+ f718 f0 BEQ  [f71c]
+ f71a 84 STY  [0]
+ f71c a0 LDY  #ff
+ f71e a9 LDA  #29
+ f720 8d STA  [647]
+ f723 20 JSR  [fafa]
+ f726 7b RRA 
+ f729 ea NOP 
+ f72a ea NOP 
+ f72b 08 PHP 
+ f72c 48 PHA 
+ f72d a0 LDY  #11
+ f72f 68 PLA 
+ f730 28 PLP 
+ f731 20 JSR  [faff]
+ f734 ad LDA  [647]
+ f737 c9 CMP  #14
+ f739 f0 BEQ  [f73d]
+ f73b 84 STY  [0]
+ f73d a0 LDY  #ff
+ f73f a9 LDA  #37
+ f741 8d STA  [647]
+ f744 20 JSR  [fb0a]
+ f747 7b RRA 
+ f74a ea NOP 
+ f74b ea NOP 
+ f74c 08 PHP 
+ f74d 48 PHA 
+ f74e a0 LDY  #12
+ f750 68 PLA 
+ f751 28 PLP 
+ f752 20 JSR  [fb10]
+ f755 ad LDA  [647]
+ f758 c9 CMP  #9b
+ f75a f0 BEQ  [f75e]
+ f75c 84 STY  [0]
+ f75e a0 LDY  #13
+ f760 a2 LDX  #ff
+ f762 a9 LDA  #a5
+ f764 8d STA  [647]
+ f767 20 JSR  [fae9]
+ f76a 7f RRA 
+ f76d ea NOP 
+ f76e ea NOP 
+ f76f ea NOP 
+ f770 ea NOP 
+ f771 20 JSR  [faef]
+ f774 ad LDA  [647]
+ f777 c9 CMP  #52
+ f779 f0 BEQ  [f77d]
+ f77b 84 STY  [0]
+ f77d c8 INY 
+ f77e a9 LDA  #29
+ f780 8d STA  [647]
+ f783 20 JSR  [fafa]
+ f786 7f RRA 
+ f789 ea NOP 
+ f78a ea NOP 
+ f78b ea NOP 
+ f78c ea NOP 
+ f78d 20 JSR  [faff]
+ f790 ad LDA  [647]
+ f793 c9 CMP  #14
+ f795 f0 BEQ  [f799]
+ f797 84 STY  [0]
+ f799 c8 INY 
+ f79a a9 LDA  #37
+ f79c 8d STA  [647]
+ f79f 20 JSR  [fb0a]
+ f7a2 7f RRA 
+ f7a5 ea NOP 
+ f7a6 ea NOP 
+ f7a7 ea NOP 
+ f7a8 ea NOP 
+ f7a9 20 JSR  [fb10]
+ f7ac ad LDA  [647]
+ f7af c9 CMP  #9b
+ f7b1 f0 BEQ  [f7b5]
+ f7b3 84 STY  [0]
+ f7b5 60 RTS 
+ f7b6 18 CLC 
+ f7b7 a9 LDA  #ff
+ f7b9 85 STA  [1]
+ f7bb 24 BIT  [1]
+ f7bd a9 LDA  #55
+ f7bf 60 RTS 
+ f7c0 b0 BCS  [f7cb]
+ f7c2 10 BPL  [f7cb]
+ f7c4 c9 CMP  #ff
+ f7c6 d0 BNE  [f7cb]
+ f7c8 50 BVC  [f7cb]
+ f7ca 60 RTS 
+ f7cb 84 STY  [0]
+ f7cd 60 RTS 
+ f7ce 38 SEC 
+ f7cf b8 CLV 
+ f7d0 a9 LDA  #0
+ f7d2 60 RTS 
+ f7d3 d0 BNE  [f7dc]
+ f7d5 70 BVS  [f7dc]
+ f7d7 90 BCC  [f7dc]
+ f7d9 30 BMI  [f7dc]
+ f7db 60 RTS 
+ f7dc 84 STY  [0]
+ f7de 60 RTS 
+ f7df 18 CLC 
+ f7e0 24 BIT  [1]
+ f7e2 a9 LDA  #55
+ f7e4 60 RTS 
+ f7e5 d0 BNE  [f7ee]
+ f7e7 50 BVC  [f7ee]
+ f7e9 b0 BCS  [f7ee]
+ f7eb 30 BMI  [f7ee]
+ f7ed 60 RTS 
+ f7ee 84 STY  [0]
+ f7f0 60 RTS 
+ f7f1 38 SEC 
+ f7f2 b8 CLV 
+ f7f3 a9 LDA  #f8
+ f7f5 60 RTS 
+ f7f6 90 BCC  [f801]
+ f7f8 10 BPL  [f801]
+ f7fa c9 CMP  #e8
+ f7fc d0 BNE  [f801]
+ f7fe 70 BVS  [f801]
+ f800 60 RTS 
+ f801 84 STY  [0]
+ f803 60 RTS 
+ f804 18 CLC 
+ f805 24 BIT  [1]
+ f807 a9 LDA  #5f
+ f809 60 RTS 
+ f80a b0 BCS  [f815]
+ f80c 10 BPL  [f815]
+ f80e c9 CMP  #f5
+ f810 d0 BNE  [f815]
+ f812 50 BVC  [f815]
+ f814 60 RTS 
+ f815 84 STY  [0]
+ f817 60 RTS 
+ f818 38 SEC 
+ f819 b8 CLV 
+ f81a a9 LDA  #70
+ f81c 60 RTS 
+ f81d d0 BNE  [f826]
+ f81f 70 BVS  [f826]
+ f821 90 BCC  [f826]
+ f823 30 BMI  [f826]
+ f825 60 RTS 
+ f826 84 STY  [0]
+ f828 60 RTS 
+ f829 18 CLC 
+ f82a 24 BIT  [1]
+ f82c a9 LDA  #0
+ f82e 60 RTS 
+ f82f 30 BMI  [f83a]
+ f831 b0 BCS  [f83a]
+ f833 c9 CMP  #69
+ f835 d0 BNE  [f83a]
+ f837 70 BVS  [f83a]
+ f839 60 RTS 
+ f83a 84 STY  [0]
+ f83c 60 RTS 
+ f83d 38 SEC 
+ f83e 24 BIT  [1]
+ f840 a9 LDA  #0
+ f842 60 RTS 
+ f843 30 BMI  [f84e]
+ f845 b0 BCS  [f84e]
+ f847 c9 CMP  #6a
+ f849 d0 BNE  [f84e]
+ f84b 70 BVS  [f84e]
+ f84d 60 RTS 
+ f84e 84 STY  [0]
+ f850 60 RTS 
+ f851 38 SEC 
+ f852 b8 CLV 
+ f853 a9 LDA  #7f
+ f855 60 RTS 
+ f856 10 BPL  [f861]
+ f858 b0 BCS  [f861]
+ f85a c9 CMP  #ff
+ f85c d0 BNE  [f861]
+ f85e 50 BVC  [f861]
+ f860 60 RTS 
+ f861 84 STY  [0]
+ f863 60 RTS 
+ f864 18 CLC 
+ f865 24 BIT  [1]
+ f867 a9 LDA  #7f
+ f869 60 RTS 
+ f86a 10 BPL  [f875]
+ f86c b0 BCS  [f875]
+ f86e c9 CMP  #ff
+ f870 d0 BNE  [f875]
+ f872 70 BVS  [f875]
+ f874 60 RTS 
+ f875 84 STY  [0]
+ f877 60 RTS 
+ f878 38 SEC 
+ f879 b8 CLV 
+ f87a a9 LDA  #7f
+ f87c 60 RTS 
+ f87d d0 BNE  [f886]
+ f87f 30 BMI  [f886]
+ f881 70 BVS  [f886]
+ f883 90 BCC  [f886]
+ f885 60 RTS 
+ f886 84 STY  [0]
+ f888 60 RTS 
+ f889 24 BIT  [1]
+ f88b a9 LDA  #40
+ f88d 60 RTS 
+ f88e 30 BMI  [f897]
+ f890 90 BCC  [f897]
+ f892 d0 BNE  [f897]
+ f894 50 BVC  [f897]
+ f896 60 RTS 
+ f897 84 STY  [0]
+ f899 60 RTS 
+ f89a b8 CLV 
+ f89b 60 RTS 
+ f89c f0 BEQ  [f8a5]
+ f89e 30 BMI  [f8a5]
+ f8a0 90 BCC  [f8a5]
+ f8a2 70 BVS  [f8a5]
+ f8a4 60 RTS 
+ f8a5 84 STY  [0]
+ f8a7 60 RTS 
+ f8a8 f0 BEQ  [f8af]
+ f8aa 10 BPL  [f8af]
+ f8ac 10 BPL  [f8af]
+ f8ae 60 RTS 
+ f8af 84 STY  [0]
+ f8b1 60 RTS 
+ f8b2 a9 LDA  #80
+ f8b4 60 RTS 
+ f8b5 f0 BEQ  [f8bc]
+ f8b7 10 BPL  [f8bc]
+ f8b9 90 BCC  [f8bc]
+ f8bb 60 RTS 
+ f8bc 84 STY  [0]
+ f8be 60 RTS 
+ f8bf d0 BNE  [f8c6]
+ f8c1 30 BMI  [f8c6]
+ f8c3 90 BCC  [f8c6]
+ f8c5 60 RTS 
+ f8c6 84 STY  [0]
+ f8c8 60 RTS 
+ f8c9 b0 BCS  [f8d0]
+ f8cb f0 BEQ  [f8d0]
+ f8cd 10 BPL  [f8d0]
+ f8cf 60 RTS 
+ f8d0 84 STY  [0]
+ f8d2 60 RTS 
+ f8d3 90 BCC  [f8da]
+ f8d5 f0 BEQ  [f8da]
+ f8d7 30 BMI  [f8da]
+ f8d9 60 RTS 
+ f8da 84 STY  [0]
+ f8dc 60 RTS 
+ f8dd 24 BIT  [1]
+ f8df a0 LDY  #40
+ f8e1 60 RTS 
+ f8e2 30 BMI  [f8eb]
+ f8e4 90 BCC  [f8eb]
+ f8e6 d0 BNE  [f8eb]
+ f8e8 50 BVC  [f8eb]
+ f8ea 60 RTS 
+ f8eb 86 STX  [0]
+ f8ed 60 RTS 
+ f8ee b8 CLV 
+ f8ef 60 RTS 
+ f8f0 f0 BEQ  [f8f9]
+ f8f2 30 BMI  [f8f9]
+ f8f4 90 BCC  [f8f9]
+ f8f6 70 BVS  [f8f9]
+ f8f8 60 RTS 
+ f8f9 86 STX  [0]
+ f8fb 60 RTS 
+ f8fc f0 BEQ  [f903]
+ f8fe 10 BPL  [f903]
+ f900 10 BPL  [f903]
+ f902 60 RTS 
+ f903 86 STX  [0]
+ f905 60 RTS 
+ f906 a0 LDY  #80
+ f908 60 RTS 
+ f909 f0 BEQ  [f910]
+ f90b 10 BPL  [f910]
+ f90d 90 BCC  [f910]
+ f90f 60 RTS 
+ f910 86 STX  [0]
+ f912 60 RTS 
+ f913 d0 BNE  [f91a]
+ f915 30 BMI  [f91a]
+ f917 90 BCC  [f91a]
+ f919 60 RTS 
+ f91a 86 STX  [0]
+ f91c 60 RTS 
+ f91d b0 BCS  [f924]
+ f91f f0 BEQ  [f924]
+ f921 10 BPL  [f924]
+ f923 60 RTS 
+ f924 86 STX  [0]
+ f926 60 RTS 
+ f927 90 BCC  [f92e]
+ f929 f0 BEQ  [f92e]
+ f92b 30 BMI  [f92e]
+ f92d 60 RTS 
+ f92e 86 STX  [0]
+ f930 60 RTS 
+ f931 24 BIT  [1]
+ f933 a9 LDA  #40
+ f935 38 SEC 
+ f936 60 RTS 
+ f937 30 BMI  [f944]
+ f939 90 BCC  [f944]
+ f93b d0 BNE  [f944]
+ f93d 70 BVS  [f944]
+ f93f c9 CMP  #0
+ f941 d0 BNE  [f944]
+ f943 60 RTS 
+ f944 84 STY  [0]
+ f946 60 RTS 
+ f947 b8 CLV 
+ f948 38 SEC 
+ f949 a9 LDA  #40
+ f94b 60 RTS 
+ f94c f0 BEQ  [f959]
+ f94e 30 BMI  [f959]
+ f950 90 BCC  [f959]
+ f952 70 BVS  [f959]
+ f954 c9 CMP  #1
+ f956 d0 BNE  [f959]
+ f958 60 RTS 
+ f959 84 STY  [0]
+ f95b 60 RTS 
+ f95c a9 LDA  #40
+ f95e 38 SEC 
+ f95f 24 BIT  [1]
+ f961 60 RTS 
+ f962 b0 BCS  [f96f]
+ f964 f0 BEQ  [f96f]
+ f966 10 BPL  [f96f]
+ f968 70 BVS  [f96f]
+ f96a c9 CMP  #ff
+ f96c d0 BNE  [f96f]
+ f96e 60 RTS 
+ f96f 84 STY  [0]
+ f971 60 RTS 
+ f972 18 CLC 
+ f973 a9 LDA  #80
+ f975 60 RTS 
+ f976 90 BCC  [f97d]
+ f978 c9 CMP  #7f
+ f97a d0 BNE  [f97d]
+ f97c 60 RTS 
+ f97d 84 STY  [0]
+ f97f 60 RTS 
+ f980 38 SEC 
+ f981 a9 LDA  #81
+ f983 60 RTS 
+ f984 50 BVC  [f98d]
+ f986 90 BCC  [f98d]
+ f988 c9 CMP  #2
+ f98a d0 BNE  [f98d]
+ f98c 60 RTS 
+ f98d 84 STY  [0]
+ f98f 60 RTS 
+ f990 a2 LDX  #55
+ f992 a9 LDA  #ff
+ f994 85 STA  [1]
+ f996 ea NOP 
+ f997 24 BIT  [1]
+ f999 38 SEC 
+ f99a a9 LDA  #1
+ f99c 60 RTS 
+ f99d 90 BCC  [f9ba]
+ f99f d0 BNE  [f9ba]
+ f9a1 30 BMI  [f9ba]
+ f9a3 50 BVC  [f9ba]
+ f9a5 c9 CMP  #0
+ f9a7 d0 BNE  [f9ba]
+ f9a9 b8 CLV 
+ f9aa a9 LDA  #aa
+ f9ac 60 RTS 
+ f9ad b0 BCS  [f9ba]
+ f9af f0 BEQ  [f9ba]
+ f9b1 30 BMI  [f9ba]
+ f9b3 70 BVS  [f9ba]
+ f9b5 c9 CMP  #55
+ f9b7 d0 BNE  [f9ba]
+ f9b9 60 RTS 
+ f9ba 84 STY  [0]
+ f9bc 60 RTS 
+ f9bd 24 BIT  [1]
+ f9bf 38 SEC 
+ f9c0 a9 LDA  #80
+ f9c2 60 RTS 
+ f9c3 90 BCC  [f9e1]
+ f9c5 d0 BNE  [f9e1]
+ f9c7 30 BMI  [f9e1]
+ f9c9 50 BVC  [f9e1]
+ f9cb c9 CMP  #0
+ f9cd d0 BNE  [f9e1]
+ f9cf b8 CLV 
+ f9d0 a9 LDA  #55
+ f9d2 38 SEC 
+ f9d3 60 RTS 
+ f9d4 b0 BCS  [f9e1]
+ f9d6 f0 BEQ  [f9e1]
+ f9d8 10 BPL  [f9e1]
+ f9da 70 BVS  [f9e1]
+ f9dc c9 CMP  #aa
+ f9de d0 BNE  [f9e1]
+ f9e0 60 RTS 
+ f9e1 84 STY  [0]
+ f9e3 60 RTS 
+ f9e4 24 BIT  [1]
+ f9e6 38 SEC 
+ f9e7 a9 LDA  #1
+ f9e9 60 RTS 
+ f9ea 90 BCC  [fa08]
+ f9ec f0 BEQ  [fa08]
+ f9ee 10 BPL  [fa08]
+ f9f0 50 BVC  [fa08]
+ f9f2 c9 CMP  #80
+ f9f4 d0 BNE  [fa08]
+ f9f6 b8 CLV 
+ f9f7 18 CLC 
+ f9f8 a9 LDA  #55
+ f9fa 60 RTS 
+ f9fb 90 BCC  [fa08]
+ f9fd f0 BEQ  [fa08]
+ f9ff 30 BMI  [fa08]
+ fa01 70 BVS  [fa08]
+ fa03 c9 CMP  #2a
+ fa05 d0 BNE  [fa08]
+ fa07 60 RTS 
+ fa08 84 STY  [0]
+ fa0a 24 BIT  [1]
+ fa0c 38 SEC 
+ fa0d a9 LDA  #80
+ fa0f 60 RTS 
+ fa10 90 BCC  [fa2e]
+ fa12 f0 BEQ  [fa2e]
+ fa14 30 BMI  [fa2e]
+ fa16 50 BVC  [fa2e]
+ fa18 c9 CMP  #1
+ fa1a d0 BNE  [fa2e]
+ fa1c b8 CLV 
+ fa1d 18 CLC 
+ fa1e a9 LDA  #55
+ fa20 60 RTS 
+ fa21 b0 BCS  [fa2e]
+ fa23 f0 BEQ  [fa2e]
+ fa25 10 BPL  [fa2e]
+ fa27 70 BVS  [fa2e]
+ fa29 c9 CMP  #aa
+ fa2b d0 BNE  [fa2e]
+ fa2d 60 RTS 
+ fa2e 84 STY  [0]
+ fa30 60 RTS 
+ fa31 24 BIT  [1]
+ fa33 18 CLC 
+ fa34 a9 LDA  #40
+ fa36 60 RTS 
+ fa37 50 BVC  [fa65]
+ fa39 b0 BCS  [fa65]
+ fa3b 30 BMI  [fa65]
+ fa3d c9 CMP  #40
+ fa3f d0 BNE  [fa65]
+ fa41 60 RTS 
+ fa42 b8 CLV 
+ fa43 38 SEC 
+ fa44 a9 LDA  #ff
+ fa46 60 RTS 
+ fa47 70 BVS  [fa65]
+ fa49 d0 BNE  [fa65]
+ fa4b 30 BMI  [fa65]
+ fa4d 90 BCC  [fa65]
+ fa4f c9 CMP  #ff
+ fa51 d0 BNE  [fa65]
+ fa53 60 RTS 
+ fa54 24 BIT  [1]
+ fa56 a9 LDA  #f0
+ fa58 60 RTS 
+ fa59 50 BVC  [fa65]
+ fa5b f0 BEQ  [fa65]
+ fa5d 10 BPL  [fa65]
+ fa5f 90 BCC  [fa65]
+ fa61 c9 CMP  #f0
+ fa63 f0 BEQ  [fa67]
+ fa65 84 STY  [0]
+ fa67 60 RTS 
+ fa68 24 BIT  [1]
+ fa6a 38 SEC 
+ fa6b a9 LDA  #75
+ fa6d 60 RTS 
+ fa6e 50 BVC  [fae6]
+ fa70 f0 BEQ  [fae6]
+ fa72 30 BMI  [fae6]
+ fa74 b0 BCS  [fae6]
+ fa76 c9 CMP  #65
+ fa78 d0 BNE  [fae6]
+ fa7a 60 RTS 
+ fa7b 24 BIT  [1]
+ fa7d 18 CLC 
+ fa7e a9 LDA  #b3
+ fa80 60 RTS 
+ fa81 50 BVC  [fae6]
+ fa83 90 BCC  [fae6]
+ fa85 10 BPL  [fae6]
+ fa87 c9 CMP  #fb
+ fa89 d0 BNE  [fae6]
+ fa8b 60 RTS 
+ fa8c b8 CLV 
+ fa8d 18 CLC 
+ fa8e a9 LDA  #c3
+ fa90 60 RTS 
+ fa91 70 BVS  [fae6]
+ fa93 f0 BEQ  [fae6]
+ fa95 10 BPL  [fae6]
+ fa97 b0 BCS  [fae6]
+ fa99 c9 CMP  #d3
+ fa9b d0 BNE  [fae6]
+ fa9d 60 RTS 
+ fa9e 24 BIT  [1]
+ faa0 38 SEC 
+ faa1 a9 LDA  #10
+ faa3 60 RTS 
+ faa4 50 BVC  [fae6]
+ faa6 f0 BEQ  [fae6]
+ faa8 30 BMI  [fae6]
+ faaa b0 BCS  [fae6]
+ faac c9 CMP  #7e
+ faae d0 BNE  [fae6]
+ fab0 60 RTS 
+ fab1 24 BIT  [1]
+ fab3 18 CLC 
+ fab4 a9 LDA  #40
+ fab6 60 RTS 
+ fab7 70 BVS  [fae6]
+ fab9 b0 BCS  [fae6]
+ fabb 30 BMI  [fae6]
+ fabd c9 CMP  #53
+ fabf d0 BNE  [fae6]
+ fac1 60 RTS 
+ fac2 b8 CLV 
+ fac3 38 SEC 
+ fac4 a9 LDA  #ff
+ fac6 60 RTS 
+ fac7 70 BVS  [fae6]
+ fac9 f0 BEQ  [fae6]
+ facb 10 BPL  [fae6]
+ facd 90 BCC  [fae6]
+ facf c9 CMP  #ff
+ fad1 d0 BNE  [fae6]
+ fad3 60 RTS 
+ fad4 24 BIT  [1]
+ fad6 38 SEC 
+ fad7 a9 LDA  #f0
+ fad9 60 RTS 
+ fada 70 BVS  [fae6]
+ fadc f0 BEQ  [fae6]
+ fade 10 BPL  [fae6]
+ fae0 90 BCC  [fae6]
+ fae2 c9 CMP  #b8
+ fae4 f0 BEQ  [fae8]
+ fae6 84 STY  [0]
+ fae8 60 RTS 
+ fae9 24 BIT  [1]
+ faeb 18 CLC 
+ faec a9 LDA  #b2
+ faee 60 RTS 
+ faef 70 BVS  [fb1b]
+ faf1 90 BCC  [fb1b]
+ faf3 30 BMI  [fb1b]
+ faf5 c9 CMP  #5
+ faf7 d0 BNE  [fb1b]
+ faf9 60 RTS 
+ fafa b8 CLV 
+ fafb 18 CLC 
+ fafc a9 LDA  #42
+ fafe 60 RTS 
+ faff 70 BVS  [fb1b]
+ fb01 30 BMI  [fb1b]
+ fb03 b0 BCS  [fb1b]
+ fb05 c9 CMP  #57
+ fb07 d0 BNE  [fb1b]
+ fb09 60 RTS 
+ fb0a 24 BIT  [1]
+ fb0c 38 SEC 
+ fb0d a9 LDA  #75
+ fb0f 60 RTS 
+ fb10 70 BVS  [fb1b]
+ fb12 30 BMI  [fb1b]
+ fb14 90 BCC  [fb1b]
+ fb16 c9 CMP  #11
+ fb18 d0 BNE  [fb1b]
+ fb1a 60 RTS 
+ fb1b 85 STA  [0]
+ fb1d 24 BIT  [1]
+ fb1f 18 CLC 
+ fb20 a9 LDA  #b3
+ fb22 60 RTS 
+ fb23 50 BVC  [fb75]
+ fb25 90 BCC  [fb75]
+ fb27 10 BPL  [fb75]
+ fb29 c9 CMP  #e1
+ fb2b d0 BNE  [fb75]
+ fb2d 60 RTS 
+ fb2e b8 CLV 
+ fb2f 18 CLC 
+ fb30 a9 LDA  #42
+ fb32 60 RTS 
+ fb33 70 BVS  [fb75]
+ fb35 f0 BEQ  [fb75]
+ fb37 30 BMI  [fb75]
+ fb39 90 BCC  [fb75]
+ fb3b c9 CMP  #56
+ fb3d d0 BNE  [fb75]
+ fb3f 60 RTS 
+ fb40 24 BIT  [1]
+ fb42 38 SEC 
+ fb43 a9 LDA  #75
+ fb45 60 RTS 
+ fb46 50 BVC  [fb75]
+ fb48 f0 BEQ  [fb75]
+ fb4a 30 BMI  [fb75]
+ fb4c 90 BCC  [fb75]
+ fb4e c9 CMP  #6e
+ fb50 d0 BNE  [fb75]
+ fb52 60 RTS 
+ fb53 24 BIT  [1]
+ fb55 18 CLC 
+ fb56 a9 LDA  #b3
+ fb58 60 RTS 
+ fb59 50 BVC  [fb75]
+ fb5b 90 BCC  [fb75]
+ fb5d 30 BMI  [fb75]
+ fb5f c9 CMP  #2
+ fb61 d0 BNE  [fb75]
+ fb63 60 RTS 
+ fb64 b8 CLV 
+ fb65 18 CLC 
+ fb66 a9 LDA  #42
+ fb68 60 RTS 
+ fb69 70 BVS  [fb75]
+ fb6b f0 BEQ  [fb75]
+ fb6d 30 BMI  [fb75]
+ fb6f b0 BCS  [fb75]
+ fb71 c9 CMP  #42
+ fb73 f0 BEQ  [fb77]
+ fb75 84 STY  [0]
+ fb77 60 RTS 
+ fb78 00 BRK 
+ fb7a 00 BRK 
+ fb7c 00 BRK 
+ fb7e 00 BRK 
+ fb80 00 BRK 
+ fb82 00 BRK 
+ fb84 00 BRK 
+ fb86 00 BRK 
+ fb88 80 NOP 
+ fb8a ff ISC 
+ fb8d 00 BRK 
+ fb8f 00 BRK 
+ fb91 00 BRK 
+ fb93 00 BRK 
+ fb95 00 BRK 
+ fb97 00 BRK 
+ fb99 01 ORA  [0]
+ fb9b 01 ORA  [0]
+ fb9d 00 BRK 
+ fb9f 00 BRK 
+ fba1 00 BRK 
+ fba3 00 BRK 
+ fba5 00 BRK 
+ fba7 00 BRK 
+ fba9 fe INC  [c055]
+ fbac c0 CPY  #fe
+ fbae 7c NOP 
+ fbb1 fe INC  [f055]
+ fbb4 c0 CPY  #fe
+ fbb6 fe INC  [c655]
+ fbb9 c6 DEC  [2]
+ fbbb fe INC  [c71b]
+ fbbe c6 DEC  [0]
+ fbc0 cc CPY  [d8]
+ fbc3 f0 BEQ  [fb9d]
+ fbc5 cc CPY  [c6]
+ fbc8 c6 DEC  [ee]
+ fbca 02 UND 
+ fbcb d6 DEC  [1b]
+ fbcd c6 DEC  [c6]
+ fbcf 00 BRK 
+ fbd1 c6 DEC  [2]
+ fbd3 d6 DEC  [23]
+ fbd5 c6 DEC  [c6]
+ fbd7 00 BRK 
+ fbd9 fe INC  [c657]
+ fbdc c6 DEC  [fe]
+ fbde 7c NOP 
+ fbe1 fe INC  [fc57]
+ fbe4 c0 CPY  #c0
+ fbe6 c0 CPY  #0
+ fbe8 cc CPY  [cc]
+ fbeb 78 SEI 
+ fbec 30 BMI  [fc1e]
+ fbee 30 BMI  [fbf0]
+ fbf0 18 CLC 
+ fbf1 18 CLC 
+ fbf2 18 CLC 
+ fbf3 18 CLC 
+ fbf4 18 CLC 
+ fbf5 18 CLC 
+ fbf6 18 CLC 
+ fbf7 00 BRK 
+ fbf9 fe INC  [657]
+ fbfc 1c NOP 
+ fbff 00 BRK 
+ fc01 fe INC  [3c57]
+ fc04 3c NOP 
+ fc07 00 BRK 
+ fc09 18 CLC 
+ fc0a d8 CLD 
+ fc0b d8 CLD 
+ fc0c fe INC  [186d]
+ fc0f 00 BRK 
+ fc11 fe INC  [8055]
+ fc14 fc NOP 
+ fc17 00 BRK 
+ fc19 fe INC  [c055]
+ fc1c fc NOP 
+ fc1f 00 BRK 
+ fc21 fe INC  [c5b]
+ fc24 18 CLC 
+ fc25 10 BPL  [fc57]
+ fc27 00 BRK 
+ fc29 00 BRK 
+ fc2b 00 BRK 
+ fc2d 00 BRK 
+ fc2f 00 BRK 
+ fc31 00 BRK 
+ fc33 00 BRK 
+ fc35 00 BRK 
+ fc37 00 BRK 
+ fc39 00 BRK 
+ fc3b 00 BRK 
+ fc3d 00 BRK 
+ fc3f 00 BRK 
+ fc41 00 BRK 
+ fc43 00 BRK 
+ fc45 00 BRK 
+ fc47 00 BRK 
+ fc49 00 BRK 
+ fc4b 00 BRK 
+ fc4d 00 BRK 
+ fc4f 00 BRK 
+ fc51 00 BRK 
+ fc53 00 BRK 
+ fc55 00 BRK 
+ fc57 00 BRK 
+ fc59 00 BRK 
+ fc5b 00 BRK 
+ fc5d 00 BRK 
+ fc5f 00 BRK 
+ fc61 00 BRK 
+ fc63 00 BRK 
+ fc65 00 BRK 
+ fc67 00 BRK 
+ fc69 18 CLC 
+ fc6a 18 CLC 
+ fc6b ff ISC 
+ fc6e 18 CLC 
+ fc6f 18 CLC 
+ fc70 18 CLC 
+ fc71 18 CLC 
+ fc72 18 CLC 
+ fc73 ff ISC 
+ fc76 00 BRK 
+ fc78 00 BRK 
+ fc7a 00 BRK 
+ fc7c 00 BRK 
+ fc7e 00 BRK 
+ fc80 18 CLC 
+ fc81 18 CLC 
+ fc82 18 CLC 
+ fc83 18 CLC 
+ fc84 00 BRK 
+ fc86 18 CLC 
+ fc87 00 BRK 
+ fc89 33 RLA 
+ fc8b 00 BRK 
+ fc8d 00 BRK 
+ fc8f 00 BRK 
+ fc91 66 ROR  [ff]
+ fc93 66 ROR  [ff]
+ fc95 66 ROR  [66]
+ fc97 00 BRK 
+ fc99 3e ROL  [3cb5]
+ fc9c 06 ASL  [7c]
+ fc9e 18 CLC 
+ fc9f 00 BRK 
+ fca1 66 ROR  [c]
+ fca3 18 CLC 
+ fca4 30 BMI  [fd0c]
+ fca6 46 LSR  [0]
+ fca8 3c NOP 
+ fcab 38 SEC 
+ fcac 67 RRA 
+ fcae 3f RLA 
+ fcb1 0c NOP 
+ fcb4 00 BRK 
+ fcb6 00 BRK 
+ fcb8 0c NOP 
+ fcbb 30 BMI  [fced]
+ fcbd 18 CLC 
+ fcbe 0c NOP 
+ fcc1 18 CLC 
+ fcc2 0c NOP 
+ fcc5 18 CLC 
+ fcc6 30 BMI  [fcc8]
+ fcc8 00 BRK 
+ fcca 3c NOP 
+ fccd 66 ROR  [0]
+ fccf 00 BRK 
+ fcd1 18 CLC 
+ fcd2 18 CLC 
+ fcd3 7e ROR  [186d]
+ fcd6 00 BRK 
+ fcd8 00 BRK 
+ fcda 00 BRK 
+ fcdc 00 BRK 
+ fcde 18 CLC 
+ fcdf 30 BMI  [fce1]
+ fce1 00 BRK 
+ fce3 6e ROR  [3b]
+ fce6 00 BRK 
+ fce8 00 BRK 
+ fcea 00 BRK 
+ fcec 00 BRK 
+ fcee 18 CLC 
+ fcef 00 BRK 
+ fcf1 03 SLO 
+ fcf3 0c NOP 
+ fcf6 60 RTS 
+ fcf7 00 BRK 
+ fcf9 63 RRA 
+ fcfb 6b ARR 
+ fcfd 63 RRA 
+ fcff 00 BRK 
+ fd01 1c NOP 
+ fd04 0c NOP 
+ fd07 00 BRK 
+ fd09 63 RRA 
+ fd0b 0e ASL  [6338]
+ fd0e 7f RRA 
+ fd11 63 RRA 
+ fd13 0e ASL  [6363]
+ fd16 3e ROL  [655]
+ fd19 0e ASL  [261e]
+ fd1c 7f RRA 
+ fd1f 00 BRK 
+ fd21 63 RRA 
+ fd23 7e ROR  [6358]
+ fd26 3e ROL  [3e55]
+ fd29 63 RRA 
+ fd2b 7e ROR  [63b8]
+ fd2e 3e ROL  [7f55]
+ fd31 63 RRA 
+ fd33 0c NOP 
+ fd36 3c NOP 
+ fd39 63 RRA 
+ fd3b 3e ROL  [63b8]
+ fd3e 3e ROL  [3e55]
+ fd41 63 RRA 
+ fd43 3f RLA 
+ fd46 3e ROL  [55]
+ fd49 00 BRK 
+ fd4b 18 CLC 
+ fd4c 00 BRK 
+ fd4e 18 CLC 
+ fd4f 00 BRK 
+ fd51 00 BRK 
+ fd53 18 CLC 
+ fd54 00 BRK 
+ fd56 18 CLC 
+ fd57 30 BMI  [fd67]
+ fd59 18 CLC 
+ fd5a 30 BMI  [fdbc]
+ fd5c 30 BMI  [fd76]
+ fd5e 0e ASL  [0]
+ fd61 00 BRK 
+ fd63 00 BRK 
+ fd65 00 BRK 
+ fd67 00 BRK 
+ fd69 18 CLC 
+ fd6a 0c NOP 
+ fd6d 18 CLC 
+ fd6e 70 BVS  [fd70]
+ fd70 7e ROR  [3b8]
+ fd73 06 ASL  [1c]
+ fd75 00 BRK 
+ fd77 18 CLC 
+ fd78 7c NOP 
+ fd7b ee INC  [e6e0]
+ fd7e 7c NOP 
+ fd81 36 ROL  [b8]
+ fd83 7f RRA 
+ fd86 63 RRA 
+ fd88 6e ROR  [6373]
+ fd8b 7e ROR  [63b8]
+ fd8e 7e ROR  [1e55]
+ fd91 33 RLA 
+ fd93 60 RTS 
+ fd94 60 RTS 
+ fd95 33 RLA 
+ fd97 00 BRK 
+ fd99 76 ROR  [b8]
+ fd9b 63 RRA 
+ fd9d 66 ROR  [7c]
+ fd9f 00 BRK 
+ fda1 31 AND  [80]
+ fda3 3c NOP 
+ fda6 7f RRA 
+ fda9 31 AND  [80]
+ fdab 3c NOP 
+ fdae 78 SEI 
+ fdaf 00 BRK 
+ fdb1 33 RLA 
+ fdb3 67 RRA 
+ fdb5 37 RLA 
+ fdb7 00 BRK 
+ fdb9 63 RRA 
+ fdbb 7f RRA 
+ fdbe 63 RRA 
+ fdc0 3c NOP 
+ fdc3 18 CLC 
+ fdc4 18 CLC 
+ fdc5 18 CLC 
+ fdc6 3c NOP 
+ fdc9 06 ASL  [6]
+ fdcb 06 ASL  [6]
+ fdcd 66 ROR  [3c]
+ fdcf 00 BRK 
+ fdd1 66 ROR  [6c]
+ fdd3 78 SEI 
+ fdd4 6c JMP  [[6367]]
+ fdd7 00 BRK 
+ fdd9 30 BMI  [fe3b]
+ fddb 60 RTS 
+ fddc 63 RRA 
+ fdde 7e ROR  [6355]
+ fde1 77 RRA 
+ fde3 6b ARR 
+ fde5 63 RRA 
+ fde7 00 BRK 
+ fde9 73 RRA 
+ fdeb 6f RRA 
+ fdee 63 RRA 
+ fdf0 1c NOP 
+ fdf3 63 RRA 
+ fdf5 36 ROL  [71]
+ fdf7 00 BRK 
+ fdf9 73 RRA 
+ fdfb 7e ROR  [60b5]
+ fdfe 60 RTS 
+ fdff 00 BRK 
+ fe01 36 ROL  [b8]
+ fe03 6b ARR 
+ fe05 36 ROL  [72]
+ fe07 00 BRK 
+ fe09 73 RRA 
+ fe0b 7e ROR  [67c1]
+ fe0e 63 RRA 
+ fe10 3e ROL  [60b8]
+ fe13 3e ROL  [6358]
+ fe16 3e ROL  [7e55]
+ fe19 5a NOP 
+ fe1a 18 CLC 
+ fe1b 18 CLC 
+ fe1c 18 CLC 
+ fe1d 18 CLC 
+ fe1e 3c NOP 
+ fe21 33 RLA 
+ fe23 63 RRA 
+ fe25 76 ROR  [91]
+ fe27 00 BRK 
+ fe29 33 RLA 
+ fe2b 63 RRA 
+ fe2d 3c NOP 
+ fe30 73 RRA 
+ fe32 63 RRA 
+ fe34 7f RRA 
+ fe37 00 BRK 
+ fe39 63 RRA 
+ fe3b 1c NOP 
+ fe3e 63 RRA 
+ fe40 33 RLA 
+ fe42 63 RRA 
+ fe44 1c NOP 
+ fe47 00 BRK 
+ fe49 63 RRA 
+ fe4b 1c NOP 
+ fe4e 7e ROR  [3c55]
+ fe51 30 BMI  [fe83]
+ fe53 30 BMI  [fe85]
+ fe55 30 BMI  [fe93]
+ fe57 00 BRK 
+ fe59 60 RTS 
+ fe5a 30 BMI  [fe74]
+ fe5c 0c NOP 
+ fe5f 00 BRK 
+ fe61 0c NOP 
+ fe64 0c NOP 
+ fe67 00 BRK 
+ fe69 18 CLC 
+ fe6a 3c NOP 
+ fe6d 18 CLC 
+ fe6e 18 CLC 
+ fe6f 18 CLC 
+ fe70 00 BRK 
+ fe72 00 BRK 
+ fe74 00 BRK 
+ fe76 ff ISC 
+ fe79 30 BMI  [fe93]
+ fe7b 00 BRK 
+ fe7d 00 BRK 
+ fe7f 00 BRK 
+ fe81 00 BRK 
+ fe83 63 RRA 
+ fe85 67 RRA 
+ fe87 00 BRK 
+ fe89 60 RTS 
+ fe8a 6e ROR  [6373]
+ fe8d 63 RRA 
+ fe8f 00 BRK 
+ fe91 00 BRK 
+ fe93 63 RRA 
+ fe95 63 RRA 
+ fe97 00 BRK 
+ fe99 03 SLO 
+ fe9b 67 RRA 
+ fe9d 63 RRA 
+ fe9f 00 BRK 
+ fea1 00 BRK 
+ fea3 61 ADC  [0]
+ fea5 60 RTS 
+ fea6 3e ROL  [e55]
+ fea9 18 CLC 
+ feaa 18 CLC 
+ feab 3c NOP 
+ feae 3c NOP 
+ feb1 00 BRK 
+ feb3 60 RTS 
+ feb4 63 RRA 
+ feb6 3d AND  [6055]
+ feb9 60 RTS 
+ feba 6e ROR  [6373]
+ febd 66 ROR  [67]
+ febf 00 BRK 
+ fec1 00 BRK 
+ fec3 0c NOP 
+ fec6 1e ASL  [55]
+ fec9 00 BRK 
+ fecb 06 ASL  [6]
+ fecd 06 ASL  [66]
+ fecf 3c NOP 
+ fed2 66 ROR  [6e]
+ fed4 7c NOP 
+ fed7 00 BRK 
+ fed9 0c NOP 
+ fedc 0c NOP 
+ fedf 00 BRK 
+ fee1 00 BRK 
+ fee3 7f RRA 
+ fee6 67 RRA 
+ fee8 00 BRK 
+ feea 6e ROR  [6373]
+ feed 66 ROR  [67]
+ feef 00 BRK 
+ fef1 00 BRK 
+ fef3 63 RRA 
+ fef5 63 RRA 
+ fef7 00 BRK 
+ fef9 00 BRK 
+ fefb 63 RRA 
+ fefd 6e ROR  [6060]
+ ff00 00 BRK 
+ ff02 3e ROL  [67b8]
+ ff05 3b RLA 
+ ff08 00 BRK 
+ ff0a 6e ROR  [6373]
+ ff0d 7e ROR  [b8]
+ ff10 00 BRK 
+ ff12 3e ROL  [1cc6]
+ ff15 47 SRE 
+ ff17 00 BRK 
+ ff19 0c NOP 
+ ff1c 18 CLC 
+ ff1d 1b SLO 
+ ff20 00 BRK 
+ ff22 73 RRA 
+ ff24 63 RRA 
+ ff26 3b RLA 
+ ff29 00 BRK 
+ ff2b 33 RLA 
+ ff2d 66 ROR  [3c]
+ ff2f 00 BRK 
+ ff31 00 BRK 
+ ff33 6b ARR 
+ ff35 77 RRA 
+ ff37 00 BRK 
+ ff39 00 BRK 
+ ff3b 36 ROL  [71]
+ ff3d 36 ROL  [b8]
+ ff3f 00 BRK 
+ ff41 00 BRK 
+ ff43 63 RRA 
+ ff45 3f RLA 
+ ff48 00 BRK 
+ ff4a 7f RRA 
+ ff4d 38 SEC 
+ ff4e 7f RRA 
+ ff51 42 UND 
+ ff52 99 STA  [a221]
+ ff55 99 STA  [3cc2]
+ ff58 00 BRK 
+ ff5a 00 BRK 
+ ff5c 00 BRK 
+ ff5e 00 BRK 
+ ff60 00 BRK 
+ ff62 00 BRK 
+ ff64 00 BRK 
+ ff66 00 BRK 
+ ff68 00 BRK 
+ ff6a 00 BRK 
+ ff6c 00 BRK 
+ ff6e 00 BRK 
+ ff70 00 BRK 
+ ff72 00 BRK 
+ ff74 00 BRK 
+ ff76 00 BRK 
+ ff78 0f SLO 
+ ff7b 33 RLA 
+ ff7d 06 ASL  [12]
+ ff7f 33 RLA 
+ ff81 06 ASL  [12]
+ ff83 33 RLA 
+ ff85 06 ASL  [12]
+ ff87 33 RLA 
+ ff89 06 ASL  [12]
+ ff8b 33 RLA 
+ ff8d 06 ASL  [12]
+ ff8f 33 RLA 
+ ff91 06 ASL  [12]
+ ff93 33 RLA 
+ ff95 06 ASL  [12]
+ ff97 33 RLA 
+ ff99 00 BRK 
+ ff9b 00 BRK 
+ ff9d 00 BRK 
+ ff9f 00 BRK 
+ ffa1 00 BRK 
+ ffa3 00 BRK 
+ ffa5 00 BRK 
+ ffa7 00 BRK 
+ ffa9 00 BRK 
+ ffab 00 BRK 
+ ffad 00 BRK 
+ ffaf 00 BRK 
+ ffb1 00 BRK 
+ ffb3 00 BRK 
+ ffb5 00 BRK 
+ ffb7 00 BRK 
+ ffb9 00 BRK 
+ ffbb 00 BRK 
+ ffbd 00 BRK 
+ ffbf 00 BRK 
+ ffc1 00 BRK 
+ ffc3 00 BRK 
+ ffc5 00 BRK 
+ ffc7 00 BRK 
+ ffc9 00 BRK 
+ ffcb 00 BRK 
+ ffcd 00 BRK 
+ ffcf 00 BRK 
+ ffd1 00 BRK 
+ ffd3 00 BRK 
+ ffd5 00 BRK 
+ ffd7 00 BRK 
+ ffd9 00 BRK 
+ ffdb 00 BRK 
+ ffdd 00 BRK 
+ ffdf 00 BRK 
+ ffe1 00 BRK 
+ ffe3 00 BRK 
+ ffe5 00 BRK 
+ ffe7 00 BRK 
+ ffe9 00 BRK 
+ ffeb 00 BRK 
+ ffed 00 BRK 
+ ffef 00 BRK 
+ fff1 00 BRK 
+ fff3 00 BRK 
+ fff5 00 BRK 
+ fff7 00 BRK 
+ fff9 00 BRK 

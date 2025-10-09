@@ -11,7 +11,7 @@ import cart "./../mappers"
 hWnd: win.HWND;
 hdc: win.HDC;
 hframe: win.HBITMAP;
-framebuffer: [][WIDTH * PIXEL_SIZE]win.COLORREF;
+framebuffer: [][WIDTH]win.COLORREF;
 background: [4][HEIGHT][WIDTH]win.COLORREF;//Capacity to display four nametables 
 backdrop: [4][HEIGHT][WIDTH]win.COLORREF;//Capacity to display four nametables
 foreground: [HEIGHT][WIDTH]win.COLORREF;
@@ -20,10 +20,10 @@ WIDTH::i32(256);
 HEIGHT::i32(240);
 
 Sprite0HitRegion ::struct{
-    x0: u16,
-    y0: u16,
-    x1: u16,
-    y1: u16,
+    x0: u8,
+    y0: u8,
+    x1: u8,
+    y1: u8,
 };
 
 sprite0hit_region: Sprite0HitRegion;
@@ -58,9 +58,9 @@ greyscale_palette := [2][4][4]u8{
     },
 };
 
-create_frame ::proc(color: win.COLORREF) {
-    width := WIDTH * PIXEL_SIZE;
-    height := HEIGHT * PIXEL_SIZE;
+frame_create ::proc(color: win.COLORREF) {
+    width := WIDTH;
+    height := HEIGHT;
     hdc_mem := win.CreateCompatibleDC(hdc);
     bmi := win.BITMAPINFO{};
     bmi.bmiHeader.biSize = size_of(win.BITMAPINFOHEADER);
@@ -73,7 +73,7 @@ create_frame ::proc(color: win.COLORREF) {
     ptr_buf:^rawptr;
     hframe = win.CreateDIBSection(hdc_mem, &bmi, win.DIB_RGB_COLORS, &ptr_buf, nil, 0);
     if hframe != nil && ptr_buf != nil {
-        framebuffer = slice.from_ptr((^[WIDTH*PIXEL_SIZE]win.COLORREF)(ptr_buf), int(HEIGHT*PIXEL_SIZE));
+        framebuffer = slice.from_ptr((^[WIDTH]win.COLORREF)(ptr_buf), int(HEIGHT));
         for i in 0..<height {
             for j in 0..<width {
                 framebuffer[i][j] = color;
@@ -82,7 +82,7 @@ create_frame ::proc(color: win.COLORREF) {
     }
 }
 
-init :: proc() {
+frame_init :: proc() {
     instance := win.HINSTANCE(win.GetModuleHandleW(nil));
     assert(instance != nil, "Failed to fetch the current instance");
     class_name := win.L("NES Emulator");
@@ -117,9 +117,9 @@ win_proc ::proc "stdcall"(
     context = runtime.default_context();
     switch msg {
         case win.WM_CREATE:
-            
+            frame_create(win.RGB(255,0,255));
         case win.WM_PAINT:
-            render_frame();
+            frame_render();
             ps: win.PAINTSTRUCT;            
             hdc := win.BeginPaint(hWnd, &ps);
             if hframe != nil {
@@ -139,62 +139,83 @@ win_proc ::proc "stdcall"(
     return win.DefWindowProcW(hwnd, msg, wparam, lparam);
 }
 
-view_pattern_table ::proc(
+frame_view_pattern_table ::proc(
     self: ^Ppu2C02, 
     target: [][WIDTH]win.COLORREF, 
     backdrop_color: bool
 ) {  
-    create_frame(win.RGB(255,0,255));
-    for i in 0..<255 {
-        draw_pattern_tbl_tile(self, u16(i), 0x0000, 0, 0, greyscale_palette[0][0], target, backdrop_color);
-        draw_pattern_tbl_tile(self, u16(i), 0x1000, u16(WIDTH/2), 0, greyscale_palette[0][0], target, backdrop_color);
-    }
-    msg: win.MSG;
-    for win.GetMessageW(&msg, nil, 0, 0) > 0 {
-        win.TranslateMessage(&msg);
-        win.DispatchMessageW(&msg);
+    //frame_create(win.RGB(255,0,255));
+    tile_no:u8 = 0;
+    for i in 0..<16 {
+        for j in 0..<16 {
+            frame_draw_pattern_tbl_tile(
+                self,
+                tile_no,
+                u8(j), u8(i),
+                0, 0, 
+                0x0000, 
+                greyscale_palette[0][0], 
+                target, 
+                backdrop_color
+            );
+            
+            frame_draw_pattern_tbl_tile(
+                self,
+                tile_no,
+                u8(j) + 16, u8(i),
+                0, 0, 
+                0x1000, 
+                greyscale_palette[0][0], 
+                target, 
+                backdrop_color
+            );
+            tile_no += 1;
+        }
+        
     }
 }
 
-draw_pattern_tbl_tile ::proc(
+frame_draw_pattern_tbl_tile ::proc(
     self: ^Ppu2C02, 
-    tile_no: u16, 
+    tile_no: u8,
+    coarse_x, coarse_y:u8,
+    fine_x, fine_y:u8,
     tbl_addr: u16,
-    screen_offset_x: u16,
-    screen_offset_y: u16,
     palette:[4]u8,
     target: [][WIDTH]win.COLORREF,
     backdrop_color: bool
 ) {
-
+    assert(coarse_x < 32 && coarse_y < 30);
+    assert(fine_x < 8 && fine_y < 8);
     tile:[8][8]u8;
     bd_tile:[8][8]u8; //Back drop tile
-
-    src := cart.mapper_direct_access(self.mapper, tbl_addr + u16(tile_no * 16), 16);
+    offset := u16(tile_no) * u16(16);
+    src := cart.mapper_direct_access(self.mapper, tbl_addr + offset, 16);
     plane0 := src[0:8];
     plane1 := src[8:16];
-    decode_tile_row(plane0, plane1, tile[:][:], palette, backdrop_color, bd_tile[:][:]);
-    x0 := (tile_no % 16) * u16(8);
-    y0 := (tile_no / 16) * u16(8);
-    draw_tile(x0, y0, tile[:][:], screen_offset_x, screen_offset_y, target, backdrop_color, bd_tile[:][:]);
+    frame_decode_tile_row(plane0, plane1, tile[:][:], palette, backdrop_color, bd_tile[:][:]);
+    frame_draw_tile(coarse_x, coarse_y, fine_x, fine_y, tile[:][:], target, backdrop_color, bd_tile[:][:]);
 }
 
-draw_tile ::proc(
-    x, y: u16, //Origin
+frame_draw_tile ::proc(
+    coarse_x, coarse_y:u8,
+    fine_x, fine_y:u8,
     tile:[][8]u8,
-    screen_offset_x: u16, //x transform
-    screen_offset_y: u16, // y transform
     target: [][WIDTH]win.COLORREF,
     backdrop_color: bool,
     bd_tile:[][8]u8,//back drop tile
 ) {
-    x0 := x;
-    y0 := y;
+    x0 := coarse_x * 8;
+    y0 := coarse_y * 8;
     for i in 0..<8 {
         xt := x0
         for j in 0..<8 {
-            y_coord := y0 + screen_offset_y;
-            x_coord := xt + screen_offset_x;
+            y_coord := y0 + fine_y;
+            x_coord := xt + fine_x;            
+            if y_coord > 239 || x_coord > 255 {
+                continue;
+            }
+
             palette_index := tile[i][j];
             if palette_index != 0 && target[y_coord][x_coord] == 0{
                 color:win.COLORREF = NES_PALETTE[palette_index];
@@ -202,11 +223,11 @@ draw_tile ::proc(
             }else if backdrop_color && bd_tile != nil{
                 palette_index := bd_tile[i][j];
                 color:win.COLORREF = NES_PALETTE[palette_index];
-                sel := ppu_regs.ctrl & 0x03;            //select a corresponding backdrop for
+                sel := transmute(u8)ppu_regs.ctrl & 0x03;            //select a corresponding backdrop for
                 backdrop[sel][y_coord][x_coord] = color;//the current nametable  
             }else{
                 color:win.COLORREF = NES_PALETTE[palette_index];
-                sel := ppu_regs.ctrl & 0x03;             //select a corresponding backdrop for
+                sel := transmute(u8)ppu_regs.ctrl & 0x03;             //select a corresponding backdrop for
                 backdrop[sel][y_coord][x_coord] = color; //the current nametable
             }           
             xt += 1;         
@@ -215,7 +236,7 @@ draw_tile ::proc(
     }
 }
 
-decode_tile_row ::proc(
+frame_decode_tile_row ::proc(
     plane0, plane1: []u8, 
     tile:[][8]u8, 
     palette:[4]u8,
@@ -250,7 +271,7 @@ decode_tile_row ::proc(
     }
 } 
 
-render_frame ::proc() {
+frame_render ::proc() {
     for i in 0..<HEIGHT {
         for j in 0..<WIDTH {
             framebuffer[i][j] = background[0][i][j];

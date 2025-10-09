@@ -5,17 +5,10 @@ import cart "mappers"
 import scrn "screen"
 
 
-
-ProcessingUnit::union {
-    ^Alu6502,
-    ^scrn.Ppu2C02,
-    ^ApuRP2A03,
-    ^cart.Mapper,
-}
-
 CpuInterface::struct {
-    pu: ProcessingUnit,
+    alu: ^Alu6502,
     bus: Bus,
+    disasm: ^Disassembler,
 }
 
 @(private)
@@ -49,7 +42,9 @@ cpu_get::proc (
 
     cpu.bus = new_bus(cpu_mem_map[:]);    
     alu.regs.SR = u8(1 << 5); 
-    cpu.pu = alu;      
+    cpu.alu = alu;  
+    cpu_reset(&cpu);
+    cpu.disasm = disasm_get();    
     return &cpu;
 }
 
@@ -66,66 +61,42 @@ cpu_debug_print::proc (self: ^CpuInterface, address: u16) {
 }
 
 cpu_reset::proc (self: ^CpuInterface) {
-    alu, ok := self.pu.(^Alu6502); assert(ok);
     lo := u16(cpu_read(self, 0xFFFC));
     hi := u16(cpu_read(self, 0xFFFD));
-    alu.regs.PC = (hi << 8) | lo;
-    alu.regs.A = 0;
-    alu.regs.X = 0;
-    alu.regs.Y = 0;
-    alu.regs.SP = 0xFF;
-    alu.regs.SR = u8(1 << 5);
+    self.alu.regs.PC = (hi << 8) | lo;
+    self.alu.regs.A = 0;
+    self.alu.regs.X = 0;
+    self.alu.regs.Y = 0;
+    self.alu.regs.SP = 0xFF;
+    self.alu.regs.SR = u8(1 << 5);
 }
 
 cpu_nmi::proc (self: ^CpuInterface) {
-    alu, ok := self.pu.(^Alu6502); assert(ok);
-    alu_push_pc(alu, &self.bus);
-    alu_clear_flag(alu, .B);
-    alu_push(alu, &self.bus, alu.regs.SR);
-    alu_set_flag(alu, .I);
+    alu_push_pc(self.alu, &self.bus);
+    alu_clear_flag(self.alu, .B);
+    alu_push(self.alu, &self.bus, self.alu.regs.SR);
+    alu_set_flag(self.alu, .I);
     
     lo := u16(cpu_read(self, 0xFFFA));
     hi := u16(cpu_read(self, 0xFFFB));
 
     isr: Operand = u16((hi << 8) | lo);
-    alu_jump(&isr, alu, .JMP, &self.bus);
+    alu_jump(&isr, self.alu, .JMP, &self.bus);
 }
 
 cpu_irq::proc (self: ^CpuInterface) {
-    alu, ok := self.pu.(^Alu6502); assert(ok);
-    if alu_is_flag_clear(alu, .I) {
-        alu_push_pc(alu, &self.bus);
-        alu_clear_flag(alu, .B);
-        alu_push(alu, &self.bus, alu.regs.SR);
-        alu_set_flag(alu, .I);
+    if alu_is_flag_clear(self.alu, .I) {
+        alu_push_pc(self.alu, &self.bus);
+        alu_clear_flag(self.alu, .B);
+        alu_push(self.alu, &self.bus, self.alu.regs.SR);
+        alu_set_flag(self.alu, .I);
         
         lo := u16(cpu_read(self, 0xFFFE));
         hi := u16(cpu_read(self, 0xFFFF));
 
         isr: Operand = u16((hi << 8) | lo);
 
-        alu_jump(&isr, alu, .JMP, &self.bus);
-    }
-}
-
-cpu_ppu_dma ::proc(self: ^CpuInterface){
-    src := u16(scrn.ppu_regs.oam_dma) << 8;
-    for i in 0..<256 {
-        scrn.ppu_oam[i] = bus_read_u8(&self.bus, src);
-        src += 1;        
-    }
-}
-
-cpu_step::proc (self: ^CpuInterface) {    
-    switch u in self.pu {
-        case ^Alu6502:
-            alu_step(u, &self.bus);
-        case ^scrn.Ppu2C02:
-            scrn.ppu_step(u);
-        case ^ApuRP2A03:
-            apu_step(u);
-        case ^cart.Mapper:
-            cart.mapper_step(u);
+        alu_jump(&isr, self.alu, .JMP, &self.bus);
     }
 }
 

@@ -14,6 +14,7 @@ Target ::union {
     ^scrn.Ppu2C02,
     ^ApuRP2A03,
     ^cart.Mapper,
+    ^Disassembler,
 }
 
 Addressable ::struct {
@@ -43,11 +44,14 @@ space_write ::proc(self: ^Addressable, address: u16, data: u8) {
             i := index(self, addr); assert(i < len(opt));
             opt[i] = data;
         case ^scrn.Ppu2C02:
-            scrn.ppu_regs_write(opt, addr, data);
+            ex := scrn.ppu_regs_write(opt, addr, data);
+            clock_ppu_exception_handler(ex);
         case ^ApuRP2A03:
             apu_regs_write(opt, addr, data);
         case ^cart.Mapper:
             cart.mapper_write(opt, addr, data);
+        case ^Disassembler:
+            disasm_write(opt, addr, data);
     }
 }
 
@@ -67,6 +71,8 @@ space_read ::proc(self: ^Addressable, address: u16) -> u8{
             data = apu_regs_read(opt, addr);
         case ^cart.Mapper:
             data = cart.mapper_read(opt, addr);
+        case ^Disassembler:
+            data = disasm_read(opt, addr);
     } 
     return data;  
 }

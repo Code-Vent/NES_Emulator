@@ -18,5 +18,8 @@ apu_regs_write::proc (self: ^ApuRP2A03, address: u16, data: u8) {
     
 }
 
+apu_reset::proc (self: ^ApuRP2A03) {
+}
+
 apu_step::proc (self: ^ApuRP2A03) {
 }

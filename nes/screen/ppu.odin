@@ -38,29 +38,78 @@ palette_ram := [2][4][4]u8{
 
 ppu_oam: [256]u8;
 
-@(private)
-PPURegisters :: struct {
-    ctrl: u8,
-    mask: u8,
-    status: u8,
-    oam_addr: u8,
-    oam_data: u8,
-    scroll: u16,
-    addr: u16,
-    data: u8,
-    oam_dma: u8,
+PPUSTATUS ::enum{
+    HorizontalScrolling, //Unused on the NES
+    VerticalScrolling, //Unused on the NES
+    Unused2,
+    Unused3,
+    Unused4,
+    SpriteOverflow,
+    Sprite0Hit,
+    VBlank
 }
 
-ppu_regs: PPURegisters = PPURegisters{};
+PPUStatus ::distinct bit_set[PPUSTATUS; u8];
+
+PPUCTRL ::enum{
+    NametableX,
+    NametableY,
+    VRAMIncrement,
+    SpritePattern,
+    BackgroundPattern,
+    SpriteSize,
+    MasterSlave,
+    GenerateNMI,
+}
+
+PPUControl ::distinct bit_set[PPUCTRL; u8];
+
+PPUMASK ::enum{
+    GreyScale,
+    LeftmostBackground,
+    LeftmostSprite,
+    BackgroundRendering,
+    SpriteRendering,
+    EmphasizeRed,
+    EmphasizeGreen,
+    EmphasizeBlue,
+}
+
+PPUMask ::distinct bit_set[PPUMASK; u8];
+
+@(private)
+PPURegisters :: struct {
+    ctrl: PPUControl,
+    mask: PPUMask,
+    status: PPUStatus,
+    oam_addr: u8,
+    scroll: u16,
+    addr: u16,
+    read_buffer: u8,
+    oam_dma: u8,
+    write_toggle: u8
+}
+
+ppu_regs: PPURegisters = PPURegisters{
+    write_toggle = 1
+};
 
 Ppu2C02 ::struct {
     mapper: ^cart.Mapper,
-    state: Ppu2C02_State,
+    events: bit_set[Ppu2C02_Events],
 }
 
-Ppu2C02_State ::enum{
+Ppu2C02_Events ::enum{
+    HIT0_DETECTED,
+    SCROLL_UPDATED,
+    END_OF_TABLE0,
+    END_OF_OAM,
+}
+
+Ppu2C02_Exception ::enum{
     DMA_PENDING,
     NMI_PENDING,
+    NONE,
 }
 
 new_ppu ::proc(m: ^cart.Mapper) -> Ppu2C02 {    
@@ -69,60 +118,97 @@ new_ppu ::proc(m: ^cart.Mapper) -> Ppu2C02 {
     };
 }
 
-ppu_step ::proc(self: ^Ppu2C02) {
+ppu_reset ::proc(self: ^Ppu2C02) {
+    if self.mapper.cartridge.meta.mirroring == .HORIZONTAL {
+        ppu_regs.status = {.VerticalScrolling};
+    }else if self.mapper.cartridge.meta.mirroring == .VERTICAL {
+        ppu_regs.status = {.HorizontalScrolling};
+    }else if self.mapper.cartridge.meta.mirroring == .FOUR_SCREEN {
+        ppu_regs.status = {.HorizontalScrolling, .VerticalScrolling};
+    }else{
+
+    }
+}
+
+ppu_step ::proc(self: ^Ppu2C02) -> Ppu2C02_Exception{
+    
+    draw_name_table(self, name_tbl_base[0]);
+    //draw_oam_sprites(self);
+    //frame_render();
+    ppu_regs.status += {.VBlank};
+
+    //if sprite0hit_region.x0 < 256 && sprite0hit_region.y0 < 240 {
+    //    self.events += {.HIT0_DETECTED};
+    //    ppu_regs.status += {.Sprite0Hit};
+    //}
+
+    if .GenerateNMI in ppu_regs.ctrl {
+        //self.events += {.END_OF_TABLE0};
+        return Ppu2C02_Exception.NMI_PENDING;
+    }
+
+    return Ppu2C02_Exception{};
 }
 
 ppu_regs_read ::proc(self: ^Ppu2C02, address: u16) -> u8 {
     data:u8 = 0xCC;
     switch address {
         case 0x2002:
-            byte_shift = 8;
-            data = ppu_regs.status & 0xE0;
-            clear_vblank_flag();
+            ppu_regs.write_toggle = 1;
+            data = transmute(u8)ppu_regs.status;
+            //data &= 0xE0;
+            ppu_regs.status -= {.VBlank};
         case 0x2004:
             data = ppu_oam[ppu_regs.oam_addr];
         case 0x2007:
-            data = cart.mapper_vram_read(self.mapper, ppu_regs.addr);
+            data = ppu_regs.read_buffer;
+            ppu_regs.read_buffer = cart.mapper_vram_read(self.mapper, ppu_regs.addr);
+            ppu_regs.addr += get_vram_address_inc();
         case:
             //assert(false);
     }  
     return data; 
 }
 
-@(private)
-byte_shift:u8 = 8;
+ppu_regs_write ::proc(self: ^Ppu2C02, address: u16, data: u8) -> Ppu2C02_Exception{
+    ex := Ppu2C02_Exception.NONE;
 
-ppu_regs_write ::proc(self: ^Ppu2C02, address: u16, data: u8) {
     switch address {
         case 0x2000://ppuctrl
-            ppu_regs.ctrl = data;
+            ppu_regs.ctrl = transmute(PPUControl)data;
         case 0x2001: //ppumask
-            ppu_regs.mask = data;
+            ppu_regs.mask = transmute(PPUMask)data;;
         case 0x2003: //oam addr
             ppu_regs.oam_addr = data;
         case 0x2004: //oam data
             ppu_oam[ppu_regs.oam_addr] = data;
             ppu_regs.oam_addr += 1;
         case 0x2005: //scroll
-            ppu_regs.scroll |= u16(data) << byte_shift;
-            byte_shift = (byte_shift + 8) & 0x8;        
+            ppu_regs.scroll |= u16(data) << (ppu_regs.write_toggle << 3);
+            ppu_regs.write_toggle ~= 0x01;   
+            if ppu_regs.write_toggle == 1 {
+                self.events += {.SCROLL_UPDATED};
+            }     
         case 0x2006: //vram address
-            ppu_regs.addr |= u16(data) << byte_shift;
-            byte_shift = (byte_shift + 8) & 0x8; 
+            ppu_regs.addr |= u16(data) << (ppu_regs.write_toggle << 3);
+            ppu_regs.write_toggle ~= 0x01;   
         case 0x2007: //vram data
-            cart.mapper_vram_write(self.mapper, ppu_regs.addr, data); 
+            if cart.mapper_vram_write(self.mapper, ppu_regs.addr, data){
+                self.events += {.END_OF_TABLE0};
+                assert(false);
+            } 
             ppu_regs.addr += get_vram_address_inc();
         case 0x4014:
             ppu_regs.oam_dma = data;
-            self.state = .DMA_PENDING;
+            ex = .DMA_PENDING;
         case:
             assert(false);
     }
+    return ex;
 }
 
-draw_name_table ::proc(self: ^Ppu2C02) {    
+draw_name_table ::proc(self: ^Ppu2C02, addr: u16) {    
     tbl_addr := get_bckgnd_pattern_tbl_address(self);
-    addr := get_name_tbl_address(self);
     src := cart.mapper_direct_access(self.mapper, addr, 1024);
     name_tbl := src[:attrib_tbl_offset];
     attrib_tbl := src[attrib_tbl_offset:];
@@ -138,20 +224,18 @@ draw_name_table ::proc(self: ^Ppu2C02) {
     };
     attrib_32x32: [32][32]u8;
     index := 0;
-    sel := ppu_regs.ctrl & 0x03; 
+    sel := transmute(u8)ppu_regs.ctrl & 0x03; 
     decode_attrib(attrib_8x8[:][:], attrib_32x32[:][:]);
     for i in 0..<30 {
         for j in 0..<32 {
             palette_index := attrib_32x32[i][j];
-            tile_no := u16(name_tbl[index]);
-            stride_x := u16(j * int(8));
-            stride_y := u16(i * int(8));
-            draw_pattern_tbl_tile(
+            tile_no := name_tbl[index];
+            frame_draw_pattern_tbl_tile(
                 self, 
                 tile_no, 
+                u8(j), u8(i),
+                0, 0,
                 tbl_addr,  
-                stride_x,
-                stride_y,
                 palette_ram[0][palette_index],
                 background[sel][:][:],
                 palette_index == 0
@@ -193,30 +277,32 @@ decode_attrib ::proc(attrib_8x8:[][]u8, attrib_32x32: [][32]u8) {
 }
 
 Sprite ::struct {
-    x_pos: u16,
-    y_pos: u16, 
+    coarse_x: u8,
+    coarse_y: u8, 
+    fine_x: u8,
+    fine_y: u8, 
     attrib: u8,
     data: []u8,
 };
 
 draw_oam_sprites ::proc(self: ^Ppu2C02) {
-    len := get_sprite_size();
+    len := u16(get_sprite_size());
     offset:u16 = 0;
     s:Sprite;
     for i in 0..<16 {
         object := ppu_oam[offset:offset+len];
-        s.y_pos = u16(object[0]);
+        s.coarse_y = object[0];
         index := object[1];
         s.attrib = object[2];
-        s.x_pos = u16(object[3]);
+        s.coarse_x = object[3];
         addr := get_sprite_pattern_tbl_address(self, &index); 
-        s.data = cart.mapper_direct_access(self.mapper, addr + u16(index), len);
+        s.data = cart.mapper_direct_access(self.mapper, addr + u16(index), u16(len));
         draw_sprite(&s);
         if i == 0 {
-            sprite0hit_region.x0 = s.x_pos;
-            sprite0hit_region.y0 = s.y_pos + 1;
-            sprite0hit_region.x1 = s.x_pos + 8;
-            sprite0hit_region.y1 = s.y_pos + u16(len / 2);
+            sprite0hit_region.x0 = s.coarse_x * 8;
+            sprite0hit_region.y0 = (s.coarse_y * 8) + 1;
+            sprite0hit_region.x1 = sprite0hit_region.x0 + 8;
+            sprite0hit_region.y1 = sprite0hit_region.y0 + u8(len >> 1);
         }
         offset += len;
     }          
@@ -226,50 +312,45 @@ draw_sprite ::proc(sprite: ^Sprite) {
     tile:[8][8]u8;
     palette_index := 0x03 & sprite.attrib;
     behind_background := (sprite.attrib & 0x20) >> 5;
-    switch len(sprite.data) {
-        case 32:
-            //top sprite
-            plane0 := sprite.data[0:8];
-            plane1 := sprite.data[8:16];
-            decode_tile_row(
-                plane0, plane1,
-                tile[:][:],
-                palette_ram[1][palette_index],
-                false,
-                nil
-            );
-            apply_flip(tile[:][:], sprite.attrib);
-            draw_tile(
-                sprite.x_pos, sprite.y_pos + 1,
-                tile[:][:],
-                0,0,
-                foreground[:][:],
-                behind_background == 1,
-                nil
-            );
-            fallthrough;
-        case 16:
+    plane0 := sprite.data[0:8];
+    plane1 := sprite.data[8:16];
+    frame_decode_tile_row(
+        plane0, plane1,
+        tile[:][:],
+        palette_ram[1][palette_index],
+        false,
+        nil
+    );
+    apply_flip(tile[:][:], sprite.attrib);
+    frame_draw_tile(
+        sprite.coarse_x, sprite.coarse_y,
+        0, 1,
+        tile[:][:],
+        foreground[:][:],
+        behind_background == 1,
+        nil
+    );
+    
+    if len(sprite.data) == 32 {
             //bottom sprite
-            plane0 := sprite.data[16:24];
-            plane1 := sprite.data[24:32];
-            decode_tile_row(
-                plane0, plane1,
-                tile[:][:],
-                palette_ram[1][palette_index],
-                false,
-                nil
-            );
-            apply_flip(tile[:][:], sprite.attrib);
-            draw_tile(
-                sprite.x_pos, sprite.y_pos + 1,
-                tile[:][:],
-                0,8,
-                foreground[:][:],
-                behind_background == 1,
-                nil
-            );
-        case:
-            fmt.printf("Invalid sprite size!\n");
+        plane0 := sprite.data[16:24];
+        plane1 := sprite.data[24:32];
+        frame_decode_tile_row(
+            plane0, plane1,
+            tile[:][:],
+            palette_ram[1][palette_index],
+            false,
+            nil
+        );
+        apply_flip(tile[:][:], sprite.attrib);
+        frame_draw_tile(
+            sprite.coarse_x, sprite.coarse_y + 1,
+            0, 1,
+            tile[:][:],
+            foreground[:][:],
+            behind_background == 1,
+            nil
+        );
     }
 }
 
@@ -296,7 +377,7 @@ flip_vertical ::proc(tile: [][8]u8){
 
 get_vram_address_inc ::proc() -> u16{
     inc := 0;
-    if ppu_regs.ctrl & 0x04 == 0{
+    if .VRAMIncrement in ppu_regs.ctrl {
         inc = 1;     
     }else{
         inc = 32;     
@@ -304,19 +385,16 @@ get_vram_address_inc ::proc() -> u16{
     return u16(inc);
 }
 
-is_nmi_enabled ::proc() -> bool {
-    return ppu_regs.ctrl & 0x80 != 0;
-}
 
 get_name_tbl_address ::proc(self: ^Ppu2C02) -> u16 {
-    sel := ppu_regs.ctrl & 0x03;
+    sel := transmute(u8)ppu_regs.ctrl & 0x03;
     return name_tbl_base[sel];
 }
 
 get_sprite_pattern_tbl_address ::proc(self: ^Ppu2C02, index: ^u8) -> u16 {
     sel:u8 = 0;
     if get_sprite_size() == 16 {
-        sel = (ppu_regs.ctrl & 0x08) >> 3;
+        sel = (transmute(u8)ppu_regs.ctrl & 0x08) >> 3;
     }else{
         sel = 0x0001 & index^;
         index^ &= 0xFE;
@@ -324,67 +402,11 @@ get_sprite_pattern_tbl_address ::proc(self: ^Ppu2C02, index: ^u8) -> u16 {
     return pattern_tbl_base[sel];
 }
 
-get_sprite_size ::proc() -> u16 {
-    return (ppu_regs.ctrl & 0x20 == 0)? 16: 32;
+get_sprite_size ::proc() -> u8 {
+    return (transmute(u8)ppu_regs.ctrl & 0x20 == 0)? 16: 32;
 }
 
 get_bckgnd_pattern_tbl_address ::proc(self: ^Ppu2C02) -> u16 {
-    sel := u8(ppu_regs.ctrl & 0x08) >> 3
+    sel := u8(transmute(u8)ppu_regs.ctrl & 0x08) >> 3
     return pattern_tbl_base[sel];
-}
-
-is_background_enabled ::proc() -> bool {
-    return ppu_regs.mask & 0x08 != 0;
-}
-
-is_sprite_enabled ::proc() -> bool {
-    return ppu_regs.mask & 0x10 != 0;
-}
-
-get_greyscale ::proc() -> u8 {
-    return ppu_regs.mask & 0x01;
-}
-
-is_show_leftmost_bkgnd ::proc() -> bool {
-    return ppu_regs.mask & 0x02 != 0;
-}
-
-is_show_leftmost_sprites ::proc() -> bool {
-    return ppu_regs.mask & 0x04 != 0;
-}
-
-is_emphasize_red ::proc() -> bool {
-    return ppu_regs.mask & 0x20 != 0;
-}
-
-is_emphasize_green ::proc() -> bool {
-    return ppu_regs.mask & 0x40 != 0;
-}
-
-is_emphasize_blue ::proc() -> bool {
-    return ppu_regs.mask & 0x80 != 0;
-}
-
-set_overfow_flag ::proc() {
-    ppu_regs.status |= 0x20;
-}
-
-set_0_hit_flag::proc() {
-    ppu_regs.status |= 0x40;
-}
-
-set_vblank_flag ::proc() {
-    ppu_regs.status |= 0x80;
-}
-
-clear_overfow_flag ::proc() {
-    ppu_regs.status &= ~u8(0x20);
-}
-
-clear_0_hit_flag ::proc() {
-    ppu_regs.status &= ~u8(0x40);
-}
-
-clear_vblank_flag ::proc() {
-    ppu_regs.status &= ~u8(0x80);
 }

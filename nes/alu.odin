@@ -1,5 +1,9 @@
 package nes
 
+import "core:strings"
+import "core:strconv"
+import "core:fmt"
+
 Flags::enum {
     C = 0, Z , I , D, B, _, V, N
 }
@@ -25,7 +29,8 @@ Alu6502::struct {
 }
 
 Alu6502_Result::struct {
-    cycles: u8,
+    opcode: u8,
+    pc    : u16,
 }
 
 OpcodeLabel::enum(u8) {
@@ -41,7 +46,8 @@ OpcodeLabel::enum(u8) {
     CLC, SEC, CLI, SEI, CLD, SED, CLV,//Implemented
     NOP, //Implemented
     //Undocumented Opcodes
-    UND,
+    UND, SLO, RLA, SRE, RRA, SAX, AHX, LAX, DCP, ISC,
+    ANC, ALR, XAA, TAS, LAS, AXS, SHX, ARR, SHY
 }
 
 AddressingLabel::enum(u8) {
@@ -49,6 +55,7 @@ AddressingLabel::enum(u8) {
 }
 
 Opcode::struct {
+    txt: string,
     ol:OpcodeLabel,
     al:AddressingLabel,
     cycles: u8,
@@ -56,231 +63,298 @@ Opcode::struct {
 
 
 OPCODES:[16][16]Opcode = {
-    //    0              1             2             3             4             5             6             7             8             9             A             B             C             D             E             F
-    {{.BRK,.IMM,7},{.ORA,.IZX,6},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,3},{.ORA,.ZP0,3},{.ASL,.ZP0,5},{.UND,.IMP,5},{.PHP,.IMP,3},{.ORA,.IMM,2},{.ASL,.ACC,2},{.UND,.IMP,2},{.NOP,.IMP,4},{.ORA,.ABS,4},{.ASL,.ABS,6},{.UND,.IMP,6}},//0
-    {{.BPL,.REL,2},{.ORA,.IZY,5},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,4},{.ORA,.ZPX,4},{.ASL,.ZPX,6},{.UND,.IMP,6},{.CLC,.IMP,2},{.ORA,.ABY,4},{.NOP,.IMP,2},{.UND,.IMP,7},{.NOP,.IMP,4},{.ORA,.ABX,4},{.ASL,.ABX,7},{.UND,.IMP,7}},//1
-    {{.JSR,.ABS,6},{.AND,.IZX,6},{.UND,.IMP,2},{.UND,.IMP,8},{.BIT,.ZP0,3},{.AND,.ZP0,3},{.ROL,.ZP0,5},{.UND,.IMP,5},{.PLP,.IMP,4},{.AND,.IMM,2},{.ROL,.IMP,2},{.UND,.IMP,2},{.BIT,.ABS,4},{.AND,.ABS,4},{.ROL,.ABS,6},{.UND,.IMP,6}},//2
-    {{.BMI,.REL,2},{.AND,.IZY,5},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,4},{.AND,.ZPX,4},{.ROL,.ZPX,6},{.UND,.IMP,6},{.SEC,.IMP,2},{.AND,.ABY,4},{.NOP,.IMP,2},{.UND,.IMP,7},{.NOP,.IMP,4},{.AND,.ABX,4},{.ROL,.ABX,7},{.UND,.IMP,7}},//3
-    {{.RTI,.IMP,6},{.EOR,.IZX,6},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,3},{.EOR,.ZP0,3},{.LSR,.ZP0,5},{.UND,.IMP,5},{.PHA,.IMP,3},{.EOR,.IMM,2},{.LSR,.IMP,2},{.UND,.IMP,2},{.JMP,.ABS,3},{.EOR,.ABS,4},{.LSR,.ABS,6},{.UND,.IMP,6}},//4
-    {{.BVC,.REL,2},{.EOR,.IZY,5},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,4},{.EOR,.ZPX,4},{.LSR,.ZPX,6},{.UND,.IMP,6},{.CLI,.IMP,2},{.EOR,.ABY,4},{.NOP,.IMP,2},{.UND,.IMP,7},{.NOP,.IMP,4},{.EOR,.ABX,4},{.LSR,.ABX,7},{.UND,.IMP,7}},//5
-    {{.RTS,.IMP,6},{.ADC,.IZX,6},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,3},{.ADC,.ZP0,3},{.ROR,.ZP0,5},{.UND,.IMP,5},{.PLA,.IMP,4},{.ADC,.IMM,2},{.ROR,.IMP,2},{.UND,.IMP,2},{.JMP,.IND,5},{.ADC,.ABS,4},{.ROR,.ABS,6},{.UND,.IMP,6}},//6
-    {{.BVS,.REL,2},{.ADC,.IZY,5},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,4},{.ADC,.ZPX,4},{.ROR,.ZPX,6},{.UND,.IMP,6},{.SEI,.IMP,2},{.ADC,.ABY,4},{.NOP,.IMP,2},{.UND,.IMP,7},{.NOP,.IMP,4},{.ADC,.ABX,4},{.ROR,.ABX,7},{.UND,.IMP,7}},//7
-    {{.NOP,.IMP,2},{.STA,.IZX,6},{.NOP,.IMP,2},{.UND,.IMP,8},{.STY,.ZP0,3},{.STA,.ZP0,3},{.STX,.ZP0,3},{.UND,.IMP,3},{.DEY,.IMP,2},{.NOP,.IMP,2},{.TXA,.IMP,2},{.UND,.IMP,2},{.STY,.ABS,4},{.STA,.ABS,4},{.STX,.ABS,4},{.UND,.IMP,4}},//8
-    {{.BCC,.REL,2},{.STA,.IZY,6},{.UND,.IMP,2},{.UND,.IMP,6},{.STY,.ZPX,4},{.STA,.ZPX,4},{.STX,.ZPY,4},{.UND,.IMP,4},{.TYA,.IMP,2},{.STA,.ABY,5},{.TXS,.IMP,2},{.UND,.IMP,5},{.NOP,.IMP,5},{.STA,.ABX,5},{.UND,.IMP,5},{.UND,.IMP,5}},//9
-    {{.LDY,.IMM,2},{.LDA,.IZX,6},{.LDX,.IMP,2},{.UND,.IMP,6},{.LDY,.ZP0,3},{.LDA,.ZP0,3},{.LDX,.ZP0,3},{.UND,.IMP,3},{.TAY,.IMP,2},{.LDA,.IMM,2},{.TAX,.IMP,2},{.UND,.IMP,2},{.LDY,.ABS,4},{.LDA,.ABS,4},{.LDX,.ABS,4},{.UND,.IMP,4}},//A
-    {{.BCS,.REL,2},{.LDA,.IZY,5},{.UND,.IMP,2},{.UND,.IMP,5},{.LDY,.ZPX,4},{.LDA,.ZPX,4},{.LDX,.ZPY,4},{.UND,.IMP,4},{.CLV,.IMP,2},{.LDA,.ABY,4},{.TSX,.IMP,2},{.UND,.IMP,4},{.LDY,.ABX,4},{.LDA,.ABX,4},{.LDX,.ABY,4},{.UND,.IMP,4}},//B
-    {{.CPY,.IMM,2},{.CMP,.IZX,6},{.NOP,.IMP,2},{.UND,.IMP,8},{.CPY,.ZP0,3},{.CMP,.ZP0,3},{.DEC,.ZP0,5},{.UND,.IMP,5},{.INY,.IMP,2},{.CMP,.IMM,2},{.DEX,.IMP,2},{.UND,.IMP,2},{.CPY,.ABS,4},{.CMP,.ABS,4},{.DEC,.ABS,6},{.UND,.IMP,6}},//C
-    {{.BNE,.REL,2},{.CMP,.IZY,5},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,4},{.CMP,.ZPX,4},{.DEC,.ZPX,6},{.UND,.IMP,6},{.CLD,.IMP,2},{.CMP,.ABY,4},{.NOP,.IMP,2},{.UND,.IMP,7},{.NOP,.IMP,4},{.CMP,.ABX,4},{.DEC,.ABX,7},{.UND,.IMP,7}},//D
-    {{.CPX,.IMM,2},{.SBC,.IZX,6},{.NOP,.IMP,2},{.UND,.IMP,8},{.CPX,.ZP0,3},{.SBC,.ZP0,3},{.INC,.ZP0,5},{.UND,.IMP,5},{.INX,.IMP,2},{.SBC,.IMM,2},{.NOP,.IMP,2},{.SBC,.IMP,2},{.CPX,.ABS,4},{.SBC,.ABS,4},{.INC,.ABS,6},{.UND,.IMP,6}},//E
-    {{.BEQ,.REL,2},{.SBC,.IZY,5},{.UND,.IMP,2},{.UND,.IMP,8},{.NOP,.IMP,4},{.SBC,.ZPX,4},{.INC,.ZPX,6},{.UND,.IMP,6},{.SED,.IMP,2},{.SBC,.ABY,4},{.NOP,.IMP,2},{.UND,.IMP,7},{.NOP,.IMP,4},{.SBC,.ABX,4},{.INC,.ABX,7},{.UND,.IMP,7}},//F
+    //            0                       1                   2                   3                   4                   5                   6                   7                   8                   9                   A                   B                   C                   D                   E                   F
+    /*00*/{{"BRK",.BRK,.IMM,7},{"ORA",.ORA,.IZX,6},{"UND",.UND,.IMP,2},{"SLO",.SLO,.IZX,8},{"NOP",.NOP,.ZP0,3},{"ORA",.ORA,.ZP0,3},{"ASL",.ASL,.ZP0,5},{"SLO",.SLO,.ZP0,5},{"PHP",.PHP,.IMP,3},{"ORA",.ORA,.IMM,2},{"ASL",.ASL,.ACC,2},{"ANC",.ANC,.IMM,2},{"NOP",.NOP,.ABS,4},{"ORA",.ORA,.ABS,4},{"ASL",.ASL,.ABS,6},{"SLO",.SLO,.ABS,6}},//0
+    /*00*/{{"BPL",.BPL,.REL,2},{"ORA",.ORA,.IZY,5},{"UND",.UND,.IMP,2},{"SLO",.SLO,.IZY,8},{"NOP",.NOP,.ZPX,4},{"ORA",.ORA,.ZPX,4},{"ASL",.ASL,.ZPX,6},{"SLO",.SLO,.ZPX,6},{"CLC",.CLC,.IMP,2},{"ORA",.ORA,.ABY,4},{"NOP",.NOP,.IMP,2},{"SLO",.SLO,.ABY,7},{"NOP",.NOP,.ABX,4},{"ORA",.ORA,.ABX,4},{"ASL",.ASL,.ABX,7},{"SLO",.SLO,.ABX,7}},//1
+    /*20*/{{"JSR",.JSR,.ABS,6},{"AND",.AND,.IZX,6},{"UND",.UND,.IMP,2},{"RLA",.RLA,.IZX,8},{"BIT",.BIT,.ZP0,3},{"AND",.AND,.ZP0,3}, {"ROL",.ROL,.ZP0,5},{"RLA",.RLA,.ZP0,5},{"PLP",.PLP,.IMP,4},{"AND",.AND,.IMM,2},{"ROL",.ROL,.IMP,2},{"ANC",.ANC,.IMM,2},{"BIT",.BIT,.ABS,4},{"AND",.AND,.ABS,4},{"ROL",.ROL,.ABS,6},{"RLA",.RLA,.ABS,6}},//2
+    /*20*/{{"BMI",.BMI,.REL,2},{"AND",.AND,.IZY,5},{"UND",.UND,.IMP,2},{"RLA",.RLA,.IZY,8},{"NOP",.NOP,.ZPX,4},{"AND",.AND,.ZPX,4},{"ROL",.ROL,.ZPX,6},{"RLA",.RLA,.ZPX,6},{"SEC",.SEC,.IMP,2},{"AND",.AND,.ABY,4},{"NOP",.NOP,.IMP,2},{"RLA",.RLA,.ABY,7},{"NOP",.NOP,.ABX,4},{"AND",.AND,.ABX,4},{"ROL",.ROL,.ABX,7},{"RLA",.RLA,.ABX,7}},//3
+    /*40*/{{"RTI",.RTI,.IMP,6},{"EOR",.EOR,.IZX,6},{"UND",.UND,.IMP,2},{"SRE",.SRE,.IZX,8},{"NOP",.NOP,.ZP0,3},{"EOR",.EOR,.ZP0,3},{"LSR",.LSR,.ZP0,5},{"SRE",.SRE,.ZP0,5},{"PHA",.PHA,.IMP,3},{"EOR",.EOR,.IMM,2},{"LSR",.LSR,.IMP,2},{"ALR",.ALR,.IMM,2},{"JMP",.JMP,.ABS,3},{"EOR",.EOR,.ABS,4},{"LSR",.LSR,.ABS,6},{"SRE",.SRE,.ABS,6}},//4
+    /*40*/{{"BVC",.BVC,.REL,2},{"EOR",.EOR,.IZY,5},{"UND",.UND,.IMP,2},{"SRE",.SRE,.IZY,8},{"NOP",.NOP,.ZPX,4},{"EOR",.EOR,.ZPX,4},{"LSR",.LSR,.ZPX,6},{"SRE",.SRE,.ZPX,6},{"CLI",.CLI,.IMP,2},{"EOR",.EOR,.ABY,4},{"NOP",.NOP,.IMP,2},{"SRE",.SRE,.ABY,7},{"NOP",.NOP,.ABX,4},{"EOR",.EOR,.ABX,4},{"LSR",.LSR,.ABX,7},{"SRE",.SRE,.ABX,7}},//5
+    /*60*/{{"RTS",.RTS,.IMP,6},{"ADC",.ADC,.IZX,6},{"UND",.UND,.IMP,2},{"RRA",.RRA,.IZX,8},{"NOP",.NOP,.ZP0,3},{"ADC",.ADC,.ZP0,3},{"ROR",.ROR,.ZP0,5},{"RRA",.RRA,.ZP0,5},{"PLA",.PLA,.IMP,4},{"ADC",.ADC,.IMM,2},{"ROR",.ROR,.IMP,2},{"ARR",.ARR,.IMM,2},{"JMP",.JMP,.IND,5},{"ADC",.ADC,.ABS,4},{"ROR",.ROR,.ABS,6},{"RRA",.RRA,.ABS,6}},//6
+    /*60*/{{"BVS",.BVS,.REL,2},{"ADC",.ADC,.IZY,5},{"UND",.UND,.IMP,2},{"RRA",.RRA,.IZY,8},{"NOP",.NOP,.ZPX,4},{"ADC",.ADC,.ZPX,4},{"ROR",.ROR,.ZPX,6},{"RRA",.RRA,.ZPX,6},{"SEI",.SEI,.IMP,2},{"ADC",.ADC,.ABY,4},{"NOP",.NOP,.IMP,2},{"RRA",.RRA,.ABY,7},{"NOP",.NOP,.ABX,4},{"ADC",.ADC,.ABX,4},{"ROR",.ROR,.ABX,7},{"RRA",.RRA,.ABX,7}},//7
+    /*80*/{{"NOP",.NOP,.IMM,2},{"STA",.STA,.IZX,6},{"NOP",.NOP,.IMM,2},{"SAX",.SAX,.IZX,8},{"STY",.STY,.ZP0,3},{"STA",.STA,.ZP0,3},{"STX",.STX,.ZP0,3},{"SAX",.SAX,.ZP0,3},{"DEY",.DEY,.IMP,2},{"NOP",.NOP,.IMM,2},{"TXA",.TXA,.IMP,2},{"XAA",.XAA,.IMM,2},{"STY",.STY,.ABS,4},{"STA",.STA,.ABS,4},{"STX",.STX,.ABS,4},{"SAX",.SAX,.ABS,4}},//8
+    /*80*/{{"BCC",.BCC,.REL,2},{"STA",.STA,.IZY,6},{"UND",.UND,.IMP,2},{"AHX",.AHX,.IZY,6},{"STY",.STY,.ZPX,4},{"STA",.STA,.ZPX,4},{"STX",.STX,.ZPY,4},{"SAX",.SAX,.ZPY,4},{"TYA",.TYA,.IMP,2},{"STA",.STA,.ABY,5},{"TXS",.TXS,.IMP,2},{"TAS",.TAS,.ABY,5},{"NOP",.SHY,.ABX,5},{"STA",.STA,.ABX,5},{"SHY",.SHX,.ABY,5},{"AHX",.AHX,.ABY,5}},//9
+    /*A0*/{{"LDY",.LDY,.IMM,2},{"LDA",.LDA,.IZX,6},{"LDX",.LDX,.IMM,2},{"LAX",.LAX,.IZX,6},{"LDY",.LDY,.ZP0,3},{"LDA",.LDA,.ZP0,3},{"LDX",.LDX,.ZP0,3},{"LAX",.LAX,.ZP0,3},{"TAY",.TAY,.IMP,2},{"LDA",.LDA,.IMM,2},{"TAX",.TAX,.IMP,2},{"LAX",.LAX,.IMM,2},{"LDY",.LDY,.ABS,4},{"LDA",.LDA,.ABS,4},{"LDX",.LDX,.ABS,4},{"LAX",.LAX,.ABS,4}},//A
+    /*A0*/{{"BCS",.BCS,.REL,2},{"LDA",.LDA,.IZY,5},{"UND",.UND,.IMP,2},{"LAX",.LAX,.IZY,5},{"LDY",.LDY,.ZPX,4},{"LDA",.LDA,.ZPX,4},{"LDX",.LDX,.ZPY,4},{"LAX",.LAX,.ZPY,4},{"CLV",.CLV,.IMP,2},{"LDA",.LDA,.ABY,4},{"TSX",.TSX,.IMP,2},{"LAS",.LAS,.ABY,4},{"LDY",.LDY,.ABX,4},{"LDA",.LDA,.ABX,4},{"LDX",.LDX,.ABY,4},{"LAX",.LAX,.ABY,4}},//B
+    /*C0*/{{"CPY",.CPY,.IMM,2},{"CMP",.CMP,.IZX,6},{"NOP",.NOP,.IMM,2},{"DCP",.DCP,.IZX,8},{"CPY",.CPY,.ZP0,3},{"CMP",.CMP,.ZP0,3},{"DEC",.DEC,.ZP0,5},{"DCP",.DCP,.ZP0,5},{"INY",.INY,.IMP,2},{"CMP",.CMP,.IMM,2},{"DEX",.DEX,.IMP,2},{"AXS",.AXS,.IMM,2},{"CPY",.CPY,.ABS,4},{"CMP",.CMP,.ABS,4},{"DEC",.DEC,.ABS,6},{"DCP",.DCP,.ABS,6}},//C
+    /*C0*/{{"BNE",.BNE,.REL,2},{"CMP",.CMP,.IZY,5},{"UND",.UND,.IMP,2},{"DCP",.DCP,.IZY,8},{"NOP",.NOP,.ZPX,4},{"CMP",.CMP,.ZPX,4},{"DEC",.DEC,.ZPX,6},{"DCP",.DCP,.ZPX,6},{"CLD",.CLD,.IMP,2},{"CMP",.CMP,.ABY,4},{"NOP",.NOP,.IMP,2},{"DCP",.DCP,.ABY,7},{"NOP",.NOP,.ABX,4},{"CMP",.CMP,.ABX,4},{"DEC",.DEC,.ABX,7},{"DCP",.DCP,.ABX,7}},//D
+    /*E0*/{{"CPX",.CPX,.IMM,2},{"SBC",.SBC,.IZX,6},{"NOP",.NOP,.IMM,2},{"ISC",.ISC,.IZX,8},{"CPX",.CPX,.ZP0,3},{"SBC",.SBC,.ZP0,3},{"INC",.INC,.ZP0,5},{"ISC",.ISC,.ZP0,5},{"INX",.INX,.IMP,2},{"SBC",.SBC,.IMM,2},{"NOP",.NOP,.IMP,2},{"SBC",.SBC,.IMM,2},{"CPX",.CPX,.ABS,4},{"SBC",.SBC,.ABS,4},{"INC",.INC,.ABS,6},{"ISC",.ISC,.ABS,6}},//E
+    /*E0*/{{"BEQ",.BEQ,.REL,2},{"SBC",.SBC,.IZY,5},{"UND",.UND,.IMP,2},{"ISC",.ISC,.IZY,8},{"NOP",.NOP,.ZPX,4},{"SBC",.SBC,.ZPX,4},{"INC",.INC,.ZPX,6},{"ISC",.ISC,.ZPX,6},{"SED",.SED,.IMP,2},{"SBC",.SBC,.ABY,4},{"NOP",.NOP,.IMP,2},{"ISC",.ISC,.ABY,7},{"NOP",.NOP,.ABX,4},{"SBC",.SBC,.ABX,4},{"INC",.INC,.ABX,7},{"ISC",.ISC,.ABX,7}},//F
 };
 
 
-alu_read_u8_arg::proc (
+alu_read_u8_arg ::proc (
     self: ^Alu6502, 
-    bus: ^Bus, 
-    address: u16
+    bus: ^Bus
 ) -> u8 {
-    data := bus_read_u8(bus, address);
-    self.regs.PC = address + 1;
+    data := bus_read_u8(bus, self.regs.PC);
+    self.regs.PC += 1;
     return data;
 }
 
-alu_read_u16_arg::proc (
+alu_read_u16_arg ::proc (
     self: ^Alu6502, 
-    bus: ^Bus, 
-    address: u16
+    bus: ^Bus
 ) -> u16 {
-    data := bus_read_u16(bus, address);
-    self.regs.PC = address + 2;
+    data := bus_read_u16(bus, self.regs.PC);
+    self.regs.PC += 2;
     return data;
 }
 
-alu_pop::proc (
+alu_pop ::proc (
     self: ^Alu6502, 
     bus: ^Bus
 ) -> u8{
-    assert(self.regs.SP < 0xff);
-    self.regs.SP += 1;
-    stack_ptr:u16 = u16(0x100) + u16(self.regs.SP);
-    return bus_read_u8(bus, stack_ptr);
+    if self.regs.SP < 0xff {
+        self.regs.SP += 1;
+        stack_ptr:u16 = u16(0x100) + u16(self.regs.SP);
+        return bus_read_u8(bus, stack_ptr);
+    }
+    return 0;
 }
 
-alu_push::proc (
+alu_push ::proc (
     self: ^Alu6502, 
     bus: ^Bus, 
     data: u8
 ){
-    assert(self.regs.SP > 0x00);
-    stack_ptr:u16 = u16(0x100) + u16(self.regs.SP);
-    bus_write(bus, stack_ptr, data);
-    self.regs.SP -= 1;
+    if self.regs.SP > 0x00 {
+        stack_ptr:u16 = u16(0x100) + u16(self.regs.SP);
+        bus_write(bus, stack_ptr, data);
+        self.regs.SP -= 1;
+        //fmt.printf("%X pushed %X\n", data, self.regs.SP);
+    }
 }
 
-alu_push_pc::proc (self: ^Alu6502, bus: ^Bus) {
-    lo:u8 = u8((self.regs.PC >> 8) & 0x00FF);
-    hi:u8 = u8(self.regs.PC & 0x00FF);
-    alu_push(self, bus, lo);
+alu_push_pc ::proc (self: ^Alu6502, bus: ^Bus) {
+    hi := u8((self.regs.PC >> 8) & 0x00FF);
+    lo := u8(self.regs.PC & 0x00FF);
     alu_push(self, bus, hi);
+    alu_push(self, bus, lo);
+    //fmt.println(self.regs.PC);
 }
 
-alu_pop_pc::proc (self: ^Alu6502, bus: ^Bus) {
+alu_pop_pc ::proc (self: ^Alu6502, bus: ^Bus) {
     lo := alu_pop(self, bus);
     hi := alu_pop(self, bus);
-    self.regs.PC = u16((hi << 8) | lo);
+    self.regs.PC = u16(hi) << 8 | u16(lo);
+    //fmt.println(self.regs.PC);
 }
 
 
-alu_set_flag::proc (self: ^Alu6502, flag: Flags) {
+alu_set_flag ::proc (self: ^Alu6502, flag: Flags) {
     self.regs.SR |= u8(1 << u8(flag));
 }
 
-alu_clear_flag::proc (self: ^Alu6502, flag: Flags) {
+alu_clear_flag ::proc (self: ^Alu6502, flag: Flags) {
     self.regs.SR &= ~u8(1 << u8(flag));
 }
 
-alu_is_flag_set::proc (self: ^Alu6502, flag: Flags) -> bool {
+alu_is_flag_set ::proc (self: ^Alu6502, flag: Flags) -> bool {
     return (self.regs.SR & u8(1 << u8(flag))) != 0;
 }
 
-alu_is_flag_clear::proc (self: ^Alu6502, flag: Flags) -> bool{
+alu_is_flag_clear ::proc (self: ^Alu6502, flag: Flags) -> bool{
     return (self.regs.SR & u8(1 << u8(flag))) == 0;
 }
 
-alu_step::proc (
+alu_step ::proc (
     self: ^Alu6502, 
     bus: ^Bus
-) -> Alu6502_Result {
-    byte := alu_read_u8_arg(self, bus, self.regs.PC);
-    row := (byte & 0xF0) >> 4;
-    col := (byte & 0x0F);
+) -> (debug_info:string) {
+    pc := self.regs.PC;
+    value := alu_read_u8_arg(self, bus);
+    row := (value & 0xF0) >> 4;
+    col := (value & 0x0F);
     opcode := OPCODES[row][col];
     src, dest: Operand;
     decode_operand(self, opcode.al, bus, &src);
-    decode_operation(self, opcode.ol, bus, &src, &dest);
-    return Alu6502_Result{cycles = opcode.cycles};
+    debug_info = decode_operation(self, opcode.ol, bus, &src, &dest);
+    debug_info = fmt.tprintf("%4X %s %s\n", pc, opcode.txt, debug_info);
+    return debug_info;
 }
 
 //@(private)
-decode_operand::proc (
+decode_operand ::proc (
     self: ^Alu6502, 
     mode: AddressingLabel, 
     bus: ^Bus, 
     opr: ^Operand
-) {
+) -> (size: u8){
     switch(mode){
         case .ABS:
-            absolute(self, bus, opr)
+            size = absolute(self, bus, opr)
         case .ABX:
-            absolute_indexed_x(self, bus, opr)
+            size = absolute_indexed_x(self, bus, opr)
         case .ABY:
-            absolute_indexed_y(self, bus, opr)
+            size = absolute_indexed_y(self, bus, opr)
         case .IMM:
-            immediate(self, bus, opr);
+            size = immediate(self, bus, opr);
         case .IMP,.ACC:
-            implied(self, bus, opr);
+            size = implied(self, bus, opr);
         case .IND:
-            indirect(self, bus, opr)
+            size = indirect(self, bus, opr)
         case .IZX:
-            indirect_indexed_x(self, bus, opr)
+            size = indirect_indexed_x(self, bus, opr)
         case .IZY:
-            indirect_indexed_y(self, bus, opr)
+            size = indirect_indexed_y(self, bus, opr)
         case .REL:
-            relative(self, bus, opr)
+            size = relative(self, bus, opr)
         case .ZP0:
-            zero_page(self, bus, opr)
+            size = zero_page(self, bus, opr)
         case .ZPX:
-            zero_page_indexed_x(self, bus, opr)
+            size = zero_page_indexed_x(self, bus, opr)
         case .ZPY:
-            zero_page_indexed_y(self, bus, opr)
+            size = zero_page_indexed_y(self, bus, opr)
     }
+    return size;
 }
 
 @(private)
-implied::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
+implied ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size:u8){
     opr^ = &self.regs.A;
+    return 1;
 }
 
 @(private)
-immediate::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
+immediate ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size:u8) {
+    arg := alu_read_u8_arg(self, bus);
     opr^ = arg;
+    return 2;
 }
 
 @(private)
-relative::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg := alu_read_u8_arg(self, bus, self.regs.PC);
-    val := (0x80 & arg != 0)? -1 * int(~(arg - 1)) : int(arg);
-    eaddr:int = int(self.regs.PC) + val;
+relative ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size:u8){
+    arg := alu_read_u8_arg(self, bus);
+    //val := (0x80 & arg != 0)? -1 * int(~(arg - 1)) : int(arg);
+    eaddr:int = int(self.regs.PC) + int(i8(arg));
     opr^ = u16(eaddr);
+    return 2;
 }
 
 @(private)
-zero_page_indexed_x::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
-    eaddr:u16 = u16(arg + self.regs.X) & 0x00FF;
+zero_page_indexed_x ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size: u8){
+    arg := alu_read_u8_arg(self, bus);
+    eaddr := u16(arg + self.regs.X) & 0x00FF;
     opr^ = eaddr;
+    return 2;
 }
 
 @(private)
-zero_page_indexed_y::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
+zero_page_indexed_y ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size:u8) {
+    arg:u8 = alu_read_u8_arg(self, bus);
     eaddr:u16 = u16(arg + self.regs.Y) & 0x00FF;
     opr^ = eaddr;
+    return 2;
 }
 
 @(private)
-absolute::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u16 = alu_read_u16_arg(self, bus, self.regs.PC);
+absolute ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size: u8){
+    arg := alu_read_u16_arg(self, bus);
     opr^ = arg;
+    return 3;
 }
 
 @(private)
-absolute_indexed_x::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u16 = alu_read_u16_arg(self, bus, self.regs.PC);
-    eaddr:u16 = u16(arg) + u16(self.regs.X);
+absolute_indexed_x ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size: u8){
+    arg := alu_read_u16_arg(self, bus);
+    eaddr := u16(arg) + u16(self.regs.X);
     opr^ = eaddr;
+    return 3;
 }
 
 @(private)
-absolute_indexed_y::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u16 = alu_read_u16_arg(self, bus, self.regs.PC);
-    eaddr:u16 = u16(arg) + u16(self.regs.Y);
+absolute_indexed_y ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size: u8){
+    arg := alu_read_u16_arg(self, bus);
+    eaddr := u16(arg) + u16(self.regs.Y);
     opr^ = eaddr;
+    return 3;
 }
 
 @(private)
-indirect_indexed_x::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
-    temp:u16 = (u16(arg) + u16(self.regs.X)) & 0x00FF;
-    eadrr_lo:u8 = bus_read_u8(bus, temp);
-    temp = (u16(arg) + u16(self.regs.X + 1)) & 0x00FF;
-    eadrr_hi:u8 = bus_read_u8(bus, temp);
+indirect_indexed_x ::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size: u8){
+    arg := alu_read_u8_arg(self, bus);
+    temp := u16(arg + self.regs.X) & 0x00FF;
+    eadrr_lo := bus_read_u8(bus, temp);
+    temp = u16(arg + self.regs.X + 1) & 0x00FF;
+    eadrr_hi := bus_read_u8(bus, temp);
     eaddr := u16(eadrr_hi) << 8 | u16(eadrr_lo);
     opr^ = eaddr;
+    return 2;
 }
 
 @(private)
-indirect_indexed_y::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
-    eadrr_lo:u8 = bus_read_u8(bus, u16(arg));
+indirect_indexed_y::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size: u8){
+    arg := alu_read_u8_arg(self, bus);
+    eadrr_lo := bus_read_u8(bus, u16(arg));
     temp := u16(arg + 1) & 0x00FF;
-    eadrr_hi:u8 = bus_read_u8(bus, temp);
+    eadrr_hi := bus_read_u8(bus, temp);
     eaddr := (u16(eadrr_hi) << 8 | u16(eadrr_lo)) + u16(self.regs.Y);
     opr^ = eaddr;
+    return 2;
 }
 
 @(private)
-indirect::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u32 = u32(alu_read_u16_arg(self, bus, self.regs.PC));
+indirect::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size: u8){
+    arg := u32(alu_read_u16_arg(self, bus));
     opr^ = arg;
+    return 3;
 }
 
 @(private)
-zero_page::proc (self: ^Alu6502, bus: ^Bus, opr: ^Operand) {
-    arg:u8 = alu_read_u8_arg(self, bus, self.regs.PC);
-    eaddr:u16 = u16(arg) & 0x00FF;
+zero_page::proc (
+    self: ^Alu6502, 
+    bus: ^Bus, 
+    opr: ^Operand
+) -> (size: u8){
+    arg := alu_read_u8_arg(self, bus);
+    eaddr := u16(arg) & 0x00FF;
     opr^ = eaddr;
+    return 2;
 }
 
 //@(private)
@@ -290,96 +364,102 @@ decode_operation::proc (
     bus: ^Bus, 
     src: ^Operand, 
     dest: ^Operand
-) {
+) -> (debug_info: string) {
     #partial switch op {
         case .PHP:
             alu_set_flag(self, .B);
             src^ = &self.regs.SR
             fallthrough
         case .PHA:
-            alu_stack(src, self, bus, .PUSH);
+            debug_info = alu_stack(src, self, bus, .PUSH);
         case .PLP:
             src^ = &self.regs.SR
-            alu_stack(src, self, bus, .PULL);
+            debug_info = alu_stack(src, self, bus, .PULL);
         case .PLA:
-            alu_stack(src, self, bus, .PULL);//src has been set to A inside imp addressing mode
-            A, ok := src.(^u8); assert(ok);
-            if A^ == 0 {
+            
+            debug_info = alu_stack(src, self, bus, .PULL);//src has been set to A inside imp addressing mode
+            //fmt.println(self.regs.A);
+            
+            if self.regs.A == 0 {
                 alu_set_flag(self, .Z);
+                //fmt.println(alu_is_flag_set(self, .Z));
             }else{
                 alu_clear_flag(self, .Z);
             }
 
-            if A^ & 0x80 == 0 {
-                alu_clear_flag(self, .Z);
+            if self.regs.A & 0x80 == 0 {
+                alu_clear_flag(self, .N);
             }else{
-                alu_set_flag(self, .Z);
+                alu_set_flag(self, .N);
             }
         case .TAX:
             dest^ = &self.regs.X
-            alu_transfer(src, dest, self);
+            debug_info = alu_transfer(src, dest, self, false);
         case .TXA:
             src^ = &self.regs.X
             dest^ = &self.regs.A
-            alu_transfer(src, dest, self);
+            debug_info = alu_transfer(src, dest, self, false);
         case .TAY:
             dest^ = &self.regs.Y
-            alu_transfer(src, dest, self);
+            debug_info = alu_transfer(src, dest, self, false);
         case .TYA:
             src^ = &self.regs.Y;
             dest^ = &self.regs.A;
-            alu_transfer(src, dest, self);
+            debug_info = alu_transfer(src, dest, self, false);
         case .TXS:
             src^ = &self.regs.X;
             dest^ = &self.regs.SP;
-            alu_transfer(src, dest, self);
+            debug_info = alu_transfer(src, dest, self, true);
         case .TSX:
             src^ = &self.regs.SP;
             dest^ = &self.regs.X;
-            alu_transfer(src, dest, self);
+            debug_info = alu_transfer(src, dest, self, false);
         case .LDA:
             dest^ = &self.regs.A;
-            alu_load(src, dest, self, bus);
+            debug_info = alu_load(src, dest, self, bus);
         case .STA:
             dest^ = &self.regs.A;
-            alu_store(dest, src, bus);
+            debug_info = alu_store(dest, src, bus);
+            //assert(false);
         case .LDX:
             dest^ = &self.regs.X;
-            alu_load(src, dest, self, bus);
+            debug_info = alu_load(src, dest, self, bus);
         case .STX:
             dest^ = &self.regs.X;
-            alu_store(dest, src, bus);
+            debug_info = alu_store(dest, src, bus);
         case .LDY:
             dest^ = &self.regs.Y;
-            alu_load(src, dest, self, bus);
+            debug_info = alu_load(src, dest, self, bus);
         case .STY:
             dest^ = &self.regs.Y;
-            alu_store(dest, src, bus);
+            debug_info = alu_store(dest, src, bus);
         case .CMP:
             dest^ = &self.regs.A;
-            alu_compare(src, dest, self, bus);
+            debug_info = alu_compare(src, dest, self, bus);
         case .CPX:
             dest^ = &self.regs.X;
-            alu_compare(src, dest, self, bus);
+            debug_info = alu_compare(src, dest, self, bus);
         case .CPY:
             dest^ = &self.regs.Y;
-            alu_compare(src, dest, self, bus);
+            debug_info = alu_compare(src, dest, self, bus);
         case .BCC:
-            alu_branch(src, self, .C, false);
+            debug_info = alu_branch(src, self, .C, false);
         case .BCS:
-            alu_branch(src, self, .C, true);
+            debug_info = alu_branch(src, self, .C, true);
         case .BEQ:
-            alu_branch(src, self, .Z, true);
+            debug_info = alu_branch(src, self, .Z, true);
         case .BNE:
-            alu_branch(src, self, .Z, false);
+            //fmt.println(alu_is_flag_clear(self, .Z));
+            //fmt.println(alu_is_flag_set(self, .Z));
+            debug_info = alu_branch(src, self, .Z, false);
         case .BPL:
-            alu_branch(src, self, .N, false);
+            debug_info = alu_branch(src, self, .N, false);
         case .BMI:
-            alu_branch(src, self, .N, true);
+            debug_info = alu_branch(src, self, .N, true);
         case .BVC:
-            alu_branch(src, self, .V, false);
+            debug_info = alu_branch(src, self, .V, false);
         case .BVS:
-            alu_branch(src, self, .V, true);
+            debug_info = alu_branch(src, self, .V, true);
         case .CLC:
             alu_clear_flag(self, .C);
         case .SEC:
@@ -397,17 +477,17 @@ decode_operation::proc (
         case .NOP:
             //Do nothing
         case .JMP:
-            alu_jump(src, self, .JMP, bus);
+            debug_info = alu_jump(src, self, .JMP, bus);
         case .JSR:
-            alu_jump(src, self, .JSR, bus);
+            debug_info = alu_jump(src, self, .JSR, bus);
         case .RTS:  
-            alu_jump(src, self, .RTS, bus);
+            debug_info = alu_jump(src, self, .RTS, bus);
         case .BRK:
-            alu_jump(src, self, .BRK, bus);
+            debug_info = alu_jump(src, self, .BRK, bus);
         case .RTI:
-            alu_jump(src, self, .RTI, bus);
+            debug_info = alu_jump(src, self, .RTI, bus);
         case .ADC:
-            alu_arithmetic(src, self, bus);
+            debug_info = alu_arithmetic(src, self, bus);
         case .SBC:
             #partial switch choice in src {
                 case u8:
@@ -418,45 +498,46 @@ decode_operation::proc (
                     data := bus_read_u8(bus, choice);
                     data = ~data;
                     src^ = data;
-                case:
+                case ^u8:
                     assert(false);
             }
-            alu_arithmetic(src, self, bus);
+            debug_info = alu_arithmetic(src, self, bus);
         case .INC:
-            alu_inc_or_dec(src, self, .INC, bus);
+            debug_info = alu_inc_or_dec(src, self, .INC, bus);
         case .INX:
             src^ = &self.regs.X;
-            alu_inc_or_dec(src, self, .INC, bus);
+            debug_info = alu_inc_or_dec(src, self, .INC, bus);
         case .INY:
             src^ = &self.regs.Y;
-            alu_inc_or_dec(src, self, .INC, bus);
+            debug_info = alu_inc_or_dec(src, self, .INC, bus);
         case .DEC:
-            alu_inc_or_dec(src, self, .DEC, bus);
+            debug_info = alu_inc_or_dec(src, self, .DEC, bus);
         case .DEX:
             src^ = &self.regs.X;
-            alu_inc_or_dec(src, self, .DEC, bus);
+            debug_info = alu_inc_or_dec(src, self, .DEC, bus);
         case .DEY:
             src^ = &self.regs.Y;
-            alu_inc_or_dec(src, self, .DEC, bus);
+            debug_info = alu_inc_or_dec(src, self, .DEC, bus);
         case .ASL:
-            alu_shift(src, .LEFT, self, bus);
+            debug_info = alu_shift(src, .LEFT, self, bus);
         case .LSR:
-            alu_shift(src, .RIGHT, self, bus);
+            debug_info = alu_shift(src, .RIGHT, self, bus);
         case .ROL:
-            alu_rotate(src, .LEFT, self, bus);
+            debug_info = alu_rotate(src, .LEFT, self, bus);
         case .ROR:
-            alu_rotate(src, .RIGHT, self, bus);
+            debug_info = alu_rotate(src, .RIGHT, self, bus);
         case .AND:
-            alu_bitwise(src, self, .AND, bus);
+            debug_info = alu_bitwise(src, self, .AND, bus);
         case .ORA:
-            alu_bitwise(src, self, .OR, bus);
+            debug_info = alu_bitwise(src, self, .OR, bus);
         case .EOR:
-            alu_bitwise(src, self, .XOR, bus);
+            debug_info = alu_bitwise(src, self, .XOR, bus);
         case .BIT:
-            alu_bitwise(src, self, .BIT, bus);
-        case .UND:
-            assert(false);
+            debug_info = alu_bitwise(src, self, .BIT, bus);
+        case://uNDOCUMENTED CODES
+            //assert(false);
     }
+    return debug_info;
 }
 
 
@@ -465,10 +546,20 @@ alu_load::proc (
     dest: ^Operand, 
     alu: ^Alu6502, 
     bus: ^Bus
-) {
-    srcaddr, ok1 := src.(u16); assert(ok1);
-    result := bus_read_u8(bus, srcaddr);
-    destaddrr, ok2 := dest.(^u8); assert(ok2);
+) -> (debug_info: string){
+    result:u8;
+    #partial switch choice in src {
+        case u8:
+            result = choice;
+            debug_info = fmt.tprintf(" #%2X", choice);
+        case u16:
+            result = bus_read_u8(bus, choice);
+            debug_info = fmt.tprintf(" [%4X]", choice);
+        case:
+            assert(false);
+    }
+    
+    destaddrr, ok := dest.(^u8); assert(ok);
     destaddrr^ = result;
 
     if result == 0 {
@@ -482,48 +573,72 @@ alu_load::proc (
     }else{
         alu_set_flag(alu, .N);
     }
+    return debug_info;
 }
 
-alu_store::proc (src: ^Operand, dest: ^Operand, bus: ^Bus) {
+alu_store::proc (
+    src: ^Operand, 
+    dest: ^Operand, 
+    bus: ^Bus
+) -> (debug_info: string){
     srcaddr, ok1 := src.(^u8); assert(ok1);
     data := srcaddr^;
     destaddrr, ok2 := dest.(u16); assert(ok2);
     bus_write(bus, destaddrr, data);
+    dummy := bus_read_u8(bus, destaddrr);
+    debug_info = fmt.tprintf(" [%4X](%2X)", destaddrr, dummy);
+    return debug_info;
 }
 
-alu_transfer::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502) {
+alu_transfer::proc (
+    src: ^Operand, 
+    dest: ^Operand, 
+    alu: ^Alu6502,
+    naked: bool
+) ->(debug_info: string) {
     srcaddr, ok1 := src.(^u8); assert(ok1);
     destaddrr, ok2 := dest.(^u8); assert(ok2);
     result := srcaddr^;
     destaddrr^ = result;
 
-    if result == 0 {
-        alu_set_flag(alu, .Z);
-    }else{
-        alu_clear_flag(alu, .Z);
-    }
+    if !naked {
+        if result == 0 {
+            alu_set_flag(alu, .Z);
+        }else{
+            alu_clear_flag(alu, .Z);
+        }
     
-    if result & 0x80 == 0 {
-        alu_clear_flag(alu, .N);
-    }else{
-        alu_set_flag(alu, .N);
+        if result & 0x80 == 0 {
+            alu_clear_flag(alu, .N);
+        }else{
+            alu_set_flag(alu, .N);
+        }
     }
+    debug_info = fmt.tprintf("(%2X);", result);    
+    return debug_info;
 }
 
-alu_arithmetic::proc (src: ^Operand, alu: ^Alu6502, bus: ^Bus) {
+alu_arithmetic::proc (
+    src: ^Operand, 
+    alu: ^Alu6502, 
+    bus: ^Bus
+) -> (debug_info: string) {
     data:u8;
     #partial switch choice in src {
         case u8:
+            debug_info = fmt.tprintf(" #%2X", choice);
             data = choice;
         case u16:
             data = bus_read_u8(bus, choice);
+            debug_info = fmt.tprintf(" [%4X]", choice);
         case:
             assert(false);
     }
-    carry := alu_is_flag_set(alu, .C)? 1 : 0;
-    result:int = int(alu.regs.A) + int(data) + carry;
-    alu.regs.A = u8(result & 0x000000FF);
-    if result & 0x100 != 0 {
+    carry_in := alu_is_flag_set(alu, .C)? 1 : 0;
+    result:int = int(i8(alu.regs.A)) + int(i8(data)) + carry_in;
+    carry_out := int(alu.regs.A) + int(data) + carry_in;
+
+    if carry_out > 255 {
         alu_set_flag(alu, .C);
     }else{
         alu_clear_flag(alu, .C);
@@ -536,7 +651,11 @@ alu_arithmetic::proc (src: ^Operand, alu: ^Alu6502, bus: ^Bus) {
     }
     
     overflow := (result~int(alu.regs.A)) & (result~int(data));
-    if overflow & 0x80 != 0 {
+    alu.regs.A = u8(result & 0x000000FF);
+    debug_info = fmt.tprintf("%s (A = %X, carry=%b)", 
+    debug_info, alu.regs.A, (carry_out > 255));
+
+    if overflow & 0x80 != 0{
         alu_set_flag(alu, .V);
     }else{
         alu_clear_flag(alu, .V);
@@ -548,19 +667,28 @@ alu_arithmetic::proc (src: ^Operand, alu: ^Alu6502, bus: ^Bus) {
     else{
         alu_set_flag(alu,.N);
     }
+    return debug_info;
 }
 
-alu_compare::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^Bus) {
+alu_compare::proc (
+    src: ^Operand, 
+    dest: ^Operand, 
+    alu: ^Alu6502, 
+    bus: ^Bus
+) -> (debug_info: string) {
     memory:u8;
+    register, ok := dest.(^u8); assert(ok);
     #partial switch choice in src {
         case u8:
             memory = choice;
+            debug_info = fmt.tprintf(" #%2X", choice);
         case u16:
             memory = bus_read_u8(bus, choice);
+            debug_info = fmt.tprintf(" [%4X]", choice);
         case:
             assert(false);
     }
-    register, ok := dest.(^u8); assert(ok);
+    
     result := int(register^) - int(memory);
 
     if result == 0 {
@@ -580,26 +708,41 @@ alu_compare::proc (src: ^Operand, dest: ^Operand, alu: ^Alu6502, bus: ^Bus) {
     }else{
         alu_set_flag(alu, .N);
     }
+    return debug_info;
 }
 
-alu_branch::proc (src: ^Operand, alu: ^Alu6502, flag: Flags, cond: bool) {
-    if cond && alu_is_flag_set(alu, flag) || 
-    !cond && alu_is_flag_clear(alu, flag){
-        eaddr, ok := src.(u16); assert(ok);
+alu_branch::proc (
+    src: ^Operand, 
+    alu: ^Alu6502, 
+    flag: Flags, 
+    cond: bool
+) -> (debug_info: string) {
+    eaddr, ok := src.(u16); assert(ok);
+    debug_info = fmt.tprintf(" [%4X]", eaddr);
+    if (cond && alu_is_flag_set(alu, flag)) || 
+    (!cond && alu_is_flag_clear(alu, flag)){
         alu.regs.PC = eaddr;
     }
+    return debug_info;
 }
 
-alu_inc_or_dec::proc (src: ^Operand, alu: ^Alu6502, option: enum(int){INC=1,DEC=-1}, bus: ^Bus) {
-    result:int;
+alu_inc_or_dec::proc (
+    src: ^Operand, 
+    alu: ^Alu6502, 
+    option: enum(int){INC=1,DEC=-1}, 
+    bus: ^Bus
+) -> (debug_info: string) {
+    result:u8;
     #partial switch eaddr in src {
         case u16:
             data := bus_read_u8(bus, eaddr);
-            result = int(data) + int(option);
-            bus_write(bus, eaddr, u8(result));
+            result = u8(int(data) + int(option));
+            bus_write(bus, eaddr, result);
+            debug_info = fmt.tprintf(" [%4X](%2X)", eaddr, result);
         case ^u8:
-            result = int(eaddr^) + int(option);
-            eaddr^ = u8(result);
+            result = u8(int(eaddr^) + int(option));
+            eaddr^ = result;
+            debug_info = fmt.tprintf("(%2X);", result);
         case:
             assert(false);
     }
@@ -614,6 +757,7 @@ alu_inc_or_dec::proc (src: ^Operand, alu: ^Alu6502, option: enum(int){INC=1,DEC=
     }else{
         alu_set_flag(alu, .N);
     }
+    return debug_info;
 }
 
 ShiftDirection::enum{
@@ -621,7 +765,12 @@ ShiftDirection::enum{
     LEFT,
 }
 
-alu_shift::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^Bus) {
+alu_shift::proc (
+    src: ^Operand, 
+    dir: ShiftDirection, 
+    alu: ^Alu6502, 
+    bus: ^Bus
+) -> (debug_info: string) {
     carry:bool;
     result:u8;
     data:u8;
@@ -644,9 +793,11 @@ alu_shift::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^Bus) {
     eaddr, ok := src.(^u8);
     if ok {
         eaddr^ = result;
+        //debug_info = fmt.tprintf(" r(%X) = (%X);", data, result);
     }else{
         eaddr := src.(u16);
         bus_write(bus, eaddr, result);
+        debug_info = fmt.tprintf(" [%4X]", eaddr);
     }
 
     if carry {
@@ -666,9 +817,16 @@ alu_shift::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^Bus) {
     }else{
         alu_set_flag(alu, .N);
     }
+    
+    return debug_info;
 }
 
-alu_rotate::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^Bus) {
+alu_rotate::proc (
+    src: ^Operand, 
+    dir: ShiftDirection, 
+    alu: ^Alu6502, 
+    bus: ^Bus
+) -> (debug_info: string) {
     old_carry:bool = alu_is_flag_set(alu, .C);
     new_carry:bool;
     result:u8;
@@ -692,9 +850,11 @@ alu_rotate::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^Bus) 
     eaddr, ok := src.(^u8);
     if ok {
         eaddr^ = result;
+        //debug_info = fmt.tprintf(" r(%X) = (%X);", data, result);
     }else{
         eaddr := src.(u16);
         bus_write(bus, eaddr, result);
+        debug_info = fmt.tprintf(" [%4X]", eaddr);
     }
 
     if new_carry {
@@ -714,6 +874,7 @@ alu_rotate::proc (src: ^Operand, dir: ShiftDirection, alu: ^Alu6502, bus: ^Bus) 
     }else{
         alu_set_flag(alu, .N);
     }
+    return debug_info;
 }
 
 BitwiseOp::enum{
@@ -723,13 +884,20 @@ BitwiseOp::enum{
     BIT,
 }
 
-alu_bitwise::proc (src: ^Operand, alu: ^Alu6502, op: BitwiseOp, bus: ^Bus) {
+alu_bitwise::proc (
+    src: ^Operand, 
+    alu: ^Alu6502, 
+    op: BitwiseOp, 
+    bus: ^Bus
+) -> (debug_info: string) {
     data, result:u8;
     #partial switch eaddr in src {
         case u8:
             data = eaddr
+            debug_info = fmt.tprintf(" #%2X", data);
         case u16:
             data = bus_read_u8(bus, eaddr);
+            debug_info = fmt.tprintf(" [%4X](%2X)(%2X)", eaddr, data, alu.regs.A);
         case:
             assert(false);
     }
@@ -747,7 +915,7 @@ alu_bitwise::proc (src: ^Operand, alu: ^Alu6502, op: BitwiseOp, bus: ^Bus) {
             result = alu.regs.A ~  data;
             alu.regs.A = result;
     }
-
+    //debug_info = fmt.tprintf("%s %X;", debug_info, result);
     if result == 0 {
         alu_set_flag(alu, .Z);
     }else{
@@ -759,6 +927,7 @@ alu_bitwise::proc (src: ^Operand, alu: ^Alu6502, op: BitwiseOp, bus: ^Bus) {
             alu_clear_flag(alu, .N);
         }else{
             alu_set_flag(alu, .N);
+            debug_info = fmt.tprintf("%s N flag Set", debug_info);
         }
 
         if data & 0x40 == 0 {
@@ -773,6 +942,7 @@ alu_bitwise::proc (src: ^Operand, alu: ^Alu6502, op: BitwiseOp, bus: ^Bus) {
             alu_set_flag(alu, .N);
         }
     }
+    return debug_info;
 }
 
 JumpOp::enum{
@@ -783,44 +953,62 @@ JumpOp::enum{
     RTI,
 }
 
-alu_jump::proc (src: ^Operand, alu: ^Alu6502, op: JumpOp, bus: ^Bus) {
+alu_jump::proc (
+    src: ^Operand, 
+    alu: ^Alu6502, 
+    op: JumpOp, 
+    bus: ^Bus
+) -> (debug_info: string) {
     pc:u16;
     #partial switch eaddr in src {
         case u16:
             pc = eaddr;
+            debug_info = fmt.tprintf(" [%4X](%X)", pc, alu.regs.PC);
         case u32:
             pc = bus_read_u16(bus, u16(eaddr));
+            debug_info = fmt.tprintf(" [[%4X]](%X)", u16(eaddr), pc);
         case:
-            assert(false);
     }
 
     switch op {
         case .BRK:
             alu_set_flag(alu, .B);
-            alu_push(alu, bus, alu.regs.SR);
+            //alu_push(alu, bus, alu.regs.SR);
             alu_set_flag(alu, .I);
-            fallthrough;
+            //alu_push_pc(alu, bus);
         case .JSR:
+            //fmt.printf("%4X\n",alu.regs.PC);
+            alu.regs.PC -= 1;
             alu_push_pc(alu, bus);
-            fallthrough;
+            alu.regs.PC = pc;
         case .JMP:
             alu.regs.PC = pc;
         case .RTI:
             alu.regs.SR = alu_pop(alu, bus);
-            fallthrough;
+            alu_pop_pc(alu, bus);
         case .RTS:
             alu_pop_pc(alu, bus);
+            alu.regs.PC += 1;
+            //fmt.printf("%4X\n",alu.regs.PC);
     }
+    return debug_info;
 }
 
-alu_stack::proc (src: ^Operand, alu: ^Alu6502, bus: ^Bus, op: enum{PUSH, PULL}) {
+alu_stack::proc (
+    src: ^Operand, 
+    alu: ^Alu6502, 
+    bus: ^Bus, 
+    op: enum{PUSH, PULL}
+) -> (debug_info: string) {
     reg, ok := src.(^u8); assert(ok);
     switch op {
         case .PUSH:
             alu_push(alu, bus, reg^);
         case .PULL:
             reg^ = alu_pop(alu, bus);
-    }
+            debug_info = fmt.tprintf("(%X)", reg^);
+    }    
+    return debug_info;
 }
 
 

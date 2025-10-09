@@ -154,15 +154,18 @@ mapper_vram_read::proc (self: ^Mapper, address: u16) -> u8 {
         case 0x2C00..=0x2FBF:
             loc = (address - 0x2C00) + self.vram.name_tbl3_offset;
         case:
-            fmt.printfln("Invalid Mapper address");
+            fmt.printfln("Invalid Read Mapper address: %x", address);
     }
     return self.vram.buffer[loc];
 }
 
-mapper_vram_write::proc (self: ^Mapper, address: u16, data: u8) {
+mapper_vram_write::proc (self: ^Mapper, address: u16, data: u8) -> (EOT0:bool){
     loc:u16 = 0;
     switch address {
-        case 0x2000..=0x23BF:
+        case 0x23BF:
+            EOT0 = true;
+            fallthrough;
+        case 0x2000..=0x23BE:
             loc = (address - 0x2000) + self.vram.name_tbl0_offset;
         case 0x2400..=0x27BF:
             loc = (address - 0x2400) + self.vram.name_tbl1_offset;
@@ -171,9 +174,10 @@ mapper_vram_write::proc (self: ^Mapper, address: u16, data: u8) {
         case 0x2C00..=0x2FBF:
             loc = (address - 0x2C00) + self.vram.name_tbl3_offset;
         case:
-            fmt.printfln("Invalid Mapper address");
+            fmt.printfln("Invalid Write Mapper address %x", address);
     }
     self.vram.buffer[loc] = data;
+    return EOT0;
 }
 
 delete_mapper ::proc(self: ^Mapper){
