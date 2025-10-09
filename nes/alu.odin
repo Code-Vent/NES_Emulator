@@ -1,5 +1,6 @@
 package nes
 
+import "core:debug/pe"
 import "core:strings"
 import "core:strconv"
 import "core:fmt"
@@ -424,9 +425,19 @@ decode_operation::proc (
         case .LDX:
             dest^ = &self.regs.X;
             debug_info = alu_load(src, dest, self, bus);
+        case .LAX:
+            dest^ = &self.regs.A;
+            debug_info = alu_load(src, dest, self, bus);
+            self.regs.X = self.regs.A;
         case .STX:
             dest^ = &self.regs.X;
             debug_info = alu_store(dest, src, bus);
+        case .SAX:
+            ax := (self.regs.A) & (self.regs.X);
+            dest^ = &ax;
+            debug_info = alu_store(dest, src, bus);
+            debug_info = fmt.tprintf("%s(A=%2X)(X=%2X)(AX=%2X)", debug_info, self.regs.A, self.regs.X, ax);
+            //fmt.println("AX", ax);
         case .LDY:
             dest^ = &self.regs.Y;
             debug_info = alu_load(src, dest, self, bus);
@@ -489,35 +500,23 @@ decode_operation::proc (
         case .ADC:
             debug_info = alu_arithmetic(src, self, bus);
         case .SBC:
-            #partial switch choice in src {
-                case u8:
-                    data := choice;
-                    data = ~data;
-                    src^ = data;
-                case u16:
-                    data := bus_read_u8(bus, choice);
-                    data = ~data;
-                    src^ = data;
-                case ^u8:
-                    assert(false);
-            }
-            debug_info = alu_arithmetic(src, self, bus);
+            debug_info = sbc(src, self, bus);
         case .INC:
-            debug_info = alu_inc_or_dec(src, self, .INC, bus);
+            debug_info = alu_inc_or_dec(src, self, .INC, bus, false);
         case .INX:
             src^ = &self.regs.X;
-            debug_info = alu_inc_or_dec(src, self, .INC, bus);
+            debug_info = alu_inc_or_dec(src, self, .INC, bus, false);
         case .INY:
             src^ = &self.regs.Y;
-            debug_info = alu_inc_or_dec(src, self, .INC, bus);
+            debug_info = alu_inc_or_dec(src, self, .INC, bus, false);
         case .DEC:
-            debug_info = alu_inc_or_dec(src, self, .DEC, bus);
+            debug_info = alu_inc_or_dec(src, self, .DEC, bus, false);
         case .DEX:
             src^ = &self.regs.X;
-            debug_info = alu_inc_or_dec(src, self, .DEC, bus);
+            debug_info = alu_inc_or_dec(src, self, .DEC, bus, false);
         case .DEY:
             src^ = &self.regs.Y;
-            debug_info = alu_inc_or_dec(src, self, .DEC, bus);
+            debug_info = alu_inc_or_dec(src, self, .DEC, bus, false);
         case .ASL:
             debug_info = alu_shift(src, .LEFT, self, bus);
         case .LSR:
@@ -534,7 +533,39 @@ decode_operation::proc (
             debug_info = alu_bitwise(src, self, .XOR, bus);
         case .BIT:
             debug_info = alu_bitwise(src, self, .BIT, bus);
-        case://uNDOCUMENTED CODES
+        //uNDOCUMENTED CODES
+        case .RRA:
+            info1 := alu_rotate(src, .RIGHT, self, bus);
+            info2 := alu_arithmetic(src, self, bus);
+            debug_info = fmt.tprintf("%s%s", info1, info2);
+        case .SLO:
+            info1 := alu_shift(src, .LEFT, self, bus);
+            carry_set := alu_is_flag_set(self, .C);
+            info2 := alu_bitwise(src, self, .OR, bus);
+            if carry_set {
+                alu_set_flag(self, .C);
+            }else{
+                alu_clear_flag(self, .C);
+            }
+            debug_info = fmt.tprintf("%s%s", info1, info2);
+        case .SRE:
+            info1 := alu_shift(src, .RIGHT, self, bus);
+            info2 := alu_bitwise(src, self, .XOR, bus);
+            debug_info = fmt.tprintf("%s%s", info1, info2);
+        case .RLA:
+            info1 := alu_rotate(src, .LEFT, self, bus);
+            info2 := alu_bitwise(src, self, .AND, bus);
+            debug_info = fmt.tprintf("%s%s", info1, info2);
+        case .DCP:
+            info1 := alu_inc_or_dec(src, self, .DEC, bus, true);
+            dest^ = &self.regs.A;
+            info2 := alu_compare(src, dest, self, bus);
+            debug_info = fmt.tprintf("%s%s", info1, info2);
+        case .ISC:
+            info1 := alu_inc_or_dec(src, self, .INC, bus, false);
+            info2 := sbc(src, self, bus);
+            debug_info = fmt.tprintf("%s%s", info1, info2);
+        case:
             //assert(false);
     }
     return debug_info;
@@ -554,7 +585,7 @@ alu_load::proc (
             debug_info = fmt.tprintf(" #%2X", choice);
         case u16:
             result = bus_read_u8(bus, choice);
-            debug_info = fmt.tprintf(" [%4X]", choice);
+            debug_info = fmt.tprintf(" [%4X](%2X)", choice, result);
         case:
             assert(false);
     }
@@ -594,14 +625,14 @@ alu_transfer::proc (
     src: ^Operand, 
     dest: ^Operand, 
     alu: ^Alu6502,
-    naked: bool
+    dirty: bool
 ) ->(debug_info: string) {
     srcaddr, ok1 := src.(^u8); assert(ok1);
     destaddrr, ok2 := dest.(^u8); assert(ok2);
     result := srcaddr^;
     destaddrr^ = result;
 
-    if !naked {
+    if !dirty {
         if result == 0 {
             alu_set_flag(alu, .Z);
         }else{
@@ -618,7 +649,29 @@ alu_transfer::proc (
     return debug_info;
 }
 
-alu_arithmetic::proc (
+@(private)
+sbc ::proc (
+    src: ^Operand, 
+    alu: ^Alu6502, 
+    bus: ^Bus
+) -> (debug_info: string){
+    #partial switch choice in src {
+        case u8:
+            data := choice;
+            data = ~data;
+            src^ = data;
+        case u16:
+            data := bus_read_u8(bus, choice);
+            data = ~data;
+            src^ = data;
+        case ^u8:
+            assert(false);
+    }
+    debug_info = alu_arithmetic(src, alu, bus);
+    return debug_info;
+}
+
+alu_arithmetic ::proc (
     src: ^Operand, 
     alu: ^Alu6502, 
     bus: ^Bus
@@ -652,7 +705,7 @@ alu_arithmetic::proc (
     
     overflow := (result~int(alu.regs.A)) & (result~int(data));
     alu.regs.A = u8(result & 0x000000FF);
-    debug_info = fmt.tprintf("%s (A = %X, carry=%b)", 
+    debug_info = fmt.tprintf("%s (A = %X, carry=%v)", 
     debug_info, alu.regs.A, (carry_out > 255));
 
     if overflow & 0x80 != 0{
@@ -730,7 +783,8 @@ alu_inc_or_dec::proc (
     src: ^Operand, 
     alu: ^Alu6502, 
     option: enum(int){INC=1,DEC=-1}, 
-    bus: ^Bus
+    bus: ^Bus,
+    dirty: bool
 ) -> (debug_info: string) {
     result:u8;
     #partial switch eaddr in src {
@@ -746,16 +800,19 @@ alu_inc_or_dec::proc (
         case:
             assert(false);
     }
-    if result == 0 {
-        alu_set_flag(alu, .Z);
-    }else{
-        alu_clear_flag(alu, .Z);
-    }
     
-    if result & 0x80 == 0 {
-        alu_clear_flag(alu, .N);
-    }else{
-        alu_set_flag(alu, .N);
+    if !dirty {
+        if result == 0 {
+            alu_set_flag(alu, .Z);
+        }else{
+            alu_clear_flag(alu, .Z);
+        }
+    
+        if result & 0x80 == 0 {
+            alu_clear_flag(alu, .N);
+        }else{
+            alu_set_flag(alu, .N);
+        }
     }
     return debug_info;
 }

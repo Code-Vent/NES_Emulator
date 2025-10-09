@@ -36,11 +36,6 @@ main ::proc() {
     } else {
         fmt.println("Disassembly test failed: %s", error);
     }
-
-    a := u8(0x80);
-    b := u8(0x7F);
-
-    fmt.println(int(i8(a)), int(i8(b)));
     
     //nes.clock_add_units(&pu);
     //nes.clock_run();
