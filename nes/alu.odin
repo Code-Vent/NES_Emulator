@@ -965,7 +965,13 @@ alu_jump::proc (
             pc = eaddr;
             debug_info = fmt.tprintf(" [%4X](%X)", pc, alu.regs.PC);
         case u32:
-            pc = bus_read_u16(bus, u16(eaddr));
+            if eaddr & 0x000000FF == 0x000000FF {
+                hi := bus_read_u8(bus, u16(eaddr & 0x0000FF00));
+                lo := bus_read_u8(bus, u16(eaddr & 0x0000FFFF));
+                pc = u16(hi) << 8 | u16(lo);
+            }else{
+                pc = bus_read_u16(bus, u16(eaddr & 0x0000FFFF));
+            }
             debug_info = fmt.tprintf(" [[%4X]](%X)", u16(eaddr), pc);
         case:
     }
