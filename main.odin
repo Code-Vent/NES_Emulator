@@ -12,7 +12,7 @@ import "core:os"
 
 main ::proc() {
     alu_ := nes.Alu6502{};
-    mapper_, ok := cart.new_mapper("./nestest.nes"); assert(ok);
+    mapper_, ok := cart.new_mapper("./mario.nes"); assert(ok);
     defer cart.delete_mapper(&mapper_);
     ppu_ := scrn.new_ppu(&mapper_);
     apu_ := nes.ApuRP2A03{};
@@ -26,19 +26,20 @@ main ::proc() {
 
     
     //str := nes.disasm_all(cpu_.disasm);
-    //fmt.println(str);
-    log, ok1 := os.read_entire_file("nestest.log");assert(ok1);
-    expected := strings.split(transmute(string)log, "\n");
-    ok2, error := nes.disasm_run_test(cpu_.disasm, 0xC000, expected);
+    //os.write_entire_file("disasm.txt", transmute([]u8)str);
+
+
+    //log, ok1 := os.read_entire_file("nestest.log");assert(ok1);
+    //expected := strings.split(transmute(string)log, "\n");
+    //ok2, error := nes.disasm_run_test(cpu_.disasm, 0xC000, expected);    
+    //if ok2 {
+    //    fmt.println("Disassembly test passed.");
+    //} else {
+    //    fmt.println("Disassembly test failed: %s", error);
+    //}
     
-    if ok2 {
-        fmt.println("Disassembly test passed.");
-    } else {
-        fmt.println("Disassembly test failed: %s", error);
-    }
-    
-    //nes.clock_add_units(&pu);
-    //nes.clock_run();
+    nes.clock_add_units(&pu);
+    nes.clock_run();
     
     //fmt.println(mapper_.cartridge.meta.mirroring);
     //scrn.frame_init();

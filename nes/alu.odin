@@ -74,7 +74,7 @@ OPCODES:[16][16]Opcode = {
     /*60*/{{"RTS",.RTS,.IMP,6},{"ADC",.ADC,.IZX,6},{"UND",.UND,.IMP,2},{"RRA",.RRA,.IZX,8},{"NOP",.NOP,.ZP0,3},{"ADC",.ADC,.ZP0,3},{"ROR",.ROR,.ZP0,5},{"RRA",.RRA,.ZP0,5},{"PLA",.PLA,.IMP,4},{"ADC",.ADC,.IMM,2},{"ROR",.ROR,.IMP,2},{"ARR",.ARR,.IMM,2},{"JMP",.JMP,.IND,5},{"ADC",.ADC,.ABS,4},{"ROR",.ROR,.ABS,6},{"RRA",.RRA,.ABS,6}},//6
     /*60*/{{"BVS",.BVS,.REL,2},{"ADC",.ADC,.IZY,5},{"UND",.UND,.IMP,2},{"RRA",.RRA,.IZY,8},{"NOP",.NOP,.ZPX,4},{"ADC",.ADC,.ZPX,4},{"ROR",.ROR,.ZPX,6},{"RRA",.RRA,.ZPX,6},{"SEI",.SEI,.IMP,2},{"ADC",.ADC,.ABY,4},{"NOP",.NOP,.IMP,2},{"RRA",.RRA,.ABY,7},{"NOP",.NOP,.ABX,4},{"ADC",.ADC,.ABX,4},{"ROR",.ROR,.ABX,7},{"RRA",.RRA,.ABX,7}},//7
     /*80*/{{"NOP",.NOP,.IMM,2},{"STA",.STA,.IZX,6},{"NOP",.NOP,.IMM,2},{"SAX",.SAX,.IZX,8},{"STY",.STY,.ZP0,3},{"STA",.STA,.ZP0,3},{"STX",.STX,.ZP0,3},{"SAX",.SAX,.ZP0,3},{"DEY",.DEY,.IMP,2},{"NOP",.NOP,.IMM,2},{"TXA",.TXA,.IMP,2},{"XAA",.XAA,.IMM,2},{"STY",.STY,.ABS,4},{"STA",.STA,.ABS,4},{"STX",.STX,.ABS,4},{"SAX",.SAX,.ABS,4}},//8
-    /*80*/{{"BCC",.BCC,.REL,2},{"STA",.STA,.IZY,6},{"UND",.UND,.IMP,2},{"AHX",.AHX,.IZY,6},{"STY",.STY,.ZPX,4},{"STA",.STA,.ZPX,4},{"STX",.STX,.ZPY,4},{"SAX",.SAX,.ZPY,4},{"TYA",.TYA,.IMP,2},{"STA",.STA,.ABY,5},{"TXS",.TXS,.IMP,2},{"TAS",.TAS,.ABY,5},{"NOP",.SHY,.ABX,5},{"STA",.STA,.ABX,5},{"SHY",.SHX,.ABY,5},{"AHX",.AHX,.ABY,5}},//9
+    /*80*/{{"BCC",.BCC,.REL,2},{"STA",.STA,.IZY,6},{"UND",.UND,.IMP,2},{"AHX",.AHX,.IZY,6},{"STY",.STY,.ZPX,4},{"STA",.STA,.ZPX,4},{"STX",.STX,.ZPY,4},{"SAX",.SAX,.ZPY,4},{"TYA",.TYA,.IMP,2},{"STA",.STA,.ABY,5},{"TXS",.TXS,.IMP,2},{"TAS",.TAS,.ABY,5},{"NOP",.SHY,.ABX,5},{"STA",.STA,.ABX,5},{"SHX",.SHX,.ABY,5},{"AHX",.AHX,.ABY,5}},//9
     /*A0*/{{"LDY",.LDY,.IMM,2},{"LDA",.LDA,.IZX,6},{"LDX",.LDX,.IMM,2},{"LAX",.LAX,.IZX,6},{"LDY",.LDY,.ZP0,3},{"LDA",.LDA,.ZP0,3},{"LDX",.LDX,.ZP0,3},{"LAX",.LAX,.ZP0,3},{"TAY",.TAY,.IMP,2},{"LDA",.LDA,.IMM,2},{"TAX",.TAX,.IMP,2},{"LAX",.LAX,.IMM,2},{"LDY",.LDY,.ABS,4},{"LDA",.LDA,.ABS,4},{"LDX",.LDX,.ABS,4},{"LAX",.LAX,.ABS,4}},//A
     /*A0*/{{"BCS",.BCS,.REL,2},{"LDA",.LDA,.IZY,5},{"UND",.UND,.IMP,2},{"LAX",.LAX,.IZY,5},{"LDY",.LDY,.ZPX,4},{"LDA",.LDA,.ZPX,4},{"LDX",.LDX,.ZPY,4},{"LAX",.LAX,.ZPY,4},{"CLV",.CLV,.IMP,2},{"LDA",.LDA,.ABY,4},{"TSX",.TSX,.IMP,2},{"LAS",.LAS,.ABY,4},{"LDY",.LDY,.ABX,4},{"LDA",.LDA,.ABX,4},{"LDX",.LDX,.ABY,4},{"LAX",.LAX,.ABY,4}},//B
     /*C0*/{{"CPY",.CPY,.IMM,2},{"CMP",.CMP,.IZX,6},{"NOP",.NOP,.IMM,2},{"DCP",.DCP,.IZX,8},{"CPY",.CPY,.ZP0,3},{"CMP",.CMP,.ZP0,3},{"DEC",.DEC,.ZP0,5},{"DCP",.DCP,.ZP0,5},{"INY",.INY,.IMP,2},{"CMP",.CMP,.IMM,2},{"DEX",.DEX,.IMP,2},{"AXS",.AXS,.IMM,2},{"CPY",.CPY,.ABS,4},{"CMP",.CMP,.ABS,4},{"DEC",.DEC,.ABS,6},{"DCP",.DCP,.ABS,6}},//C
@@ -140,6 +140,14 @@ alu_pop_pc ::proc (self: ^Alu6502, bus: ^Bus) {
     hi := alu_pop(self, bus);
     self.regs.PC = u16(hi) << 8 | u16(lo);
     //fmt.println(self.regs.PC);
+}
+
+alu_load_flag ::proc (self: ^Alu6502, flag: Flags, value: bool){
+    if value {
+        alu_set_flag(self, flag);
+    }else{
+        alu_clear_flag(self, flag);
+    }
 }
 
 
@@ -366,7 +374,8 @@ decode_operation::proc (
     src: ^Operand, 
     dest: ^Operand
 ) -> (debug_info: string) {
-    #partial switch op {
+    
+    switch op {
         case .PHP:
             alu_set_flag(self, .B);
             src^ = &self.regs.SR
@@ -425,19 +434,9 @@ decode_operation::proc (
         case .LDX:
             dest^ = &self.regs.X;
             debug_info = alu_load(src, dest, self, bus);
-        case .LAX:
-            dest^ = &self.regs.A;
-            debug_info = alu_load(src, dest, self, bus);
-            self.regs.X = self.regs.A;
         case .STX:
             dest^ = &self.regs.X;
             debug_info = alu_store(dest, src, bus);
-        case .SAX:
-            ax := (self.regs.A) & (self.regs.X);
-            dest^ = &ax;
-            debug_info = alu_store(dest, src, bus);
-            debug_info = fmt.tprintf("%s(A=%2X)(X=%2X)(AX=%2X)", debug_info, self.regs.A, self.regs.X, ax);
-            //fmt.println("AX", ax);
         case .LDY:
             dest^ = &self.regs.Y;
             debug_info = alu_load(src, dest, self, bus);
@@ -534,6 +533,39 @@ decode_operation::proc (
         case .BIT:
             debug_info = alu_bitwise(src, self, .BIT, bus);
         //uNDOCUMENTED CODES
+        //UND, SLO, RLA, SRE, RRA, SAX, AHX, LAX, DCP, ISC,
+        //ANC, ALR, XAA, TAS, LAS, AXS, SHX, ARR, SHY
+        case .LAX:
+            dest^ = &self.regs.A;
+            debug_info = alu_load(src, dest, self, bus);
+            self.regs.X = self.regs.A;
+        case .AHX:
+            addr, ok := src.(u16); assert(ok);
+            hi := (addr & 0xFF00) >> 8;
+            ahx := self.regs.A & self.regs.X & u8(hi + 1);
+            dest^ = &ahx;
+            debug_info = alu_store(dest, src, bus);
+        case .ARR://Not sure implementation is correct
+            info1 := alu_bitwise(src, self, .AND, bus);
+            and_result := self.regs.A;
+            src^ = &self.regs.A;
+            info2 := alu_rotate(src, .RIGHT, self, bus);
+            final_result := self.regs.A;
+            if alu_is_flag_set(self, .D) {
+                alu_load_flag(self, .C, final_result >= 0x80);
+                alu_load_flag(self, .N, (final_result & 0x80) != 0)
+            }else{
+                alu_load_flag(self, .C, (and_result & 0x40) != 0);
+                alu_load_flag(self, .N, (final_result & 0x40) != 0)
+                overflow := (final_result & 0x40)~((final_result & 0x20)<<1);
+                alu_load_flag(self, .V, overflow != 0);
+            }
+            debug_info = fmt.tprintf("%s%s", info1, info2);
+        case .SAX:
+            ax := (self.regs.A) & (self.regs.X);
+            dest^ = &ax;
+            debug_info = alu_store(dest, src, bus);
+            debug_info = fmt.tprintf("%s(A=%2X)(X=%2X)(AX=%2X)", debug_info, self.regs.A, self.regs.X, ax);
         case .RRA:
             info1 := alu_rotate(src, .RIGHT, self, bus);
             info2 := alu_arithmetic(src, self, bus);
@@ -565,7 +597,47 @@ decode_operation::proc (
             info1 := alu_inc_or_dec(src, self, .INC, bus, false);
             info2 := sbc(src, self, bus);
             debug_info = fmt.tprintf("%s%s", info1, info2);
-        case:
+        case .ALR:
+            info1 := alu_bitwise(src, self, .AND, bus);
+            src^ = &self.regs.A;
+            info2 := alu_shift(src, .RIGHT, self, bus);
+            debug_info = fmt.tprintf("%s%s", info1, info2);
+        case .ANC:
+            debug_info = alu_bitwise(src, self, .AND, bus);
+            alu_load_flag(self, .C, alu_is_flag_set(self, .N));
+        case .AXS:
+            val1 := self.regs.A & self.regs.X;
+            val2, ok := src.(u8); assert(ok);
+            dest^ = &self.regs.X;
+            src^ = u8(i8(val1) - i8(val2));
+            debug_info = alu_load(src, dest, self, bus);
+            alu_load_flag(self, .C, val1 >= val2);
+        case .LAS:
+            self.regs.A = self.regs.SP;
+            debug_info = alu_bitwise(src, self, .AND, bus);
+            self.regs.SP = self.regs.A;
+            self.regs.X = self.regs.A;
+        case .TAS:
+            self.regs.SP = self.regs.A & self.regs.X;
+            addr, ok := src.(u16); assert(ok);
+            hi := (addr & 0xFF00) >> 8;
+            val := self.regs.SP & u8(hi + 1);
+            dest^ = &val;
+            debug_info = alu_store(dest, src, bus);
+        case .XAA:
+        case .SHX:
+            addr, ok := src.(u16); assert(ok);
+            hi := (addr & 0xFF00) >> 8;
+            hx := self.regs.X & u8(hi + 1);
+            dest^ = &hx;
+            debug_info = alu_store(dest, src, bus);
+        case .SHY:
+            addr, ok := src.(u16); assert(ok);
+            hi := (addr & 0xFF00) >> 8;
+            hy := self.regs.Y & u8(hi + 1);
+            dest^ = &hy;
+            debug_info = alu_store(dest, src, bus);
+        case .UND:
             //assert(false);
     }
     return debug_info;
@@ -616,8 +688,7 @@ alu_store::proc (
     data := srcaddr^;
     destaddrr, ok2 := dest.(u16); assert(ok2);
     bus_write(bus, destaddrr, data);
-    dummy := bus_read_u8(bus, destaddrr);
-    debug_info = fmt.tprintf(" [%4X](%2X)", destaddrr, dummy);
+    debug_info = fmt.tprintf(" [%4X](%2X)", destaddrr, data);
     return debug_info;
 }
 
@@ -850,11 +921,11 @@ alu_shift::proc (
     eaddr, ok := src.(^u8);
     if ok {
         eaddr^ = result;
-        //debug_info = fmt.tprintf(" r(%X) = (%X);", data, result);
+        debug_info = fmt.tprintf("(%2X)", result);
     }else{
         eaddr := src.(u16);
         bus_write(bus, eaddr, result);
-        debug_info = fmt.tprintf(" [%4X]", eaddr);
+        debug_info = fmt.tprintf(" [%4X](%2X)", eaddr, result);
     }
 
     if carry {
@@ -907,11 +978,11 @@ alu_rotate::proc (
     eaddr, ok := src.(^u8);
     if ok {
         eaddr^ = result;
-        //debug_info = fmt.tprintf(" r(%X) = (%X);", data, result);
+        debug_info = fmt.tprintf("(%2X)", result);
     }else{
         eaddr := src.(u16);
         bus_write(bus, eaddr, result);
-        debug_info = fmt.tprintf(" [%4X]", eaddr);
+        debug_info = fmt.tprintf(" [%4X](%2X)", eaddr, result);
     }
 
     if new_carry {
@@ -972,7 +1043,7 @@ alu_bitwise::proc (
             result = alu.regs.A ~  data;
             alu.regs.A = result;
     }
-    //debug_info = fmt.tprintf("%s %X;", debug_info, result);
+    debug_info = fmt.tprintf("%s(%2X)", debug_info, result);
     if result == 0 {
         alu_set_flag(alu, .Z);
     }else{
@@ -1036,9 +1107,9 @@ alu_jump::proc (
     switch op {
         case .BRK:
             alu_set_flag(alu, .B);
-            //alu_push(alu, bus, alu.regs.SR);
+            alu_push(alu, bus, alu.regs.SR);
             alu_set_flag(alu, .I);
-            //alu_push_pc(alu, bus);
+            alu_push_pc(alu, bus);
         case .JSR:
             //fmt.printf("%4X\n",alu.regs.PC);
             alu.regs.PC -= 1;

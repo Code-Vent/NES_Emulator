@@ -24,12 +24,8 @@ disasm_mem_map: [1]Addressable;
 disasm_get ::proc() -> ^Disassembler{
     disasm.origin = cpu.alu.regs.PC;
     disasm.left_ptr = cpu.alu.regs.PC;
-
     disasm_mem_map[0] = new_address_space(&disasm, 0x0000, 0xFFFF,0xFFFF);
     disasm.bus = new_bus(disasm_mem_map[:]);  
-
-
-
     return &disasm;
 }
 
