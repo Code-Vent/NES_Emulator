@@ -1,8 +1,11 @@
-package mappers
+package cart
 
+import "core:relative"
 import "core:os"
 import "core:mem"
 import "core:fmt"
+
+Mapper ::proc(c: ^Cartridge, address: u16, op: MapperOp) -> bool;
 
 iNESHeader ::struct{
     name:[4]u8,
@@ -41,24 +44,25 @@ MetaData ::struct {
 Cartridge ::struct {
     seg_info: SegmentInfo,
     meta: MetaData,
+    mapper: Mapper,
+    address: int,
     buffer: []u8,
 }
 
 iNES_MAGIC ::[4]u8{'N','E','S',0x1A};
 
 
-@(private)
-new_cartridge ::proc(filename: string) -> (cart: Cartridge, success: bool) {
-    
-    content, ok := os.read_entire_file(filename); assert(ok);
+load_cartridge ::proc(path: string, is_relative: bool = true) -> (c: Cartridge, success: bool) {
+    abs_path := is_relative? fmt.tprintf("./games/%s", path) : path;
+    content, ok := os.read_entire_file(abs_path); assert(ok);
     defer delete(content);
     assert(len(content) > 16);
 
     header := (^iNESHeader)(raw_data(content))^;
     assert(header.name == iNES_MAGIC);
-    extract_meta_data(&header, &cart.meta);
+    extract_meta_data(&header, &c.meta);
     required_len, data_len := validate(&header, content[16:], 
-        cart.meta.has_trainer, &cart.seg_info);
+        c.meta.has_trainer, &c.seg_info);
     assert(required_len == data_len);
     if header.chr_rom_banks == 0 {
         required_len += 8192;
@@ -68,12 +72,12 @@ new_cartridge ::proc(filename: string) -> (cart: Cartridge, success: bool) {
     copy(buffer[:], content[16:]);
 
     if header.chr_rom_banks == 0 {
-        a := cart.seg_info.chr_rom_offset;
+        a := c.seg_info.chr_rom_offset;
         mem.set(raw_data(buffer[a:]), 0, 8192);
-    }
-    
-    cart.buffer = buffer[:];
-    return cart, true;
+    }    
+    c.buffer = buffer[:];
+    c.mapper = get_mapper(&c);
+    return c, true;
 }
 
 validate ::proc(
@@ -116,5 +120,30 @@ extract_meta_data ::proc(
             meta.mirroring = .VERTICAL;
         case 2,3:
             meta.mirroring = .FOUR_SCREEN;
+    }
+}
+
+unload_cartridge ::proc(c: ^Cartridge) {
+    c.mapper(nil, 0, .DEINIT);
+    delete(c.buffer);
+}
+
+read_rom ::proc(c: ^Cartridge, address: u16, nbytes: int = 1) -> []u8 {
+    if c.mapper(c, address, .READ) {
+        start := c.address;
+        end   := c.address + nbytes;
+        if end < len(c.buffer) {
+            return c.buffer[start:end];
+        }else if start < len(c.buffer) {
+            return c.buffer[start:];
+        }
+    }
+    return nil;
+}
+
+write_rom ::proc(c: ^Cartridge, address: u16, data: u8) {
+    if c.mapper(c, address, .WRITE) {
+        //write to CHR RAM
+        c.buffer[c.address] = data;
     }
 }

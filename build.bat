@@ -1,1 +1,0 @@
-odin run . -collection:nes=./nes
