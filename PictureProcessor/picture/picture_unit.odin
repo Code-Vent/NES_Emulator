@@ -6,8 +6,8 @@ import "../../PixelUnit/pixel"
 VRAM_INC     ::pixel.Register.R0;
 WRITE_TOGGLE ::pixel.Register.R1;
 SPRITE_SIZE  ::pixel.Register.R2;
-W0           ::pixel.Register.R3;
-W1           ::pixel.Register.R4;
+OAM_ADDR     ::pixel.Register.R3;
+W0           ::pixel.Register.R4;
 
 //16-bit registers
 VRAM_ADDR                ::pixel.Register16.R0;
@@ -19,6 +19,7 @@ SPRITE_PATTERNTABLE_ADDR ::pixel.Register16.R4;
 
 PPU ::struct{
     pixel_unit: pixel.Pixel8,
+    oam_data  : [256]u8, 
 }
 
 write_ppu ::proc(ppu: ^PPU, address: u16, data: u8) {
@@ -28,7 +29,9 @@ write_ppu ::proc(ppu: ^PPU, address: u16, data: u8) {
         case 0x2001:
             ppu.pixel_unit.render_settings = data;
         case 0x2003:
+            pixel.write_register(&ppu.pixel_unit, OAM_ADDR, data);
         case 0x2004:
+            pp
         case 0x2005:
         case 0x2006:
         case 0x2007:
