@@ -7,6 +7,7 @@ Register ::enum(u8){
 Register16 ::distinct Register;
 
 Option ::enum{
+
 	AND, OR, XOR,
 	LSR, ASL, ROR, ROL,
 	LDR,
@@ -60,9 +61,6 @@ Pixel8 ::struct{
     status           :u8,
     control_settings :u8,
     render_settings  :u8,
-    nametables       :[][2048]u8,
-    patterntables    :[2048]u8,
-    palette          :[32]u8,
 }
 
 lu_operation ::proc(

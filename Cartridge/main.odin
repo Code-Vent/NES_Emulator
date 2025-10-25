@@ -9,5 +9,4 @@ main ::proc() {
     defer cart.unload_cartridge(&cartridge);
     data := cart.read_rom(&cartridge, 0xFFFD);
     fmt.printf("%2X", data);
-    windows.Crea
 }

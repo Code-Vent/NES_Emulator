@@ -128,7 +128,7 @@ unload_cartridge ::proc(c: ^Cartridge) {
     delete(c.buffer);
 }
 
-read_rom ::proc(c: ^Cartridge, address: u16, nbytes: int = 1) -> []u8 {
+read_cart ::proc(c: ^Cartridge, address: u16, nbytes: int = 1) -> []u8 {
     if c.mapper(c, address, .READ) {
         start := c.address;
         end   := c.address + nbytes;
@@ -141,7 +141,7 @@ read_rom ::proc(c: ^Cartridge, address: u16, nbytes: int = 1) -> []u8 {
     return nil;
 }
 
-write_rom ::proc(c: ^Cartridge, address: u16, data: u8) {
+write_cart ::proc(c: ^Cartridge, address: u16, data: u8) {
     if c.mapper(c, address, .WRITE) {
         //write to CHR RAM
         c.buffer[c.address] = data;

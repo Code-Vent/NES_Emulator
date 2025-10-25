@@ -47,7 +47,7 @@ M6502 ::struct{
 };
 
 reset ::proc(mcu: ^M6502, cartridge: ^cart.Cartridge) {
-    reset_handler := cart.read_rom(cartridge, 0xFFFC, 2);
+    reset_handler := cart.read_cart(cartridge, 0xFFFC, 2);
     mcu.pc = u16(reset_handler[1]) << 8 | u16(reset_handler[0]);
     mcu.sp = 0xFF;
     write_flag(mcu, .HIGH, true);
@@ -97,9 +97,9 @@ write_bus ::proc(mcu: ^M6502, address: u16, data: u8) {
             index := address & 0x07FF;
             mcu.ram[index] = data;
         case 0x2000..=0x3FFF, 0x4014://PPU
-            picture.write_ppu(&mcu.ppu, address & 0x2007, data);
+            picture.write_ppu_regs(&mcu.ppu, address & 0x2007, data);
         case 0x4020..=0xFFFF: //Cartridge 
-            cart.write_rom(mcu.cartridge, address, data);
+            cart.write_cart(mcu.cartridge, address, data);
         case:
     }
 }
@@ -115,9 +115,9 @@ read_bus ::proc(mcu: ^M6502, address: u16, nbytes: int = 1) -> (data: []u8) {
                 data = mcu.ram[start:];
             }
         case 0x2000..=0x3FFF://PPU
-            data = picture.read_ppu(&mcu.ppu, address & 0x2007);
+            data = picture.read_ppu_regs(&mcu.ppu, address & 0x2007);
         case 0x4020..=0xFFFF://Cartridge  
-            data = cart.read_rom(mcu.cartridge, address, nbytes);
+            data = cart.read_cart(mcu.cartridge, address, nbytes);
         case:
     }
     return data;
