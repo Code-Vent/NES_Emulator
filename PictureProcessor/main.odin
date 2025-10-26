@@ -43,7 +43,7 @@ main ::proc() {
     }
 
     ppu.dma_callback = dma;
-    picture.write_ppu_regs(&ppu, 0x4014, 0xEF);
+    picture.write_ppu_regs(&ppu, 0x4014 & 0x2007, 0xEF);
     for i in 0..<len(oam[:]) {
         assert(oam[i] == ppu.oam_data[i]);
     }
