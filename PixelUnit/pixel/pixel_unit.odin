@@ -23,7 +23,9 @@ StatusBits ::enum(u8){
     VBLANK,
 };
 
-Render ::enum(u8){
+RenderSettings ::distinct bit_set[RenderBits; u8];
+
+RenderBits ::enum(u8){
     GRAY_SCALE,
     LEFT_BCKGND,
     LEFT_SPRITE,
@@ -56,7 +58,7 @@ Pixel8 ::struct{
     //toggle write
     state_queue      :StateQueue,
     status           :Status,
-    render_settings  :u8,
+    render_settings  :RenderSettings,
 }
 
 lu_operation ::proc(

@@ -12,30 +12,29 @@ PPU ::struct{
     pixel_unit          :pixel.Pixel8,
     oam_data            :[256]u8, 
     nametables          :[]u8,
-    patterntable        :[1024]u8,
+    //patterntable        :[1024]u8,
     palette             :[32]u8,
-    read_buffer         :[1]u8,
+    read_buffer         :[2]u8,
     status              :[1]u8,
     oam_addr            :u8,
     vram_inc            :u8,
     sprite_size         :u8,
-    finex_scroll        :u8,
+    x                   :u8,
     v                   :u16,
     t                   :u16,
     w                   :u8,
     nametable_addr      :u16,
     bckgnd_pattern_addr :u16,
     sprite_pattern_addr :u16,   
-    mapper              :^cart.Mapper,
+    cartridge           :^cart.Cartridge,
     nmi_enabled         :bool,
     dma_callback        :proc(addr: u16, nbytes: int)->[]u8,
     nmi_callback        :proc(),
 }
 
-new_ppu ::proc(mapper: ^cart.Mapper) -> PPU {
-    c := cart.Cartridge{};
+new_ppu ::proc(c: ^cart.Cartridge) -> PPU {
     ppu := PPU{};
-    mapper^(&c, 0x2C00, .VRAM_ADDR);
+    c.mapper(c, 0x2C00, .VRAM_ADDR);
     if c.address == 0x0C00 {
         //fmt.println("FOUR SCREEN");
         ppu.nametables = make([]u8, 4 * 1024);
@@ -46,7 +45,7 @@ new_ppu ::proc(mapper: ^cart.Mapper) -> PPU {
         //fmt.println("SINGLE SCREEN");
         ppu.nametables = make([]u8, 1 * 1024);
     }
-    ppu.mapper = mapper;
+    ppu.cartridge = c;
     return ppu;
 }
 
@@ -61,7 +60,7 @@ write_ppu_regs ::proc(ppu: ^PPU, address: u16, data: u8) {
         case 0x2000:
             parse_control_bits(ppu, data);
         case 0x2001:
-            ppu.pixel_unit.render_settings = data;
+            ppu.pixel_unit.render_settings = transmute(pixel.RenderSettings)data;
         case 0x2003:
             ppu.oam_addr = data;
         case 0x2004:
@@ -84,28 +83,54 @@ write_ppu_regs ::proc(ppu: ^PPU, address: u16, data: u8) {
 }
 
 read_ppu_regs ::proc(ppu: ^PPU, address: u16) -> []u8 {
-
     switch address {
         case 0x2002:
             poll_status_bits(ppu);
             return ppu.status[:];
         case 0x2004:
+            i := ppu.oam_addr;
+            return ppu.oam_data[i:i+1];
         case 0x2007:
+            ppu.read_buffer[0] = ppu.read_buffer[1];
+            read_ppu(ppu);
+            return ppu.read_buffer[:1];
         case:    
+            assert(false);
     }
     return nil;
 }
 
 write_ppu ::proc(ppu: ^PPU, value: u8) {
-    c := cart.Cartridge{};
     switch ppu.v {
+        case 0x0000..=0x1FFF:
+            cart.write_cart(ppu.cartridge, ppu.v, value);
         case 0x2000..=0x2FFF:
-            ppu.mapper^(&c, ppu.v, .VRAM_ADDR);
-            ppu.nametables[c.address] = value;
+            ppu.cartridge.mapper(ppu.cartridge, ppu.v, .VRAM_ADDR);
+            ppu.nametables[ppu.cartridge.address] = value;
+        case 0x3F00..=0x3FFF:
+            //Palette RAM
+            index := (ppu.v & 0x3F1F) - 0x3F00;
+            ppu.palette[index] = value;
+
+    }
+    ppu.v += u16(ppu.vram_inc);
+}
+
+read_ppu ::proc(ppu: ^PPU) {
+    switch ppu.v {
+        case 0x0000..=0x1FFF:
+            ppu.read_buffer[1] = cart.read_cart(ppu.cartridge, ppu.v)[0];
+            ppu.v += u16(ppu.vram_inc);
+        case 0x2000..=0x2FFF:
+            ppu.cartridge.mapper(ppu.cartridge, ppu.v, .VRAM_ADDR);
+            ppu.read_buffer[1] = ppu.nametables[ppu.cartridge.address];
             ppu.v += u16(ppu.vram_inc);
         case 0x3F00..=0x3FFF:
             //Palette RAM
+            index := (ppu.v & 0x3F1F) - 0x3F00;
+            ppu.read_buffer[0] = ppu.palette[index];
     }
+    ppu.v += u16(ppu.vram_inc);
 }
 
 parse_control_bits ::proc(ppu: ^PPU, value: u8) {
@@ -135,7 +160,7 @@ parse_scroll_bits ::proc(ppu: ^PPU, value: u8) {
         temp := (u16(value) & 0xF8) >> 3;
         ppu.t = (ppu.t & 0xFFE0) | temp;
         temp = (u16(value) & 0x07);
-        ppu.finex_scroll = u8(temp);
+        ppu.x = u8(temp);
         ppu.w = 1;
     }else{
         fgh := (u16(value) & 0x07) << 12;

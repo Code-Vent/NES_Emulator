@@ -2,6 +2,7 @@ package cart
 
 
 MapperOp ::enum{
+    TEST_INIT,
     INIT,
     VRAM_ADDR,
     WRITE,
@@ -73,6 +74,8 @@ four_screen ::proc(address: u16) -> u16 {
 
 nrom_mapper ::proc(c: ^Cartridge, address: u16, op: MapperOp) -> (ok:bool){
     switch op {
+        case .TEST_INIT:
+            nrom_banks.mirroring = c.meta.mirroring; 
         case .INIT:
             nrom_banks.chr = make([]int, c.seg_info.chr_rom_banks);
             nrom_banks.prg = make([]int, 2);

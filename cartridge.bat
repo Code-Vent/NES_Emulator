@@ -1,2 +1,0 @@
-cd Cartridge
-odin run .
