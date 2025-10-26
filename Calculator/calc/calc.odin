@@ -2,8 +2,8 @@ package calc
 
 import "core:fmt"
 
-carryFlagMask :u8:(1<<0);
-zeroFlagMask :u8:(1<<1);
+carryFlagMask    :u8:(1<<0);
+zeroFlagMask     :u8:(1<<1);
 overflowFlagMask :u8:(1<<6);
 negativeFlagMask :u8:(1<<7);
 

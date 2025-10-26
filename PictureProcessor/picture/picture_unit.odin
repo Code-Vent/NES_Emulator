@@ -5,13 +5,17 @@ import "core:mem"
 import "../../PixelUnit/pixel"
 import "../../Cartridge/cart"
 
+spriteOverflowMask :u8:(1<<5); 
+sprite0HitMask     :u8:(1<<6);
+vBlankMask         :u8:(1<<7);
 PPU ::struct{
     pixel_unit          :pixel.Pixel8,
     oam_data            :[256]u8, 
     nametables          :[]u8,
     patterntable        :[1024]u8,
     palette             :[32]u8,
-    read_buffer         :[2]u8,
+    read_buffer         :[1]u8,
+    status              :[1]u8,
     oam_addr            :u8,
     vram_inc            :u8,
     sprite_size         :u8,
@@ -23,7 +27,9 @@ PPU ::struct{
     bckgnd_pattern_addr :u16,
     sprite_pattern_addr :u16,   
     mapper              :^cart.Mapper,
+    nmi_enabled         :bool,
     dma_callback        :proc(addr: u16, nbytes: int)->[]u8,
+    nmi_callback        :proc(),
 }
 
 new_ppu ::proc(mapper: ^cart.Mapper) -> PPU {
@@ -67,7 +73,7 @@ write_ppu_regs ::proc(ppu: ^PPU, address: u16, data: u8) {
             parse_address_bits(ppu, data);
         case 0x2007:
             write_ppu(ppu, data);
-        case 0x4014: 
+        case 0x4014 & 0x2007: 
             addr := u16(data) << 8;
             oam := ppu.dma_callback(addr, 256);
             assert(len(oam) == 256);
@@ -81,7 +87,8 @@ read_ppu_regs ::proc(ppu: ^PPU, address: u16) -> []u8 {
 
     switch address {
         case 0x2002:
-
+            poll_status_bits(ppu);
+            return ppu.status[:];
         case 0x2004:
         case 0x2007:
         case:    
@@ -120,7 +127,7 @@ parse_control_bits ::proc(ppu: ^PPU, value: u8) {
     temp := (u16(value) & 0x03) << 10;
     ppu.t = (ppu.t & 0xF3FF) | temp;
 
-    pixel.write_control(&ppu.pixel_unit, .VBLANK_NMI, (0x80 & value) != 0);
+    ppu.nmi_enabled = (0x80 & value) != 0;
 }
 
 parse_scroll_bits ::proc(ppu: ^PPU, value: u8) {
@@ -148,4 +155,21 @@ parse_address_bits ::proc(ppu: ^PPU, value: u8) {
         ppu.w = 0;
         ppu.v = ppu.t;
     }
+}
+
+poll_status_bits ::proc(ppu: ^PPU) {
+    mask:u8 = 0;
+    if .VBLANK in ppu.pixel_unit.status {
+        mask |= vBlankMask;
+        ppu.pixel_unit.status -= {.VBLANK};
+    }
+    if .SPRITE0HIT in ppu.pixel_unit.status {
+        mask |= sprite0HitMask;
+        ppu.pixel_unit.status -= {.SPRITE0HIT};
+    }
+    if .SPRITE_OVERFLOW in ppu.pixel_unit.status {
+        mask |= spriteOverflowMask;
+        ppu.pixel_unit.status -= {.SPRITE_OVERFLOW};
+    }
+    ppu.status[0] |= mask;
 }

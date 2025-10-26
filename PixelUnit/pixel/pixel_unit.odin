@@ -7,23 +7,20 @@ Register ::enum(u8){
 Register16 ::distinct Register;
 
 Option ::enum{
-
 	AND, OR, XOR,
 	LSR, ASL, ROR, ROL,
 	LDR,
 	CMP,
 };
 
-Status ::enum(u8){
-	SPRITE_OVERFLOW = (1<<5), 
-	SPRITE0HIT      = (1<<6),
-    VBLANK          = (1<<7)
-};
 
-Control ::enum(u8){
-	PATTERN    = (1<<5), 
-	SPRITE0HIT = (1<<6),
-    VBLANK_NMI = (1<<7)
+Status ::distinct bit_set[StatusBits; u8];
+
+
+StatusBits ::enum(u8){
+	SPRITE_OVERFLOW, 
+	SPRITE0HIT,
+    VBLANK,
 };
 
 Render ::enum(u8){
@@ -58,8 +55,7 @@ Pixel8 ::struct{
     //fine x scroll 3-bit
     //toggle write
     state_queue      :StateQueue,
-    status           :u8,
-    control_settings :u8,
+    status           :Status,
     render_settings  :u8,
 }
 
@@ -93,21 +89,6 @@ enqueue_state ::proc(q: ^StateQueue, r: RenderingState) {
 
 dequeue_state ::proc(q: ^StateQueue) -> RenderingState {
     return RenderingState{};
-}
-
-
-write_status ::proc(pixel: ^Pixel8, f: Status, value: bool) {
-    
-}
-
-write_control ::proc(pixel: ^Pixel8, f: Control, value: bool) {
-	mask := transmute(u8)f;
-    if value {
-		pixel.control_settings |= mask;
-	}
-	else {
-		pixel.control_settings &= ~mask;
-	}
 }
 
 read_register ::proc(pixel: ^Pixel8, r: Register) -> u8 {

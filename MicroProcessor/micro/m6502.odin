@@ -5,7 +5,6 @@ import "core:math/rand"
 import "core:time"
 import "../../Calculator/calc"
 import "../../Cartridge/cart"
-import "../../PictureProcessor/picture"
 
 A  ::calc.Register.R0;
 X  ::calc.Register.R1;
@@ -42,7 +41,6 @@ M6502 ::struct{
     cycles: int,
     ram :[2048]u8, 
     cartridge :^cart.Cartridge,
-    ppu :picture.PPU,
     log :string,
 };
 
