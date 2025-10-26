@@ -120,11 +120,9 @@ read_ppu ::proc(ppu: ^PPU) {
     switch ppu.v {
         case 0x0000..=0x1FFF:
             ppu.read_buffer[1] = cart.read_cart(ppu.cartridge, ppu.v)[0];
-            ppu.v += u16(ppu.vram_inc);
         case 0x2000..=0x2FFF:
             ppu.cartridge.mapper(ppu.cartridge, ppu.v, .VRAM_ADDR);
             ppu.read_buffer[1] = ppu.nametables[ppu.cartridge.address];
-            ppu.v += u16(ppu.vram_inc);
         case 0x3F00..=0x3FFF:
             //Palette RAM
             index := (ppu.v & 0x3F1F) - 0x3F00;
