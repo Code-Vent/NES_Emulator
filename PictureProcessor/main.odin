@@ -46,10 +46,13 @@ main ::proc() {
         assert(a == b);
     }
 
-    ppu.dma_callback = dma;
+    ppu.handlers.dma = dma;
     picture.write_ppu_regs(&ppu, 0x4014 & 0x2007, 0xEF);
     for i in 0..<len(oam[:]) {
         assert(oam[i] == ppu.oam_data[i]);
     }
-    fmt.println(ppu.oam_data[:]);
+    //fmt.println(ppu.oam_data[:]);
+
+    picture.parse_control_bits(&ppu, 0x10);
+    assert(ppu.bckgnd_pattern_addr == 0x1000);
 }

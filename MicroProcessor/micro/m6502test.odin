@@ -1,9 +1,9 @@
 package micro
 
-import "../../Cartridge/cart"
 import "core:fmt"
 import "core:os"
 import "core:strings"
+import "../../Cartridge/cart"
 
 
 disasm_run_test ::proc(

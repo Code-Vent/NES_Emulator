@@ -1,5 +1,6 @@
 package cart
 
+import "core:fmt"
 
 MapperOp ::enum{
     TEST_INIT,
@@ -96,15 +97,12 @@ nrom_mapper ::proc(c: ^Cartridge, address: u16, op: MapperOp) -> (ok:bool){
             if nrom_banks.prg != nil {
                 delete(nrom_banks.prg);
             }
-        case .READ:
+        case .READ, .WRITE:
             ok = true;
-            fallthrough;
-        case .WRITE:
             if address >= 0x0000 && address <=0x1FFF {
                 //CHR Space
                 c.address = nrom_banks.chr[0] + int(address);
-                ok = c.meta.chr_writeable;
-                break;
+                ok = (op == .WRITE)? c.meta.chr_writeable : ok;
             }else if address >= 0x8000 && address <=0xBFFF {
                 //CHR Space
                 c.address = nrom_banks.prg[0] + int(address - 0x8000);

@@ -5,6 +5,11 @@ import "core:mem"
 import "../../PixelUnit/pixel"
 import "../../Cartridge/cart"
 
+Handlers ::struct{
+    nmi :proc(),
+    dma :proc(addr: u16, nbytes: int) -> []u8,
+}
+
 spriteOverflowMask :u8:(1<<5); 
 sprite0HitMask     :u8:(1<<6);
 vBlankMask         :u8:(1<<7);
@@ -28,8 +33,7 @@ PPU ::struct{
     sprite_pattern_addr :u16,   
     cartridge           :^cart.Cartridge,
     nmi_enabled         :bool,
-    dma_callback        :proc(addr: u16, nbytes: int)->[]u8,
-    nmi_callback        :proc(),
+    handlers            :Handlers,
 }
 
 new_ppu ::proc(c: ^cart.Cartridge) -> PPU {
@@ -72,30 +76,34 @@ write_ppu_regs ::proc(ppu: ^PPU, address: u16, data: u8) {
             parse_address_bits(ppu, data);
         case 0x2007:
             write_ppu(ppu, data);
-        case 0x4014 & 0x2007: 
-            addr := u16(data) << 8;
-            oam := ppu.dma_callback(addr, 256);
-            assert(len(oam) == 256);
-            mem.copy(raw_data(ppu.oam_data[:]), raw_data(oam), len(oam));
-            //ppu.oam_addr = 0;
+        case 0x4014:             
+            if ppu.handlers.dma != nil {
+                addr := u16(data) << 8;
+                oam := ppu.handlers.dma(addr, 256);
+                assert(len(oam) == 256);
+                mem.copy(raw_data(ppu.oam_data[:]), raw_data(oam), len(oam));
+                //ppu.oam_addr = 0;
+            }
         case:
     }
 }
 
 read_ppu_regs ::proc(ppu: ^PPU, address: u16) -> []u8 {
-    switch address {
+    switch address {            
         case 0x2002:
             poll_status_bits(ppu);
             return ppu.status[:];
         case 0x2004:
-            i := ppu.oam_addr;
+            i := int(ppu.oam_addr);
+            assert(i < 256);
             return ppu.oam_data[i:i+1];
         case 0x2007:
             ppu.read_buffer[0] = ppu.read_buffer[1];
             read_ppu(ppu);
             return ppu.read_buffer[:1];
-        case:    
-            assert(false);
+        case: 
+            ppu.read_buffer[0] = 0xFF;
+            return ppu.read_buffer[:1];
     }
     return nil;
 }
@@ -119,6 +127,8 @@ write_ppu ::proc(ppu: ^PPU, value: u8) {
 read_ppu ::proc(ppu: ^PPU) {
     switch ppu.v {
         case 0x0000..=0x1FFF:
+            //fmt.printf("\nread_ppu %4X\n", ppu.v);  
+            //assert(false);
             ppu.read_buffer[1] = cart.read_cart(ppu.cartridge, ppu.v)[0];
         case 0x2000..=0x2FFF:
             ppu.cartridge.mapper(ppu.cartridge, ppu.v, .VRAM_ADDR);
