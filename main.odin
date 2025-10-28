@@ -4,16 +4,16 @@ import "Calculator/calc"
 import "Cartridge/cart"
 import "MicroProcessor/micro"
 import "PictureProcessor/picture"
-import "PixelUnit"
+import "PixelUnit/pixel"
 
 @(private)
 mcu :micro.M6502;
 
-nmi ::proc () {
+nmi ::proc() {
     micro.nmi(&mcu);
 }
 
-irq ::proc () {
+irq ::proc() {
     micro.irq(&mcu);
 }
 

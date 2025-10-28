@@ -5,12 +5,9 @@ import "core:fmt"
 import "../Cartridge/cart"
 
 
-oam :[256]u8;
+oam :[256]u8 = {0..<256 = 1};
 
 dma ::proc(addr: u16, nbytes: int) -> []u8 {
-    for i in 0..<256 {
-        oam[i] = u8(i);
-    }
     fmt.printf("%4X\n", addr);
     return oam[:nbytes];
 }
@@ -47,7 +44,7 @@ main ::proc() {
     }
 
     ppu.handlers.dma = dma;
-    picture.write_ppu_regs(&ppu, 0x4014 & 0x2007, 0xEF);
+    picture.write_ppu_regs(&ppu, 0x4014, 0xEF);
     for i in 0..<len(oam[:]) {
         assert(oam[i] == ppu.oam_data[i]);
     }
